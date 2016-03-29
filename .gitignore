@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/vim-sessions
+Homestead.yaml
+Homestead.json
+.env
+tags

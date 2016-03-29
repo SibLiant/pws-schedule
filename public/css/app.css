@@ -1,0 +1,533 @@
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+html,
+button,
+input,
+select,
+textarea {
+  color: #222;
+}
+html {
+  font-size: 1em;
+  line-height: 1.4;
+}
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,
+canvas,
+img,
+video {
+  vertical-align: middle;
+}
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Image replacement
+ */
+.ir {
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  /* IE 6/7 fallback */
+  *text-indent: -9999px;
+}
+.ir:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 150%;
+}
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+  visibility: hidden;
+}
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.clearfix:after {
+  clear: both;
+}
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix {
+  *zoom: 1;
+}
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+     * Don't show links for images, or javascript/internal links
+     */
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  @page {
+    margin: 0.5cm;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+.ul-links {
+  list-style-type: none;
+  padding-left: 0;
+}
+.ul-links li {
+  display: inline-block;
+  margin: 0px 10px;
+}
+.ul-links li:first {
+  padding: 0px;
+}
+/*
+ * ################## grids ###################################
+ */
+.base-grid-cell {
+  padding: 5px;
+  width: 125px;
+}
+/*
+ * ################## vars ###################################
+ */
+#fixed-header {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  background-color: #13293d;
+}
+/*#cnt-calendar-header {overflow-x: scroll; height: 100%; white-space: nowrap;}*/
+/*#cnt-calendar-header div { */
+/*border: 1px solid red; */
+/*padding: 0px 5px; */
+/*.base-grid-cell;*/
+/*float: left;*/
+/*}*/
+/*.cal-hdr { border: 1px solid red; }*/
+.sch-table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  overflow-x: scroll;
+}
+.sch-name-cell {
+  width: 200px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+  vertical-align: middle;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+}
+.sch-day-cell {
+  width: 175px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+}
+.proj-border-color {
+  border-color: bule;
+}
+.proj-border-width {
+  border-width: 2px;
+}
+div#cnt-calendar-header {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  overflow-x: scroll;
+  border: 1px solid #006494;
+}
+div#cnt-calendar-header div.hdr-row {
+  display: table-row;
+}
+div#cnt-calendar-header div.hdr-row div {
+  width: 175px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+  text-align: center;
+}
+div#cnt-calendar-header div.hdr-row div#name-placeholder {
+  width: 200px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+  vertical-align: middle;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+}
+#cnt-scroll-header {
+  overflow-x: hidden;
+}
+#cnt-worker-grids {
+  overflow-x: scroll;
+  height: 1200px;
+}
+.accomodate-scrollbar {
+  width: 17px;
+  background-color: #006494;
+}
+#cnt-main-grid {
+  position: relative;
+  top: 100px;
+  border: 1px dotted yellow;
+}
+#calendar-workers-scrollable {
+  padding-top: 120px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  overflow-x: scroll;
+  border: 1px solid black;
+}
+#calendar-workers-scrollable .worker-row {
+  display: table-row;
+}
+#calendar-workers-scrollable .worker-name {
+  width: 200px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+  vertical-align: middle;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+  background-color: #006494;
+  color: white;
+}
+#calendar-workers-scrollable .worker-day {
+  width: 175px;
+  padding: 5px;
+  display: table-cell;
+  border: 1px solid #1b98e0;
+}
+#calendar-workers-scrollable .worker-day .project {
+  border: 1px solid orange;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+body {
+  background-color: #13293d;
+}
+.cnt-project {
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #e8f1f2;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cnt-hdr-date {
+  color: white;
+  background-color: #006494;
+}
+.proj-single {
+  border: 3px solid #006494;
+  border-radius: 10px;
+}
+.proj-begin {
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: #006494;
+  border-bottom-color: #006494;
+  border-left-color: #006494;
+  border-right-color: transparent;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.place-holder {
+  border: 3px solid #006494;
+  border-radius: 10px;
+  border-color: orange;
+  visibility: hidden;
+}
+#proj-ctrl {
+  border: 3px solid #006494;
+  border-radius: 10px;
+  background-color: #00FFFF !important;
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #e8f1f2;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 200px;
+}
+span.tag {
+  width: 50px;
+  color: green;
+}
+#cnt-ctrl {
+  margin-bottom: 10px;
+  height: 40px;
+}
+#cnt-proj-ctrl {
+  border: 1px solid blue;
+  line-height: 30px;
+}
+ul#selected-project {
+  /*position: relative;*/
+  /*top: -20px;*/
+  border: 1xp solid #006494;
+  font: "Courier";
+  border-radius: 10px;
+}
+ul#selected-project li:first-child {
+  background-color: #00FFFF !important;
+  border-color: #006494;
+  border-width: 3px;
+  width: 400px;
+  position: relative;
+  left: -40px;
+}
+ul#selected-project li {
+  display: inline-block;
+  border: 1px solid yellow;
+  border-radius: 10px;
+  border-width: 3px;
+  padding: 2px 5px;
+  margin-right: 10px;
+  left: -40px;
+}
+.tag {
+  /*display: inline;*/
+  /*background-color: green;*/
+  /*padding: 10px;*/
+  /*margin-top: 10px;*/
+}
+.tag-tooltip {
+  display: inline;
+  position: relative;
+}
+.tag-tooltip:hover:after {
+  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  bottom: -50px;
+  color: #fff;
+  content: attr(tooltip);
+  left: 0px;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+.proj-mid {
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: #006494;
+  border-bottom-color: #006494;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.proj-end {
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: #006494;
+  border-bottom-color: #006494;
+  border-left-color: transparent;
+  border-right-color: #006494;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+/*****************/
+/*drag and drop*/
+/*****************/
+.drop-active-class {
+  background-color: lightgreen;
+}
+.proj-drop-hover {
+  background-color: yellow;
+}
+.proj-selected {
+  background-color: #00FFFF !important;
+}
+/*@pal-bg-color: rgb(19,41,61);*/
+/*@pal-blue-green: rgb(36,123,160);*/
+/*@pal-blue-dark: rgb(0,100,148);*/
+/*@pal-blue-bright: rgb(27,152,224);*/
+/*@pal-blue-white: rgb(232,241,242);*/
+/* button style */
+.btn {
+  background: #1b98e0;
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 5px 10px 5px 10px;
+  border: solid #247ba0 2px;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #3cb0fd;
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=app.css.map */

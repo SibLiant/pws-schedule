@@ -1,0 +1,75 @@
+{
+	"auth": {
+		"username": "parker",
+		"key": "asdfasdfasdfasdf"
+	},
+	"calendarRange": {
+		"start": "2016-02-01",
+		"end": "2016-02-31"
+	},
+
+
+
+
+
+	"scheduleRecords": [{
+		"installer1_jerrie": {
+			"installer_detail": {
+				"id": 31
+			},
+			"scheduled_records": {
+				"rec1": {
+					"customer": {
+						"lname": "smith"
+					},
+					"schedule_dates": {
+						"date1": {
+							"date": "2016-05-19",
+							"tags": {
+								"tag1": {
+									"name": "window",
+									"link": "http://google.com",
+									"comment": "comment for window tag"
+								},
+								"tag2": {
+									"name": "shutter",
+									"link": "http://google.com",
+									"comment": "comment for shutter tag"
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}],
+
+
+
+
+	"recs":
+	[
+		{
+			"installer_id": 16,
+			"installer_name":"shane",
+			"customer_name":"Wilson-Smith",
+			"customer_id":"3233",
+			"schedule_date":"2016-02-19",
+			"scheduled_days":"1",
+			"external_link":"http://google.com"
+		},
+
+		{
+			"installer_id": 16,
+			"installer_name":"shane",
+			"customer_name":"Johnson",
+			"customer_id":"3233",
+			"schedule_date":"2016-02-19",
+			"scheduled_days":"1",
+			"external_link":"http://google.com"
+		}
+	
+	]
+
+}
