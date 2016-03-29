@@ -3,13 +3,31 @@
 <html>
     <head>
         <title>PWS Scheduler</title>
+
 <link rel="stylesheet" href="css/app.css">
+<style>
+
+body {
+
+	color: white;
+}
+
+body ul li a {
+	color: white;
+}
+.container {
+	padding: 5px;
+}
+
+</style>
     </head>
     <body>
         <div class="container">
-            <div class="content">
-                <div class="title testing">PWS Scheduler</div>
-            </div>
+        <h1>PWS Scheduler</h1>
+        <ul>
+        	<li><a href="/RO">Read Only </a></li>
+        	<li><a href="/RO/postedSchedule">Last Posted Via API</a></li>
+        </ul>
         </div>
     </body>
 </html>

@@ -41,6 +41,8 @@ class ReadonlyController extends Controller
     {
 		$json = $this->repo->getJSON();
 
+		$validator = new JsonValidator($json);
+
 		$validJson = $validator->isValid();
 
         return view('ro_page')->with('json_data', $validJson);
