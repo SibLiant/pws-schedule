@@ -31,7 +31,8 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 		$data['scheduleRecords'] = $this->getScheduleRecs();
 		$data['settings'] = [
 			'navForward' => '30', 
-			'navBackward' => '30'
+			'navBackward' => '30',
+			'navRootUrl' => ''
 		];
 
 		$data['workerRecords'] = $this->getWorkerRecs();
@@ -170,9 +171,6 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 			->limit(5)
 			->get();
 	}
-
-	
-
 
 	
 	/**

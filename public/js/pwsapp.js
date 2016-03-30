@@ -37,7 +37,8 @@ PWSSchedule.core = function(options){
 		"pwsDateFormat": 'YYYY-MM-DD',
 		"headerDateFormat": 'ddd MMM D',
 		"navBackward": options.settings.navBackward,
-		"navForward": options.settings.navForward
+		"navForward": options.settings.navForward,
+		"navRootUrl": options.settings.navRootUrl
 	};
 
 	config.calRangeInt = config.momCalEnd.diff( config.momCalStart, "days" );
@@ -135,6 +136,9 @@ PWSSchedule.render = function( core ){
 	};
 
 	var navCal = function(direction, days){
+		if ( core.config.navRootUrl ) { 
+			calNavRootUrl(direction); 
+		}
 		if ( direction === 'forward' ) {
 			core.config.momCalStart.add( days, 'days' );
 		}
@@ -143,6 +147,22 @@ PWSSchedule.render = function( core ){
 			core.config.momCalStart.subtract( days, 'days' );
 		}
 		reRender();
+	};
+
+	var calNavRootUrl = function(direction){
+
+		var newTargetDate;
+		if ( direction === "forward" ) {
+			newTargetDate = core.config.momCalStart.clone().add( core.config.navForward, 'days' );
+		}
+		else { //backward
+			newTargetDate = core.config.momCalStart.clone().subtract( core.config.navBackward, 'days' );
+		}
+
+		var url = core.config.navRootUrl + '/' + newTargetDate.format( core.config.pwsDateFormat );
+		window.location = url;
+		throw new Error( 'Redirecting' );
+
 	};
 
 	var clearWorkerScheduleElements = function(worker_id){
@@ -325,12 +345,24 @@ PWSSchedule.render = function( core ){
 		$('#cal-ctrl-back').click(function(e){
 			e.preventDefault();
 			var nBackward = core.config.navBackward;
+
+			if ( core.config.calNavRootUrl  ) {
+				var momTargetDay = core.config.momCalStart.clone();
+				momTargetDay.subtract( core.config.navBackward, 'days' );
+				calNavRootUrl( momTargetDay );
+			}
+
 			navCal( 'backward', nBackward  );
 		});
 
 		$('#cal-ctrl-forward').click(function(e){
 			e.preventDefault();
 			var nForward = core.config.navForward;
+			if ( core.config.calNavRootUrl  ) {
+				var momTargetDay = core.config.momCalStart.clone();
+				momTargetDay.add( core.config.navForward, 'days' );
+				calNavRootUrl( momTargetDay );
+			}
 			navCal( 'forward', nForward  );
 		});
 
@@ -370,6 +402,11 @@ PWSSchedule.render = function( core ){
 		if ( hasVerticalScrollbar ){
 			$('#hdr-row').append('<div class="accomodate-scrollbar">&nbsp</div>');
 		}
+
+
+		console.log( '------' );
+		console.log( document.referrer );
+		console.log( '------' );
 
 	};
 
