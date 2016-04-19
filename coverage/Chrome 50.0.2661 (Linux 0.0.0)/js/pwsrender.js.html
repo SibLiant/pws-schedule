@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js/pwsrender.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">js/</a> pwsrender.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.34% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>176/197</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.43% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>40/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">90.32% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>28/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">90.22% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>166/184</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">150×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">533×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-yes">444×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">523×</span>
+<span class="cline-any cline-yes">523×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">690×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global PWSSchedule, moment */
+/*exported  getCalStart, getCalRange, setCalStart */
+/* jshint unused:false */
+PWSSchedule.render = function( core ){
+	"use strict";
+&nbsp;
+&nbsp;
+	var projectSelected = null;
+	var hdrTarget = null;
+&nbsp;
+	var bldGridHeader = function(targetElement){
+		//clear any existing elements
+&nbsp;
+		if ( targetElement ){
+			hdrTarget = ( targetElement instanceof jQuery ) ? <span class="branch-0 cbranch-no" title="branch not covered" >targetElement </span>: $( targetElement );
+		}
+&nbsp;
+		var hdrdivs = [];
+		$('div.hdr-row').html('');
+&nbsp;
+		//build the controls first
+		hdrdivs.push('&lt;div id="name-placeholder"&gt; &lt;a href="#" id="cal-ctrl-back" class="btn"&gt;&lt;&lt;/a&gt; &amp;nbsp; &amp;nbsp; &lt;a href="#" id="cal-ctrl-forward" class="btn"&gt;&gt;&lt;/a&gt; &lt;/div&gt;');
+		var i;						
+&nbsp;
+		for(i=0; i &lt; core.config.calRangeInt; i++){
+			hdrdivs.push('&lt;div class="cnt-hdr-date"&gt;'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.headerDateFormat)+' &lt;/div&gt;');
+		}
+		hdrTarget.append(hdrdivs);
+	};
+&nbsp;
+	var initScheduleRecords = function(){
+		var rws;
+		$.each(core.workers, function( workerIndex, worker ) {
+			buildWorkerDays( worker.id );
+			rws = worker.buildRows(core.config.momCalStart, core.config.calRangeInt);
+			//console.debug(rws);
+			$.each(rws, function( rowIndex, row ) {
+				//console.debug(row);
+				renderWorkerRow( worker.id, row  );
+			});
+		});
+	};
+&nbsp;
+	var reRender = function(){
+		bldGridHeader();
+		initScheduleRecords();
+		ctrlBind();
+&nbsp;
+		var scrollHeader = document.getElementById('cnt-scroll-header');
+		var scrollWorkers = document.getElementById('calendar-workers-scrollable');
+		var scrollWkGrids = document.getElementById('cnt-worker-grids');
+		<span class="missing-if-branch" title="if path not taken" >I</span>if ( scrollHeader  ) { <span class="cstat-no" title="statement not covered" >scrollHeader.scrollLeft = 0; </span>}
+		<span class="missing-if-branch" title="else path not taken" >E</span>if ( scrollWorkers ) { scrollWorkers.scrollLeft = 0; }
+		<span class="missing-if-branch" title="else path not taken" >E</span>if ( scrollWkGrids ) { scrollWkGrids.scrollLeft = 0; }
+&nbsp;
+&nbsp;
+&nbsp;
+		//$('#cnt-worker-grids').scroll(function(e) {
+				//var pos = $('#cnt-worker-grids').scrollLeft();
+				//$(".worker-name, #name-placeholder").css({
+						//left: pos
+				//});
+		//});
+	};
+&nbsp;
+	var navCal = function(direction, days){
+		<span class="missing-if-branch" title="if path not taken" >I</span>if ( core.config.navRootUrl ) { 
+<span class="cstat-no" title="statement not covered" >			calNavRootUrl(direction); </span>
+		}
+		if ( direction === 'forward' ) {
+			core.config.momCalStart.add( days, 'days' );
+		}
+&nbsp;
+		if ( direction === 'backward' ) {
+			core.config.momCalStart.subtract( days, 'days' );
+		}
+		reRender();
+	};
+&nbsp;
+	var calNavRootUrl = <span class="fstat-no" title="function not covered" >function(direction){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		var newTargetDate;</span>
+<span class="cstat-no" title="statement not covered" >		if ( direction === "forward" ) {</span>
+<span class="cstat-no" title="statement not covered" >			newTargetDate = core.config.momCalStart.clone().add( core.config.navForward, 'days' );</span>
+		}
+		else { //backward
+<span class="cstat-no" title="statement not covered" >			newTargetDate = core.config.momCalStart.clone().subtract( core.config.navBackward, 'days' );</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		var url = core.config.navRootUrl + '/' + newTargetDate.format( core.config.pwsDateFormat );</span>
+<span class="cstat-no" title="statement not covered" >		window.location = url;</span>
+<span class="cstat-no" title="statement not covered" >		throw new Error( 'Redirecting' );</span>
+&nbsp;
+	};
+&nbsp;
+	var clearWorkerScheduleElements = function(worker_id){
+		var momStart = core.config.momCalStart.clone();
+		var rng = core.config.calRangeInt;
+		for (var i = 0; i &lt; rng; i++) { 
+			var select = bldDaySelector(worker_id, momStart.clone().add(i, 'days'));
+			$(select).html('');
+		}
+&nbsp;
+	};
+&nbsp;
+	var clearWorkerDayDivs = function(worker_id){
+		//var select = $('#worker-row_'+worker_id).html('');
+		var select = $('#worker-row_'+worker_id).children();
+		$.each(select, function( index, value ) {
+			if ( $(value).hasClass('worker-day')  ) { $(value).remove(); }
+		});
+&nbsp;
+	};
+&nbsp;
+	var renderWorkerRow = function(worker_id, wRow){
+&nbsp;
+		var momPrevProj = core.config.momCalStart.clone();
+		var rlen = wRow.length;
+		var dDiff;
+		for (var i = 0; i &lt; rlen; i++) { 
+			var momCurrentProj = moment( wRow[i].scheduled_date );
+			dDiff = momCurrentProj.diff( momPrevProj, 'days');
+&nbsp;
+			if (  dDiff &gt; 0 ) { renderPlaceHolder(worker_id, momPrevProj, dDiff);}
+			renderWorkerProj(worker_id, wRow[i]);
+			momPrevProj = moment( wRow[i].scheduled_date ).add( wRow[i].job_length_days, 'days' );
+		}
+		dDiff = core.config.momCalEnd.diff( momPrevProj, 'days' );
+		if (  dDiff &gt; 0   )  { renderPlaceHolder(worker_id, momPrevProj, dDiff);}
+	};
+&nbsp;
+	var renderPlaceHolder = function(worker_id, start, days){
+		var momStart =  ( moment.isMoment(start) ) ? start.clone() : moment( start );
+		var proj;
+		var selector;
+		var cls;
+		days = ( ! days ) ? <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>: days;
+		if ( days === 1 ){
+			cls = "place-holder_"+ worker_id + "_"+ momStart.format(core.config.pwsDateFormat);
+			proj = '&lt;div class="cnt-project place-holder '+cls+'"&gt; place holder&lt;/div&gt;';
+			selector = bldDaySelector(worker_id, momStart);
+			$( selector ).append(proj);
+		}
+		else {
+			for( var u=0; u&lt;days;u++){
+				var momStartClone = momStart.clone();
+				var tDay = momStartClone.add(u, 'days').format(core.config.pwsDateFormat);
+				var classDt = 'place-holder_' + worker_id + '_' + tDay;
+				proj = '&lt;div class="cnt-project place-holder '+classDt+'"&gt; place holder&lt;/div&gt;';
+				selector = bldDaySelector(worker_id, tDay);
+				$( selector ).append(proj);
+			}
+		}
+	};
+&nbsp;
+	var renderWorkerProj = function(worker_id, scheduleRecord){
+		var dys = parseInt(scheduleRecord.job_length_days);
+		var momentDrawDay;
+		for(var j=0;j&lt;dys;j++){
+			// we need to determin what class to apply to the project so the 
+			// project appears to span days nicely 
+			var cls;
+			if (dys === 1) { cls = "proj-single"; }
+			else if (j === 0) { cls = "proj-begin"; }
+			else if (  j &gt; 0 &amp;&amp; j+1 &lt; dys ) { cls = "proj-mid"; }
+			else <span class="missing-if-branch" title="else path not taken" >E</span>if ( j + 1 === dys ) { cls = "proj-end"; }
+&nbsp;
+			var id = 'schedule-id_'+scheduleRecord.schedule_id+'_dy_'+ Math.abs(j+1);
+			//verfiy if we have a sane project id
+&nbsp;
+			var proj = '&lt;div class="proj-draggable cnt-project '+cls+'" id="'+id+'"&gt; &lt;span class="proj-name"&gt;'+scheduleRecord.customer_name+'&lt;/span&gt;&lt;span class="proj-cust-name"&gt;&lt;/span&gt;&lt;/div&gt;';
+			momentDrawDay = moment(scheduleRecord.scheduled_date).add(j, 'days');
+&nbsp;
+			var selector = bldDaySelector(worker_id, momentDrawDay.format(core.config.pwsDateFormat));
+&nbsp;
+			$( selector ).append(proj);
+			$('#'+id).data('scheduleRecord', scheduleRecord );
+&nbsp;
+		}
+		//return the last draw day so we can look at the next record and determine
+		//if we need to add invisable place holders to keep a nice cal format
+		return momentDrawDay;
+	};
+&nbsp;
+	var bldDaySelector = function(worker_id, day){
+		var mom =  ( moment.isMoment(day) ) ? day.clone() : moment( day );
+		return '#worker-id_'+worker_id+'_day_'+mom.format(core.config.pwsDateFormat);
+	};
+&nbsp;
+	var  initWorkerDivs = function(targetElement){
+		var jqObjTarget = ( targetElement instanceof jQuery ) ? <span class="branch-0 cbranch-no" title="branch not covered" >targetElement </span>: $( targetElement );
+		var workerDivs = [];
+		$.each(core.workers, function( index, value ) {
+			buildWorkerDiv(value.id, value.name, jqObjTarget);
+		});
+	};
+&nbsp;
+	var buildWorkerDiv = function(worker_id, worker_name, targetElement){
+		//var jqObjTarget = ( targetElement instanceof jQuery ) ? targetElement : $( targetElement );
+		targetElement = $( targetElement );
+		var workerDivs = [];
+&nbsp;
+		var workerCntId = 'worker-row_'+ worker_id;
+		var divString = '&lt;div class="proj-droppable worker-row" id="'+workerCntId+'"&gt; &lt;div class="worker-name"&gt;'+worker_name+'&lt;/div&gt; &lt;/div&gt; &lt;!-- worker-row --&gt;	';
+		targetElement.append(divString);
+		
+		//build day containers
+		buildWorkerDays( worker_id);
+	};
+&nbsp;
+	var buildWorkerDays = function(worker_id){
+		var daysDivs = [];
+		clearWorkerDayDivs( worker_id );
+		for(var i = 0; i &lt; core.config.calRangeInt; i++){
+			daysDivs.push('&lt;div class="proj-droppable worker-day" id="worker-id_'+worker_id+'_day_'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.pwsDateFormat)+'"&gt; &lt;/div&gt;');
+		}
+		$('#worker-row_'+worker_id).append(daysDivs);
+	};
+&nbsp;
+&nbsp;
+	var setProjUnselected = function(){
+		<span class="missing-if-branch" title="if path not taken" >I</span>if ( $.isEmptyObject( projectSelected ) ) { <span class="cstat-no" title="statement not covered" >return; </span>}
+		for (var i = 0; i &lt; projectSelected.job_length_days; i ++) {
+			var select =  '#schedule-id_'+projectSelected.schedule_id+'_dy_'+ Math.abs(i+1);
+			$( select ).removeClass('proj-selected');
+		}
+		projectSelected = {};
+		$('#selected-project').html('');
+	};
+&nbsp;
+	var setProjSelected = function(p){
+		projectSelected = p.data("scheduleRecord");
+		var days = projectSelected.job_length_days; 
+		for (var i = 0; i &lt; days; i ++) {
+			var select =  '#schedule-id_'+projectSelected.schedule_id+'_dy_'+ Math.abs(i+1);
+			$( select ).addClass('proj-selected');
+		}
+		return projectSelected;
+	};
+&nbsp;
+	var updateSelectedProjectDisplay = function (){
+		$('#selected-project').html('');
+		var proj = '&lt;li&gt;'+projectSelected.customer_name+'&lt;/li&gt;';
+		$('#selected-project').append(proj);
+		setTagStyles();
+	};
+&nbsp;
+	var setTagStyles = function(){
+		$.each(projectSelected.tags, function( index, value ) {
+			renderTag( value );
+		});
+	};
+&nbsp;
+	var renderTag = function(tagId){
+		var tag = core.options.tags[tagId];
+		var styles = 'border-color: '+tag.border_color+'; background-color: '+tag.background_color+'; ';
+		$('#selected-project').append('&lt;li class="tag tag-tooltip" id="tag-id_"'+tagId+' style="'+styles+'" tooltip="'+tag.tool_tip+'"&gt;'+tag.abbreviation+'&lt;/li&gt;');
+	};
+&nbsp;
+	// build all the controls that were dynamically built
+	var ctrlBind = function(){
+&nbsp;
+		$('#cal-ctrl-back').click(function(e){
+			e.preventDefault();
+			var nBackward = core.config.navBackward;
+&nbsp;
+			<span class="missing-if-branch" title="if path not taken" >I</span>if ( core.config.calNavRootUrl  ) {
+<span class="cstat-no" title="statement not covered" >				var momTargetDay = core.config.momCalStart.clone();</span>
+<span class="cstat-no" title="statement not covered" >				momTargetDay.subtract( core.config.navBackward, 'days' );</span>
+<span class="cstat-no" title="statement not covered" >				calNavRootUrl( momTargetDay );</span>
+			}
+&nbsp;
+			navCal( 'backward', nBackward  );
+		});
+&nbsp;
+		$('#cal-ctrl-forward').click(function(e){
+			e.preventDefault();
+			var nForward = core.config.navForward;
+			<span class="missing-if-branch" title="if path not taken" >I</span>if ( core.config.calNavRootUrl  ) {
+<span class="cstat-no" title="statement not covered" >				var momTargetDay = core.config.momCalStart.clone();</span>
+<span class="cstat-no" title="statement not covered" >				momTargetDay.add( core.config.navForward, 'days' );</span>
+<span class="cstat-no" title="statement not covered" >				calNavRootUrl( momTargetDay );</span>
+			}
+			navCal( 'forward', nForward  );
+		});
+&nbsp;
+&nbsp;
+&nbsp;
+		$('.cnt-project').click(function(e){
+			// user can click on other elements in the project div
+			// make sure we catch it and get the appropriate id
+			var projEl;
+&nbsp;
+			<span class="missing-if-branch" title="if path not taken" >I</span>if ( e.target.nodeName === "SPAN" ) { <span class="cstat-no" title="statement not covered" >projEl = $(e.target).parent(); </span>}
+			<span class="missing-if-branch" title="else path not taken" >E</span>if ( e.target.nodeName === "DIV" ) { projEl = $(e.target); }
+&nbsp;
+			var projData = projEl.data("scheduleRecord");
+&nbsp;
+&nbsp;
+			setProjUnselected( projEl );
+			setProjSelected( projEl );
+			updateSelectedProjectDisplay();
+			
+		});
+&nbsp;
+		$("#cnt-worker-grids").scroll(<span class="fstat-no" title="function not covered" >function () { </span>
+<span class="cstat-no" title="statement not covered" >			$("#cnt-scroll-header").scrollLeft($("#cnt-worker-grids").scrollLeft());</span>
+		});
+&nbsp;
+		// freeze user name containers in place
+		$('#cnt-worker-grids').scroll(<span class="fstat-no" title="function not covered" >function(e) {</span>
+<span class="cstat-no" title="statement not covered" >				var pos = $('#cnt-worker-grids').scrollLeft();</span>
+<span class="cstat-no" title="statement not covered" >				$(".worker-name, #name-placeholder").css({</span>
+						left: pos
+				});
+		});
+&nbsp;
+		var div= document.getElementById('cnt-worker-grids'); // need real DOM Node, not jQuery wrapper
+		var hasVerticalScrollbar= div.scrollHeight&gt;div.clientHeight;
+		<span class="missing-if-branch" title="if path not taken" >I</span>if ( hasVerticalScrollbar ){
+<span class="cstat-no" title="statement not covered" >			$('#hdr-row').append('&lt;div class="accomodate-scrollbar"&gt;&amp;nbsp&lt;/div&gt;');</span>
+		}
+	};
+&nbsp;
+	return {
+		navCal:navCal,
+		clearWorkerDayDivs:clearWorkerDayDivs,
+		clearWorkerScheduleElements:clearWorkerScheduleElements,
+		bldGridHeader:bldGridHeader,
+		renderPlaceHolder:renderPlaceHolder,
+		renderWorkerProj:renderWorkerProj,
+		renderWorkerRow:renderWorkerRow,
+		buildWorkerDays:buildWorkerDays,
+		buildWorkerDiv:buildWorkerDiv,
+		setTagStyles:setTagStyles,
+		initWorkerDivs:initWorkerDivs,
+		initScheduleRecords:initScheduleRecords,
+		setProjSelected:setProjSelected,
+		setProjUnselected:setProjUnselected,
+		projectSelected:projectSelected,
+		updateSelectedProjectDisplay:updateSelectedProjectDisplay,
+		ctrlBind:ctrlBind
+  	};
+&nbsp;
+};
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 18 2016 06:44:45 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "~5.0",
 		"nesbot/carbon": "~1.14",
-		"tymon/jwt-auth": "0.5.*",
+		"tymon/jwt-auth": "0.5.9",
         "laracasts/flash": "^2.0"
 
     },

@@ -44,10 +44,10 @@ module.exports = function(config) {
     preprocessors: {
 		//'public/js/pwsapp.js': 'coverage'
 
-		'resources/assets/js/pwsnamespace.js': 'coverage',
-		'resources/assets/js/pwscore.js': 'coverage',
-		'resources/assets/js/pwsworker.js': 'coverage',
-		'resources/assets/js/pwsrender.js': 'coverage'
+		//'resources/assets/js/pwsnamespace.js': 'coverage',
+		//'resources/assets/js/pwscore.js': 'coverage',
+		//'resources/assets/js/pwsworker.js': 'coverage',
+		//'resources/assets/js/pwsrender.js': 'coverage'
     },
 
 

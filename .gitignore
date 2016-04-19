@@ -5,3 +5,7 @@ Homestead.yaml
 Homestead.json
 .env
 tags
+nohup.out
+phpunit_dump.txt
+phpunit_results.xml
+

@@ -19,4 +19,5 @@ class UserTest extends TestCase
 			$guid = $user->generteGUID();
 			$this->assertEquals(36, strlen($guid) );
     }
+
 }

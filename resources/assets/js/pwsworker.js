@@ -54,8 +54,6 @@ PWSSchedule.worker =  function(id, name, projectPool) {
 			cullProjects(row);
 			rows.push( row );
 		}
-		//console.debug(id);
-		//console.debug(rows);
 		return rows;
 	};
 
@@ -81,7 +79,6 @@ PWSSchedule.worker =  function(id, name, projectPool) {
 		var lastDate = null;
 		var newRow = [];
 
-		//console.log('recs length '+recs.length);
 		for (var i = 0; i < recs.length; i++) { 
 
 			if ( typeof recs[i] === 'undefined' ) {

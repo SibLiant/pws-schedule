@@ -2,6 +2,7 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use Carbon\Carbon as Carbon;
 
 class Scheduler {
 
@@ -40,8 +41,8 @@ class Scheduler {
 		$json = json_decode($resp->getBody());
 		//!Kint::dump($json); die();
 		//$this->token = $json->token;
-		if ( isset( $json->token ) ) {
-			return $json->token;
+		if ( isset( $json->data->token ) ) {
+			return $json->data->token;
 		}
 		else {
 			!Kint::dump($json); die();
@@ -104,6 +105,20 @@ class Scheduler {
 }
 
 
+$targetDate = ( isset($_SERVER['QUERY_STRING']) ) ? $_SERVER['QUERY_STRING'] : '';
+
+if ( $targetDate ) {
+	$calStart =  Carbon::createFromFormat('Y-m-d', $targetDate)->toDateString();
+	$calEnd =  Carbon::createFromFormat('Y-m-d', $targetDate)->addDays(30)->toDateString();
+}
+else {
+
+	$calStart =  Carbon::now()->toDateString();
+	$calEnd =  Carbon::now()->addDays(30)->toDateString();
+}
+
+
+
 $testJson =<<<json
 {
 	"auth": {
@@ -111,8 +126,8 @@ $testJson =<<<json
 		"key": "asdfifeilsdfkjlkjsdf"
 	},
 	"calendarRange": {
-		"start": "2016-03-29",
-		"end": "2016-04-28"
+		"start": "{$calStart}",
+		"end": "{$calEnd}"
 
 	},
 	"scheduleRecords": {
@@ -369,7 +384,6 @@ $testJson =<<<json
 }
 json;
 
-$targetDate = ( isset($_SERVER['QUERY_STRING']) ) ? $_SERVER['QUERY_STRING'] : '';
 $sch = new Scheduler($targetDate);
 $sch->postScheduleData($testJson);
 $sch->forward();

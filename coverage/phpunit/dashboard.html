@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/PWSScheduler/app</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/var/www/PWSScheduler/app</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/Inspire.php.html#8">Inspire</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Exceptions/Handler.php.html#13">Handler</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/AuthController.php.html#11">AuthController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/PasswordController.php.html#8">PasswordController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#8">HomeController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#18">JWTAuthController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PWS_JSON_API_Controller.php.html#17">PWS_JSON_API_Controller</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#15">ReadonlyController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Middleware/Authenticate.php.html#8">Authenticate</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Middleware/RedirectIfAuthenticated.php.html#8">RedirectIfAuthenticated</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/JsonValidator.php.html#15">JsonValidator</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#15">PWS_JSON_Generator</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#8">Local_DB_RO_Repository</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTUtils.php.html#7">JWTUtils</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#7">User</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Providers/AppServiceProvider.php.html#7">AppServiceProvider</a></td><td class="text-right">75%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#15">PWS_JSON_Generator</a></td><td class="text-right">420</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#8">Local_DB_RO_Repository</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#18">JWTAuthController</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#15">ReadonlyController</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/JWTUtils.php.html#7">JWTUtils</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/PWS_JSON_API_Controller.php.html#17">PWS_JSON_API_Controller</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Middleware/Authenticate.php.html#8">Authenticate</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Lib/JsonValidator.php.html#15">JsonValidator</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Middleware/RedirectIfAuthenticated.php.html#8">RedirectIfAuthenticated</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Providers/AppServiceProvider.php.html#7">AppServiceProvider</a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="User.php.html#7">User</a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/Inspire.php.html#29"><abbr title="Inspire::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#165"><abbr title="PWS_JSON_Generator::writeRandomGeneratedJsonFile">writeRandomGeneratedJsonFile</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#39"><abbr title="PWS_JSON_Generator::getJsonScheduleData">getJsonScheduleData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#48"><abbr title="PWS_JSON_Generator::getLocalTestJson">getLocalTestJson</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#59"><abbr title="PWS_JSON_Generator::getJSON">getJSON</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#83"><abbr title="PWS_JSON_Generator::generateRandomScheduleRecords">generateRandomScheduleRecords</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#116"><abbr title="PWS_JSON_Generator::parseWorkerData">parseWorkerData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#129"><abbr title="PWS_JSON_Generator::generateDate">generateDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#139"><abbr title="PWS_JSON_Generator::generateRandomName">generateRandomName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#154"><abbr title="PWS_JSON_Generator::isValidJson">isValidJson</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#176"><abbr title="PWS_JSON_Generator::readRandomGeneratedJsonFile">readRandomGeneratedJsonFile</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Exceptions/Handler.php.html#35"><abbr title="Handler::report">report</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#186"><abbr title="PWS_JSON_Generator::getTestData">getTestData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#14"><abbr title="Local_DB_RO_Repository::getJSON">getJSON</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#48"><abbr title="Local_DB_RO_Repository::getTags">getTags</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#63"><abbr title="Local_DB_RO_Repository::getScheduleRecs">getScheduleRecs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#95"><abbr title="Local_DB_RO_Repository::indexScheduleRecsByScheduleId">indexScheduleRecsByScheduleId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#116"><abbr title="Local_DB_RO_Repository::mergeAssignedScheduleTags">mergeAssignedScheduleTags</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#135"><abbr title="Local_DB_RO_Repository::getExistingScheduleIdsFromSchedulesRecordSet">getExistingScheduleIdsFromSchedulesRecordSet</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#149"><abbr title="Local_DB_RO_Repository::getAssignedTags">getAssignedTags</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#166"><abbr title="Local_DB_RO_Repository::getWorkerRecs">getWorkerRecs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#26"><abbr title="PWS_JSON_Generator::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/JsonValidator.php.html#35"><abbr title="JsonValidator::isValid">isValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lib/JsonValidator.php.html#26"><abbr title="JsonValidator::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Middleware/RedirectIfAuthenticated.php.html#18"><abbr title="RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Exceptions/Handler.php.html#47"><abbr title="Handler::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/AuthController.php.html#38"><abbr title="AuthController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/AuthController.php.html#49"><abbr title="AuthController::validator">validator</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/AuthController.php.html#64"><abbr title="AuthController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/PasswordController.php.html#28"><abbr title="PasswordController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#15"><abbr title="HomeController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#25"><abbr title="HomeController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#21"><abbr title="JWTAuthController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#29"><abbr title="JWTAuthController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#37"><abbr title="JWTAuthController::authenticate">authenticate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#56"><abbr title="JWTAuthController::getAuthenticatedUser">getAuthenticatedUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#87"><abbr title="JWTAuthController::postJSON">postJSON</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#111"><abbr title="JWTAuthController::addScheduleRecords">addScheduleRecords</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PWS_JSON_API_Controller.php.html#21"><abbr title="PWS_JSON_API_Controller::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PWS_JSON_API_Controller.php.html#32"><abbr title="PWS_JSON_API_Controller::addScheduleElement">addScheduleElement</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#26"><abbr title="ReadonlyController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#40"><abbr title="ReadonlyController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#58"><abbr title="ReadonlyController::postedSchedule">postedSchedule</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Middleware/Authenticate.php.html#18"><abbr title="Authenticate::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JWTUtils.php.html#9"><abbr title="JWTUtils::getAuthenticatedUser">getAuthenticatedUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Providers/AppServiceProvider.php.html#24"><abbr title="AppServiceProvider::register">register</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="User.php.html#29"><abbr title="User::generteGUID">generteGUID</abbr></a></td><td class="text-right">66%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Http/Controllers/JWTUtils.php.html#9"><abbr title="JWTUtils::getAuthenticatedUser">getAuthenticatedUser</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#56"><abbr title="JWTAuthController::getAuthenticatedUser">getAuthenticatedUser</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#149"><abbr title="Local_DB_RO_Repository::getAssignedTags">getAssignedTags</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#135"><abbr title="Local_DB_RO_Repository::getExistingScheduleIdsFromSchedulesRecordSet">getExistingScheduleIdsFromSchedulesRecordSet</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#129"><abbr title="PWS_JSON_Generator::generateDate">generateDate</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#37"><abbr title="JWTAuthController::authenticate">authenticate</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Middleware/Authenticate.php.html#18"><abbr title="Authenticate::handle">handle</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#116"><abbr title="PWS_JSON_Generator::parseWorkerData">parseWorkerData</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Lib/JsonValidator.php.html#35"><abbr title="JsonValidator::isValid">isValid</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#26"><abbr title="PWS_JSON_Generator::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#83"><abbr title="PWS_JSON_Generator::generateRandomScheduleRecords">generateRandomScheduleRecords</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#58"><abbr title="ReadonlyController::postedSchedule">postedSchedule</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ReadonlyController.php.html#40"><abbr title="ReadonlyController::index">index</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#139"><abbr title="PWS_JSON_Generator::generateRandomName">generateRandomName</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Middleware/RedirectIfAuthenticated.php.html#18"><abbr title="RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#48"><abbr title="Local_DB_RO_Repository::getTags">getTags</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#95"><abbr title="Local_DB_RO_Repository::indexScheduleRecsByScheduleId">indexScheduleRecsByScheduleId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Repos/Local_DB_RO_Repository.php.html#116"><abbr title="Local_DB_RO_Repository::mergeAssignedScheduleTags">mergeAssignedScheduleTags</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/PWS_JSON_API_Controller.php.html#32"><abbr title="PWS_JSON_API_Controller::addScheduleElement">addScheduleElement</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/JWTAuthController.php.html#87"><abbr title="JWTAuthController::postJSON">postJSON</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Lib/PWS_JSON_Generator.php.html#186"><abbr title="PWS_JSON_Generator::getTestData">getTestData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Providers/AppServiceProvider.php.html#24"><abbr title="AppServiceProvider::register">register</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="User.php.html#29"><abbr title="User::generteGUID">generteGUID</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 2.2.4</a> using <a href="http://php.net/" target="_top">PHP 7.0.4-7+deb.sury.org~wily+2</a> and <a href="https://phpunit.de/">PHPUnit 4.8.24</a> at Fri Apr 8 17:43:08 UTC 2016.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([14,0,0,0,0,0,0,1,1,0,0,15], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([45,0,0,0,0,0,0,2,0,0,0,13], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[100,0,"<a href=\"ApiFullPost.php.html#7\">ApiFullPost<\/a>"],[100,10,"<a href=\"ApiScheduleElement.php.html#8\">ApiScheduleElement<\/a>"],[0,1,"<a href=\"Console\/Commands\/Inspire.php.html#8\">Inspire<\/a>"],[100,0,"<a href=\"Http\/Kernel.php.html#7\">Kernel<\/a>"],[100,0,"<a href=\"Customer.php.html#7\">Customer<\/a>"],[100,0,"<a href=\"Events\/Event.php.html#5\">Event<\/a>"],[0,2,"<a href=\"Exceptions\/Handler.php.html#13\">Handler<\/a>"],[0,3,"<a href=\"Http\/Controllers\/Auth\/AuthController.php.html#11\">AuthController<\/a>"],[0,1,"<a href=\"Http\/Controllers\/Auth\/PasswordController.php.html#8\">PasswordController<\/a>"],[100,0,"<a href=\"Http\/Controllers\/Controller.php.html#10\">Controller<\/a>"],[0,2,"<a href=\"Http\/Controllers\/HomeController.php.html#8\">HomeController<\/a>"],[0,13,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#18\">JWTAuthController<\/a>"],[0,3,"<a href=\"Http\/Controllers\/PWS_JSON_API_Controller.php.html#17\">PWS_JSON_API_Controller<\/a>"],[0,5,"<a href=\"Http\/Controllers\/ReadonlyController.php.html#15\">ReadonlyController<\/a>"],[0,3,"<a href=\"Http\/Middleware\/Authenticate.php.html#8\">Authenticate<\/a>"],[100,0,"<a href=\"Http\/Middleware\/EncryptCookies.php.html#7\">EncryptCookies<\/a>"],[0,2,"<a href=\"Http\/Middleware\/RedirectIfAuthenticated.php.html#8\">RedirectIfAuthenticated<\/a>"],[100,0,"<a href=\"Http\/Middleware\/VerifyCsrfToken.php.html#7\">VerifyCsrfToken<\/a>"],[100,0,"<a href=\"Http\/Requests\/Request.php.html#7\">Request<\/a>"],[100,0,"<a href=\"Jobs\/Job.php.html#7\">Job<\/a>"],[0,3,"<a href=\"Lib\/JsonValidator.php.html#15\">JsonValidator<\/a>"],[0,20,"<a href=\"Lib\/PWS_JSON_Generator.php.html#15\">PWS_JSON_Generator<\/a>"],[75,3,"<a href=\"Providers\/AppServiceProvider.php.html#7\">AppServiceProvider<\/a>"],[100,1,"<a href=\"Providers\/AuthServiceProvider.php.html#8\">AuthServiceProvider<\/a>"],[100,1,"<a href=\"Providers\/EventServiceProvider.php.html#8\">EventServiceProvider<\/a>"],[100,3,"<a href=\"Providers\/RouteServiceProvider.php.html#8\">RouteServiceProvider<\/a>"],[0,15,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#8\">Local_DB_RO_Repository<\/a>"],[100,1,"<a href=\"Repos\/PWS_DB_RO_Repository.php.html#3\">PWS_DB_RO_Repository<\/a>"],[66.666666666667,2,"<a href=\"User.php.html#7\">User<\/a>"],[100,0,"<a href=\"calendars.php.html#7\">calendars<\/a>"],[0,5,"<a href=\"Http\/Controllers\/JWTUtils.php.html#7\">JWTUtils<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"ApiScheduleElement.php.html#16\">ApiScheduleElement::findByScheduleId<\/a>"],[100,1,"<a href=\"ApiScheduleElement.php.html#30\">ApiScheduleElement::findAllByCalendarId<\/a>"],[100,1,"<a href=\"ApiScheduleElement.php.html#45\">ApiScheduleElement::findByWorkerId<\/a>"],[100,1,"<a href=\"ApiScheduleElement.php.html#63\">ApiScheduleElement::add<\/a>"],[100,1,"<a href=\"ApiScheduleElement.php.html#77\">ApiScheduleElement::getDistinctScheduleIds<\/a>"],[100,5,"<a href=\"ApiScheduleElement.php.html#90\">ApiScheduleElement::isValidScheduleJson<\/a>"],[0,1,"<a href=\"Console\/Commands\/Inspire.php.html#29\">Inspire::handle<\/a>"],[0,1,"<a href=\"Exceptions\/Handler.php.html#35\">Handler::report<\/a>"],[0,1,"<a href=\"Exceptions\/Handler.php.html#47\">Handler::render<\/a>"],[0,1,"<a href=\"Http\/Controllers\/Auth\/AuthController.php.html#38\">AuthController::__construct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/Auth\/AuthController.php.html#49\">AuthController::validator<\/a>"],[0,1,"<a href=\"Http\/Controllers\/Auth\/AuthController.php.html#64\">AuthController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/Auth\/PasswordController.php.html#28\">PasswordController::__construct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HomeController.php.html#15\">HomeController::__construct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HomeController.php.html#25\">HomeController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#21\">JWTAuthController::__construct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#29\">JWTAuthController::index<\/a>"],[0,3,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#37\">JWTAuthController::authenticate<\/a>"],[0,5,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#56\">JWTAuthController::getAuthenticatedUser<\/a>"],[0,2,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#87\">JWTAuthController::postJSON<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JWTAuthController.php.html#111\">JWTAuthController::addScheduleRecords<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PWS_JSON_API_Controller.php.html#21\">PWS_JSON_API_Controller::__construct<\/a>"],[0,2,"<a href=\"Http\/Controllers\/PWS_JSON_API_Controller.php.html#32\">PWS_JSON_API_Controller::addScheduleElement<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ReadonlyController.php.html#26\">ReadonlyController::__construct<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ReadonlyController.php.html#40\">ReadonlyController::index<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ReadonlyController.php.html#58\">ReadonlyController::postedSchedule<\/a>"],[0,3,"<a href=\"Http\/Middleware\/Authenticate.php.html#18\">Authenticate::handle<\/a>"],[0,2,"<a href=\"Http\/Middleware\/RedirectIfAuthenticated.php.html#18\">RedirectIfAuthenticated::handle<\/a>"],[0,1,"<a href=\"Lib\/JsonValidator.php.html#26\">JsonValidator::__construct<\/a>"],[0,2,"<a href=\"Lib\/JsonValidator.php.html#35\">JsonValidator::isValid<\/a>"],[0,2,"<a href=\"Lib\/PWS_JSON_Generator.php.html#26\">PWS_JSON_Generator::__construct<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#39\">PWS_JSON_Generator::getJsonScheduleData<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#48\">PWS_JSON_Generator::getLocalTestJson<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#59\">PWS_JSON_Generator::getJSON<\/a>"],[0,2,"<a href=\"Lib\/PWS_JSON_Generator.php.html#83\">PWS_JSON_Generator::generateRandomScheduleRecords<\/a>"],[0,3,"<a href=\"Lib\/PWS_JSON_Generator.php.html#116\">PWS_JSON_Generator::parseWorkerData<\/a>"],[0,3,"<a href=\"Lib\/PWS_JSON_Generator.php.html#129\">PWS_JSON_Generator::generateDate<\/a>"],[0,2,"<a href=\"Lib\/PWS_JSON_Generator.php.html#139\">PWS_JSON_Generator::generateRandomName<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#154\">PWS_JSON_Generator::isValidJson<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#165\">PWS_JSON_Generator::writeRandomGeneratedJsonFile<\/a>"],[0,1,"<a href=\"Lib\/PWS_JSON_Generator.php.html#176\">PWS_JSON_Generator::readRandomGeneratedJsonFile<\/a>"],[0,2,"<a href=\"Lib\/PWS_JSON_Generator.php.html#186\">PWS_JSON_Generator::getTestData<\/a>"],[100,1,"<a href=\"Providers\/AppServiceProvider.php.html#14\">AppServiceProvider::boot<\/a>"],[66.666666666667,2,"<a href=\"Providers\/AppServiceProvider.php.html#24\">AppServiceProvider::register<\/a>"],[100,1,"<a href=\"Providers\/AuthServiceProvider.php.html#25\">AuthServiceProvider::boot<\/a>"],[100,1,"<a href=\"Providers\/EventServiceProvider.php.html#27\">EventServiceProvider::boot<\/a>"],[100,1,"<a href=\"Providers\/RouteServiceProvider.php.html#25\">RouteServiceProvider::boot<\/a>"],[100,1,"<a href=\"Providers\/RouteServiceProvider.php.html#38\">RouteServiceProvider::map<\/a>"],[100,1,"<a href=\"Providers\/RouteServiceProvider.php.html#40\">RouteServiceProvider::anonymous function<\/a>"],[0,1,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#14\">Local_DB_RO_Repository::getJSON<\/a>"],[0,2,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#48\">Local_DB_RO_Repository::getTags<\/a>"],[0,1,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#63\">Local_DB_RO_Repository::getScheduleRecs<\/a>"],[0,2,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#95\">Local_DB_RO_Repository::indexScheduleRecsByScheduleId<\/a>"],[0,2,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#116\">Local_DB_RO_Repository::mergeAssignedScheduleTags<\/a>"],[0,3,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#135\">Local_DB_RO_Repository::getExistingScheduleIdsFromSchedulesRecordSet<\/a>"],[0,3,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#149\">Local_DB_RO_Repository::getAssignedTags<\/a>"],[0,1,"<a href=\"Repos\/Local_DB_RO_Repository.php.html#166\">Local_DB_RO_Repository::getWorkerRecs<\/a>"],[100,1,"<a href=\"Repos\/PWS_DB_RO_Repository.php.html#10\">PWS_DB_RO_Repository::getJSON<\/a>"],[66.666666666667,2,"<a href=\"User.php.html#29\">User::generteGUID<\/a>"],[0,5,"<a href=\"Http\/Controllers\/JWTUtils.php.html#9\">JWTUtils::getAuthenticatedUser<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

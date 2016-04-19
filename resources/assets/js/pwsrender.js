@@ -5,7 +5,7 @@ PWSSchedule.render = function( core ){
 	"use strict";
 
 
-	var projectSelected = null;
+	var projectSelected = {};
 	var hdrTarget = null;
 
 	var bldGridHeader = function(targetElement){
@@ -121,16 +121,6 @@ PWSSchedule.render = function( core ){
 			var momCurrentProj = moment( wRow[i].scheduled_date );
 			dDiff = momCurrentProj.diff( momPrevProj, 'days');
 
-			//if ( dDiff && dDiff > 29 ) {
-				//console.debug('worker: '+ worker_id + ' days: '+dDiff);
-				//console.debug( '---------------' );
-				//console.debug( '---current------------' );
-				//console.debug( wRow[i].scheduled_date +' '+ wRow[i].customer_name);
-				//console.debug( '---------------' );
-				//console.debug( '---prev------------' );
-				//console.debug( momPrevProj.format( core.config.pwsDateFormat ) );
-				//console.debug( '---------------' );
-			//}
 			if (  dDiff > 0 ) { renderPlaceHolder(worker_id, momPrevProj, dDiff);}
 			renderWorkerProj(worker_id, wRow[i]);
 			momPrevProj = moment( wRow[i].scheduled_date ).add( wRow[i].job_length_days, 'days' );
@@ -239,13 +229,12 @@ PWSSchedule.render = function( core ){
 	};
 
 	var setProjSelected = function(p){
-		projectSelected = p.data("scheduleRecord");
-		var days = projectSelected.job_length_days; 
-		for (var i = 0; i < days; i ++) {
-			var select =  '#schedule-id_'+projectSelected.schedule_id+'_dy_'+ Math.abs(i+1);
+		for (var i = 0; i < p.job_length_days; i ++) {
+			var select =  '#schedule-id_'+p.schedule_id+'_dy_'+ Math.abs(i+1);
 			$( select ).addClass('proj-selected');
 		}
-		return projectSelected;
+		projectSelected = p;
+		return p;
 	};
 
 	var updateSelectedProjectDisplay = function (){
@@ -299,6 +288,7 @@ PWSSchedule.render = function( core ){
 		$('.cnt-project').click(function(e){
 			// user can click on other elements in the project div
 			// make sure we catch it and get the appropriate id
+
 			var projEl;
 
 			if ( e.target.nodeName === "SPAN" ) { projEl = $(e.target).parent(); }
@@ -307,8 +297,8 @@ PWSSchedule.render = function( core ){
 			var projData = projEl.data("scheduleRecord");
 
 
-			setProjUnselected( projEl );
-			setProjSelected( projEl );
+			setProjUnselected( projData );
+			setProjSelected( projData );
 			updateSelectedProjectDisplay();
 			
 		});
@@ -330,12 +320,6 @@ PWSSchedule.render = function( core ){
 		if ( hasVerticalScrollbar ){
 			$('#hdr-row').append('<div class="accomodate-scrollbar">&nbsp</div>');
 		}
-
-
-		console.log( '------' );
-		console.log( document.referrer );
-		console.log( '------' );
-
 	};
 
 	return {

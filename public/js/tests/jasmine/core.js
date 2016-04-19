@@ -345,7 +345,7 @@ describe('PWSCore - ', function() {
 			expect(inRange).toEqual(true);
 
 			rec.scheduled_date = momDt.clone().add( range, 'days' ).format( dtForm );
-			inRange = wkr.isRecInCalendarRange(rec, core.config.momCalStart.format(dtForm).start, range);
+			inRange = wkr.isRecInCalendarRange(rec, core.config.momCalStart.format(dtForm), range);
 			expect(inRange).toEqual(true);
 
 			//test day after range
@@ -357,11 +357,12 @@ describe('PWSCore - ', function() {
 
 
 		it('takes projects array does a single pass and returns new array of non overlaping records', function() {
-			var recs = wkr.getRowRecords( wkr.projects, core.config.momCalStart.start, core.config.calRangeInt );
+			
+			var recs = wkr.getRowRecords( wkr.projects, core.config.momCalStart, core.config.calRangeInt );
 
 			//this should just fetch 2 records for now  - we'll verify by schedule id which should be unique
-			expect(recs[0]).toEqual( jasmine.objectContaining( {schedule_id: 215} ) );
-			expect(recs[1]).toEqual( jasmine.objectContaining( {schedule_id: 217} ) );
+			expect(recs[0]).toEqual( jasmine.objectContaining( {schedule_id: 201} ) );
+			expect(recs[1]).toEqual( jasmine.objectContaining( {schedule_id: 215} ) );
 			expect(recs[2]).toBeUndefined();
 		});
 
@@ -467,7 +468,7 @@ describe('PWSCore - ', function() {
 
 			it('renders a full worker row form wkr object', function() {
 				var wkr = new PWSSchedule.worker( 1, 'parker', core.scheduleRecordsByWorkerId[1] );
-				var rws = wkr.buildRows( core.config.calStart, core.config.calRangeInt );
+				var rws = wkr.buildRows( core.config.momCalStart, core.config.calRangeInt );
 				core.render.renderWorkerRow(1, rws[0]);
 				expect( $('#schedule-id_211_dy_1') ).toBeInDOM();
 				expect( $('#schedule-id_211_dy_2') ).toBeInDOM();
@@ -481,7 +482,7 @@ describe('PWSCore - ', function() {
 
 			it('renders a full second row from wkr object', function() {
 				var wkr = new PWSSchedule.worker( 1, 'parker', core.scheduleRecordsByWorkerId[1] );
-				var rws = wkr.buildRows( core.config.calStart, core.config.calRangeInt );
+				var rws = wkr.buildRows( core.config.momCalStart, core.config.calRangeInt );
 				core.render.renderWorkerRow(1, rws[1]);
 				expect( $('#schedule-id_216_dy_1') ).toBeInDOM();
 				expect( $('#schedule-id_216_dy_2') ).toBeInDOM();
@@ -508,7 +509,8 @@ describe('PWSCore - ', function() {
 
 			it('selects a project', function() {
 				var target = $('#schedule-id_199_dy_1');
-				core.render.setProjSelected( target );
+				var dt = target.data('scheduleRecord');
+				core.render.setProjSelected( dt );
 				expect( target ).toHaveClass('proj-selected');
 			});
 

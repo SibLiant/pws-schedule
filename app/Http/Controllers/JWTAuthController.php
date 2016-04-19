@@ -13,10 +13,13 @@ use Carbon\Carbon;
 use \Kint as Kint;
 use App\Lib\JsonValidator;
 use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\JWTUtils;
 
 
 class JWTAuthController extends Controller
 {
+
+	use \App\Http\Controllers\JWTUtils;
 
 	public function __construct()
 	{
@@ -49,54 +52,9 @@ class JWTAuthController extends Controller
 		}
 
 		// if no errors are encountered we can return a JWT
-		return response()->json(compact('token'));
+		$respData = ['data' => ['status' => 201, 'token'=>$token]];
+		return response()->json($respData, 201);
 	}
-
-
-	public function getAuthenticatedUser()
-	{
-		try {
-
-			if (! $user = JWTAuth::parseToken()->authenticate()) {
-				return response()->json(['user_not_found'], 404);
-			}
-
-		} catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-			return response()->json(['token_expired'], $e->getStatusCode());
-
-		} catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-			return response()->json(['token_invalid'], $e->getStatusCode());
-
-		} catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-			return response()->json(['token_absent'], $e->getStatusCode());
-
-		}
-
-		// the token is valid and we have found the user via the sub claim
-		return $user;
-	}
-
-
-	
-	/**
-	 *
-	 * @return date string
-	 */
-	//public function clientJSON(Request $request)
-	//{
-		//$token = JWTAuth::getToken();
-		//$user = $this->getAuthenticatedUser();
-		//$calendarJson = Input::get('calendarJson');
-
-		//if ( $calendarJson ) {
-			//$validator = new JsonValidator( $calendarJson );
-			//$validJson = $validator->isValid();
-			//return view('ro_page')->with('json_data', $validJson);
-		//}
-	//}
 
 	
 	/**
@@ -110,18 +68,15 @@ class JWTAuthController extends Controller
 
 		$json = Input::get('jsonPayload');
 
-		$validator = new JsonValidator( $json );
-
-		$validJson = $validator->isValid();
-
-		if ( ! $validJson ) return response()->json(['error' => 'not valid json'], 500); 
-
+		if ( ! JsonValidator::isValid($json) ) {
+			return response()->json(['response' => 'invalid json'], 500); 
+		}
+	
 		\DB::table('api_full_post')->insert([
-			'user_id' => 1,
-			'post_json' => $validJson,
+			'user_id' => $user->id,
+			'post_json' => $json,
 		]);
 
 		return response()->json(['response' => 'success'], 200); 
 	}
-
 }

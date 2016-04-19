@@ -24,6 +24,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+	
+	/**
+	 *
+	 */
+	public function tags()
+	{
+
+		return $this->hasMany('App\ApiTag');	
+
+	}
+
 
 
 	function generteGUID()

@@ -16,7 +16,7 @@ class JsonValidator
 {
 
 	private $json;
-	private $errors = [];
+	private $isValid = false;
 
 
 	/**
@@ -26,24 +26,24 @@ class JsonValidator
 	public function __construct($json)
 	{
 
-		$ob = json_decode($json);
-		if($ob === null) throw new \Exception( 'invalid json format' ); 
-
 		$this->json = $json;
-	}
 
-	public function isValid(){
-
-
-		$this->checkDateRanges();
-		$this->checkScheduleBlocks();
-
-		return $this->json;
+		$this->isValid = $this->isValid($this->json);
 
 	}
 
-	private function checkDateRanges(){ }
-	private function checkScheduleBlocks(){ }
+	static function isValid($json){
+
+		$ob = json_decode($json);
+
+		if($ob === null) return false;
+
+		return true;
+	}
+
+
+
+
 
 }
 
