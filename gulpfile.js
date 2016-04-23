@@ -13,7 +13,8 @@ require('laravel-elixir-livereload');
 
 elixir(function(mix) {
     //mix.sass('app.scss');
-    mix.less('app.less', 'public/css/app.css');
+    //mix.less('app.less', 'public/css/app.css');
+    mix.less('*.less', 'public/css/app.css');
 		//mix.scriptsIn('public/js/pws', 'public/js/pwsapp.js');
 		mix.scripts([
 				'pwsnamespace.js', 

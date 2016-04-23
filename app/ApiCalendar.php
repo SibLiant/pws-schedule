@@ -3,12 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kint;
 
 class ApiCalendar extends ApiModel
 {
-	public $timestamps = false;
+	//public $timestamps = false;
 
+	use SoftDeletes;
+
+	protected $fillable = ['id', 'calendar_json', 'user_id', 'created_at'];
+
+	protected $casts = [ 'calendar_json' => 'array' ];
+
+	public $jsonDefaults = [
+		'name' => 'my wonderful test calendar',
+		'navForward' => '',
+		'navBackwards' => '',
+		'navRootUrl' => '',
+		'calendarRangeDays' => '30',
+
+	];
 
 	public function workers()
 	{
@@ -106,4 +121,10 @@ class ApiCalendar extends ApiModel
 		return true;
 
 	}
+
+	//public function getCalendarJsonAttribute($value) {
+
+			//return json_decode($value);
+		
+	//}
 }

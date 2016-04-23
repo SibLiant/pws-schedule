@@ -3,10 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Kint;
+use App\ApiCalendar;
+use App\ApiCalendarWorkerJoin;
 
 class ApiTag extends ApiModel
 {
-	public $timestamps = false;
+	use SoftDeletes;
+
+	public $timestamps = true;
+
+	protected $guarded = ['id'];
+	
+	protected $casts = [ 'tag_json' => 'array' ];
+
+	public $jsonDefaults = [
+		'name' => 'Tag',
+		'background_color' => 'green',
+		'abbreviation' => 'ZZZZ',
+		'tool_tip' => 'ZZZZ'
+	];
 
 	public function user()
 	{
@@ -50,7 +67,9 @@ class ApiTag extends ApiModel
 		if ( ! $Tag ) return false;
 
 		if ( $Tag->user_id == $userId ) {
+
 			$Tag->delete();
+
 			return true;
 		}
 
@@ -100,9 +119,13 @@ class ApiTag extends ApiModel
 	{
 
 		$new = [];
+
 		foreach($collection as $k => $v){
+
 			$new[$k] = $v;
+
 	  	}
+
 		return $new;
 		
 	}

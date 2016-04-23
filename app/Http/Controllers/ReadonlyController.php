@@ -12,7 +12,7 @@ use App\Lib\PWS_JSON_Generator;
 use Illuminate\Support\Facades\Input;
 use App\Exceptions\Handler;
 use App\Calendar;
-use App\ApiScheduleElement;;
+use App\ApiScheduleElement;
 use Kint;
 use Carbon\Carbon;
 

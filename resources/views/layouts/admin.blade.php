@@ -17,7 +17,14 @@
 -->
 	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/darkly/bootstrap.min.css" rel="stylesheet">
 
+		<script src="/js/jquery-2.2.0.min.js"></script>
+		<script src="/js/moment.2.11.1.js"></script>
+		<script src="/js/underscore_1.8.3.js"></script>
+		<script src="/js/pwsapp.js"></script>
+
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+
+	<!-- <link href="css/app.css" rel="stylesheet"> -->
 
     <style>
         body {
@@ -42,14 +49,14 @@
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar">test</span>
+                    <span class="icon-bar">test2</span>
+                    <span class="icon-bar">test3</span>
                 </button>
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    PWS
+                    PWS Scheduler
                 </a>
             </div>
 

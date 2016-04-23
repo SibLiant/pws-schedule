@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
 
 		//user
 		DB::table('users')->insert([
-			'name' => str_random(10),
+			'name' => 'parker',
 			'email' => 'pws@gmail.com',
 			'password' => bcrypt('1234'),
 		]);
@@ -169,11 +169,11 @@ class DatabaseSeeder extends Seeder
 		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":5,"external_worker_id":5, "worker_name":"James"}']);
 
 		//api_calendars
-		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":1,"external_worker_id":1, "name":"Mark"}']);
-		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":2,"external_worker_id":2, "name":"Jason"}']);
-		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":3,"external_worker_id":3, "name":"Isacc"}']);
-		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":4,"external_worker_id":4, "name":"Wilson"}']);
-		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":5,"external_worker_id":5, "name":"James"}']);
+		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":1,"external_worker_id":1, "name":"hvhc"}']);
+		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":2,"external_worker_id":2, "name":"service"}']);
+		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":3,"external_worker_id":3, "name":"energy"}']);
+		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":4,"external_worker_id":4, "name":"windows"}']);
+		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":5,"external_worker_id":5, "name":"shutters"}']);
 
 		//api_calendar_worker_join
 		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 1]);

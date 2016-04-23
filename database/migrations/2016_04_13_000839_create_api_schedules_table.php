@@ -14,12 +14,14 @@ class CreateApiSchedulesTable extends Migration
     {
         Schema::create('api_schedules', function (Blueprint $table) {
             $table->increments('id');
-			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('calendar_id');
             $table->integer('user_id');
             $table->jsonb('json_data');
 			$table->integer('parent_id')->nullable();
 			$table->boolean('active')->default(true);
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
+			$table->softDeletes();
         });
     }
 

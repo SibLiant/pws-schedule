@@ -16,6 +16,9 @@ class CreateApiTagsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->jsonb('tag_json');
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
+			$table->softDeletes();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kint;
 use App\ApiCalendar;
 use App\ApiCalendarWorkerJoin;
@@ -10,7 +11,18 @@ use App\ApiCalendarWorkerJoin;
 class ApiWorker extends ApiModel
 {
 
-	public $timestamps = false;
+	use SoftDeletes;
+
+	public $timestamps = true;
+
+	protected $guarded = ['id', 'created_at', 'updated_at'];
+	
+	protected $casts = [ 'worker_json' => 'array' ];
+
+	public $jsonDefaults = [
+		'worker_name' => '',
+		'external_worker_id' => ''
+	];
 
 	public function calendars()
 	{

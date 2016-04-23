@@ -16,7 +16,9 @@ class CreateApiCalendarsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->jsonb('calendar_json');
-			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
+			$table->softDeletes();
         });
     }
 

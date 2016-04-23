@@ -10,9 +10,6 @@ html,
 button,
 input,
 select,
-textarea {
-  color: #222;
-}
 html {
   font-size: 1em;
   line-height: 1.4;
@@ -259,7 +256,7 @@ textarea {
   position: fixed;
   z-index: 10;
   width: 100%;
-  background-color: #13293d;
+  background-color: #375a7f;
 }
 /*#cnt-calendar-header {overflow-x: scroll; height: 100%; white-space: nowrap;}*/
 /*#cnt-calendar-header div { */
@@ -279,17 +276,17 @@ textarea {
   width: 200px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
   vertical-align: middle;
   position: relative;
   z-index: 2;
-  background-color: white;
+  background-color: #222222;
 }
 .sch-day-cell {
   width: 175px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
 }
 .proj-border-color {
   border-color: bule;
@@ -302,7 +299,7 @@ div#cnt-calendar-header {
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll;
-  border: 1px solid #006494;
+  border: 1px solid #464545;
 }
 div#cnt-calendar-header div.hdr-row {
   display: table-row;
@@ -311,18 +308,18 @@ div#cnt-calendar-header div.hdr-row div {
   width: 175px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
   text-align: center;
 }
 div#cnt-calendar-header div.hdr-row div#name-placeholder {
   width: 200px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
   vertical-align: middle;
   position: relative;
   z-index: 2;
-  background-color: white;
+  background-color: #222222;
 }
 #cnt-scroll-header {
   overflow-x: hidden;
@@ -333,7 +330,7 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
 }
 .accomodate-scrollbar {
   width: 17px;
-  background-color: #006494;
+  background-color: #222222;
 }
 #cnt-main-grid {
   position: relative;
@@ -355,19 +352,19 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
   width: 200px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
   vertical-align: middle;
   position: relative;
   z-index: 2;
-  background-color: white;
-  background-color: #006494;
+  background-color: #222222;
+  background-color: #375a7f;
   color: white;
 }
 #calendar-workers-scrollable .worker-day {
   width: 175px;
   padding: 5px;
   display: table-cell;
-  border: 1px solid #1b98e0;
+  border: 1px solid #464545;
 }
 #calendar-workers-scrollable .worker-day .project {
   border: 1px solid orange;
@@ -375,7 +372,7 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
   margin-bottom: 5px;
 }
 body {
-  background-color: #13293d;
+  background-color: #222222;
 }
 .cnt-project {
   padding: 5px;
@@ -386,30 +383,30 @@ body {
 }
 .cnt-hdr-date {
   color: white;
-  background-color: #006494;
+  background-color: #222222;
 }
 .proj-single {
-  border: 3px solid #006494;
+  border: 3px solid #f39c12;
   border-radius: 10px;
 }
 .proj-begin {
   border-style: solid;
   border-width: 3px;
-  border-top-color: #006494;
-  border-bottom-color: #006494;
-  border-left-color: #006494;
+  border-top-color: #f39c12;
+  border-bottom-color: #f39c12;
+  border-left-color: #f39c12;
   border-right-color: transparent;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 .place-holder {
-  border: 3px solid #006494;
+  border: 3px solid #f39c12;
   border-radius: 10px;
   border-color: orange;
   visibility: hidden;
 }
 #proj-ctrl {
-  border: 3px solid #006494;
+  border: 3px solid #f39c12;
   border-radius: 10px;
   background-color: #00FFFF !important;
   padding: 5px;
@@ -441,7 +438,7 @@ ul#selected-project {
 }
 ul#selected-project li:first-child {
   background-color: #00FFFF !important;
-  border-color: #006494;
+  border-color: #f39c12;
   border-width: 3px;
   width: 400px;
   position: relative;
@@ -482,18 +479,18 @@ ul#selected-project li {
 .proj-mid {
   border-style: solid;
   border-width: 3px;
-  border-top-color: #006494;
-  border-bottom-color: #006494;
+  border-top-color: #f39c12;
+  border-bottom-color: #f39c12;
   border-left-color: transparent;
   border-right-color: transparent;
 }
 .proj-end {
   border-style: solid;
   border-width: 3px;
-  border-top-color: #006494;
-  border-bottom-color: #006494;
+  border-top-color: #f39c12;
+  border-bottom-color: #f39c12;
   border-left-color: transparent;
-  border-right-color: #006494;
+  border-right-color: #f39c12;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -515,20 +512,11 @@ ul#selected-project li {
 /*@pal-blue-bright: rgb(27,152,224);*/
 /*@pal-blue-white: rgb(232,241,242);*/
 /* button style */
-.btn {
-  background: #1b98e0;
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 14px;
-  padding: 5px 10px 5px 10px;
-  border: solid #247ba0 2px;
-  text-decoration: none;
-}
-.btn:hover {
-  background: #3cb0fd;
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
+
+/* manage related css */
+table th:last-child,
+td:last-child {
+  text-align: right;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -156,8 +156,9 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-				App\Providers\RouteServiceProvider::class,
-				Collective\Html\HtmlServiceProvider::class,
+		App\Providers\RouteServiceProvider::class,
+
+		Collective\Html\HtmlServiceProvider::class,
 
 		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
@@ -207,8 +208,9 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-		'Form' 			=> Collective\Html\HtmlServiceProvider::class,
-		'Html' 			=> Collective\Html\HtmlFacade::class,
+		'Form' => Collective\Html\FormFacade::class,
+		'ApiForm' => App\Lib\PwsApiFormBuilder::class,
+		'Html' => Collective\Html\HtmlFacade::class,
 
 		'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
 		'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',

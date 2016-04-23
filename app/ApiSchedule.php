@@ -1,13 +1,27 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use \Kint;
 use Carbon\Carbon;
+use \DB;
 
 class ApiSchedule extends ApiModel
 {
 	
-	public $timestamps = false;
+	use SoftDeletes;
+
+	public $timestamps = true;
+
+	protected $guarded = ['id', 'created_at', 'updated_at'];
+	
+	//protected $casts = [ 'json_data' => 'array' ];
+
+	public $jsonDefaults = [
+		'job_length_days' => '',
+		'scheduled_date' => ''
+	];
+
 	
 	/**
 	 *
@@ -42,9 +56,9 @@ class ApiSchedule extends ApiModel
 		
 		if ( ! is_int($calendarId) || ! is_int($workerId) ) return false;
 
-		$sql = "select * from api_schedules where json_data->'worker_id' = '{$workerId}' and calendar_id = {$calendarId};";
-
-		return \DB::select( \DB::raw($sql) );
+		return DB::table('api_schedules')
+			->whereRaw("json_data->'worker_id' = '{$workerId}' and calendar_id = {$calendarId}")
+			->get();
 	}
 
 	/**
@@ -128,9 +142,13 @@ class ApiSchedule extends ApiModel
 	{
 
 
-		$sql=" select * from api_schedules where calendar_id = ".$calendarId." and  to_date( json_data->>'scheduled_date', 'YYYY-MM-DD' ) BETWEEN '".$start->toDateString()."' AND '".$end->toDateString()."'";
+		//$sql=" select * from api_schedules where calendar_id = ".$calendarId." and  to_date( json_data->>'scheduled_date', 'YYYY-MM-DD' ) BETWEEN '".$start->toDateString()."' AND '".$end->toDateString()."'";
 
-		return \DB::select( $sql );
+		return DB::table('api_schedules')
+			->whereRaw("calendar_id = {$calendarId} and  to_date( json_data->>'scheduled_date', 'YYYY-MM-DD' ) BETWEEN '{$start->toDateString()}' AND '{$end->toDateString()}'")
+			->get();
+
+		//return \DB::select( $sql );
 
 	}
 

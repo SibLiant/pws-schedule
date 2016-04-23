@@ -37,6 +37,30 @@ Route::group(['middleware' => ['web']], function () {
     //Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@schedule');
     Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@calendar');
 
+
+
+
+    Route::get('/manage', 'ManageController@index');
+
+    Route::get('manage/calendars', ['as' => 'manage.calendar.index', 'uses' =>'ManageController@calendars']);
+	Route::match(['get', 'post'], 'manage/calendars/add', ['as' => 'manage.calendar.add', 'uses' => 'ManageController@calendarsAdd']);
+	Route::match(['get', 'post'], 'manage/calendars/edit/{calendarId}', ['as' => 'manage.calendar.edit', 'uses' => 'ManageController@calendarsEdit']);
+    Route::get('manage/calendars/remove/{calendarId}', ['as' => 'manage.calendar.remove', 'uses' =>'ManageController@calendarsRemove']);
+
+
+	
+    Route::get('manage/workers', ['as' => 'manage.worker.index', 'uses' => 'ManageController@workers']);
+	Route::match(['get', 'post'], 'manage/workers/add', ['as' => 'manage.worker.add', 'uses' => 'ManageController@workersAdd']);
+	Route::match(['get', 'post'], 'manage/workers/edit/{workerId}', ['as' => 'manage.worker.edit', 'uses' => 'ManageController@workersEdit']);
+    Route::get('manage/workers/remove/{workerId}', ['as' => 'manage.worker.remove', 'uses' =>'ManageController@workersRemove']);
+
+
+    Route::get('manage/tags', ['as' => 'manage.tag.index','uses'=>'ManageController@tags']);
+	Route::match(['get', 'post'], 'manage/tags/add', ['as' => 'manage.tag.add', 'uses' => 'ManageController@tagsAdd']);
+	Route::match(['get', 'post'], 'manage/tags/edit/{tagId}', ['as' => 'manage.tag.edit', 'uses' => 'ManageController@tagsEdit']);
+    Route::get('manage/tags/remove/{tagId}', ['as' => 'manage.tag.remove', 'uses' =>'ManageController@tagsRemove']);
+
+
 });
 
 
@@ -77,9 +101,3 @@ Route::group(['prefix' => 'api'], function(){
 
 });
 
-
-
-
-
-//Route::get('/api/clientJSON', [ 'before' => 'jwt-auth', function () {
-   //}]);

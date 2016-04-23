@@ -213,6 +213,7 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 		$data['workerRecords'] = $this->getApiWorkerRecs( $calendarId );
 
 		$data['scheduleRecords'] = $this->getApiScheduleRecs($calendarId, $start, $end);
+		//ddd($data['scheduleRecords']);
 
 		$data['tags'] = $this->getApiTags($calendarId);
 
@@ -228,9 +229,16 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 	{
 
 
-		$r = ApiSchedule::getRange($calendarId, $start, $end);
+		$recs = ApiSchedule::getRange($calendarId, $start, $end);
 
-		return ApiSchedule::jsonFieldsToArray($r, 'json_data');
+		$n = [];
+		foreach($recs as $r){ $n[] = $r->json_data;  }
+
+		$t = implode(',', $n);
+
+		$jsonArr =  "[".$t."]";
+
+		return json_decode($jsonArr);
 
 	}
 
@@ -243,7 +251,15 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 		
 		$workers = ApiCalendar::find($calendarId)->workers()->get();
 
-		return ApiWorker::jsonFieldsToArray($workers, 'worker_json');
+		$n = [];
+
+		foreach($workers as $c)   {
+
+			$n[$c->id] = $c->worker_json;
+
+		}
+
+		return $n;
 
 	}
 
@@ -260,7 +276,7 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 
 		$fTags = [];
 		
-		foreach($rawTags as  $k => $v) $fTags[$v['id']] = json_decode($v['tag_json']); 
+		foreach($rawTags as  $k => $v) $fTags[$v['id']] = $v['tag_json']; 
 
 		return $fTags;
 

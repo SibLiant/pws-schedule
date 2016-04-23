@@ -23,22 +23,5 @@ class ApiModel extends Model
 	}
 
 
-	
-	/**
-	 *
-	 */
-	public static function jsonFieldsToArray($collection, $field)
-	{
-		$n = [];
-
-		foreach($collection as $c)   $n[] = $c->$field;
-
-		$t = implode(',',$n);
-
-		$jsonArr =  "[".$t."]";
-		
-		return json_decode($jsonArr);
-		
-	}
 }
 

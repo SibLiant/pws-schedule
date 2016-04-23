@@ -9,9 +9,6 @@ html,
 button,
 input,
 select,
-textarea {
-    color: #222;
-}
 
 html {
     font-size: 1em;
@@ -311,7 +308,7 @@ textarea {
 	position: fixed; 
 	z-index: 10; 
 	width: 100%;
-	background-color: @pal-bg-color;
+	background-color: @bs-blue-base;
 }
 
 /*#cnt-calendar-header {overflow-x: scroll; height: 100%; white-space: nowrap;}*/
@@ -325,12 +322,12 @@ textarea {
 
 
 .sch-table {display: table; table-layout: fixed; width: 100%; overflow-x: scroll;}
-.sch-name-cell { width: 200px; padding: 5px;  display: table-cell;border: 1px solid @pal-blue-bright; vertical-align: middle; position: relative;  z-index: 2; background-color: white;}
-.sch-day-cell { width: 175px; padding: 5px;  display: table-cell; border: 1px solid @pal-blue-bright;}
+.sch-name-cell { width: 200px; padding: 5px;  display: table-cell;border: 1px solid @bs-grey; vertical-align: middle; position: relative;  z-index: 2; background-color: @bs-bg;}
+.sch-day-cell { width: 175px; padding: 5px;  display: table-cell; border: 1px solid @bs-grey;}
 .proj-border-color {border-color: bule;}
 .proj-border-width {border-width: 2px;}
 
-div#cnt-calendar-header {.sch-table; border: 1px solid @pal-blue-dark;}
+div#cnt-calendar-header {.sch-table; border: 1px solid @bs-grey;}
 div#cnt-calendar-header div.hdr-row {display: table-row; }
 div#cnt-calendar-header div.hdr-row div { .sch-day-cell; text-align: center; }
 div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
@@ -339,7 +336,7 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 
 #cnt-scroll-header { overflow-x: hidden; }
 #cnt-worker-grids { overflow-x: scroll; height: 1200px; }
-.accomodate-scrollbar {width: 17px; background-color:@pal-blue-dark;}
+.accomodate-scrollbar {width: 17px; background-color:@bs-bg;}
 
 
 
@@ -348,11 +345,11 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 
 #calendar-workers-scrollable { padding-top: 120px; .sch-table; border: 1px solid black; }
 #calendar-workers-scrollable .worker-row { display: table-row; }
-#calendar-workers-scrollable .worker-name { .sch-name-cell; background-color: @pal-blue-dark; color: white;}
+#calendar-workers-scrollable .worker-name { .sch-name-cell; background-color: @bs-blue-base; color: white;}
 #calendar-workers-scrollable .worker-day { .sch-day-cell; }
 #calendar-workers-scrollable .worker-day .project {   border: 1px solid orange; padding: 5px; margin-bottom: 5px;}
 
-@proj-border-color: @pal-blue-dark;
+@proj-border-color: @bs-yellow;
 @proj-border-width: 3px;
 @proj-border-radius: 10px;
 @proj-selected-bgcolor: #00FFFF	 !important;
@@ -363,9 +360,21 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 @pal-blue-bright: rgb(27,152,224);
 @pal-blue-white: rgb(232,241,242);
 
-body { background-color: @pal-bg-color; }
+
+@bs-bg: #222222;
+@bs-blue-base: #375a7f; 
+@bs-blue-light: #3498db;
+@bs-green: #00bc8c;
+@bs-green-dark: #007053;
+@bs-green-light: #00dba3;
+@bs-yellow: #f39c12;
+@bs-red: #e74c3c;
+@bs-grey: #464545;
+
+
+body { background-color: @bs-bg; }
 .cnt-project {  padding: 5px; margin-bottom: 10px; background-color: @pal-blue-white; overflow:hidden; white-space:nowrap; }
-.cnt-hdr-date { color: white; background-color: @pal-blue-dark;}
+.cnt-hdr-date { color: white; background-color: @bs-bg;}
 .proj-single {  border: @proj-border-width solid @proj-border-color; border-radius: @proj-border-radius;}
 .proj-begin { 
 	border-style: solid;	
@@ -514,25 +523,9 @@ ul#selected-project li {
 /*@pal-blue-white: rgb(232,241,242);*/
 
 /* button style */
-.btn {
-  background: @pal-blue-bright;
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 14px;
-  padding: 5px 10px 5px 10px;
-  border: solid @pal-blue-green 2px;
-  text-decoration: none;
-}
 
-.btn:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
-}
+
+
+
 
 
