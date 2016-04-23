@@ -184,9 +184,8 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 	/**
 	 *
 	 */
-	public function build($calendarId, $start = null, $end = null)
+	public function build( int $calendarId, $start = null, $end = null)
 	{
-
 
 		//get our dates into carbon formats for easy and secure use
 		if ( ! $start ) $start = new Carbon();
@@ -206,9 +205,10 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 
 		//build our baisc calendar settings
 		//todo: a helper here that ensures defaults and validity
+
 		$data['calendarRange'] = [ "start" => $start->toDateString(), "end" => $end->toDateString() ];
 
-		$data['settings'] = [ 'navForward' => '30', 'navBackward' => '30', 'navRootUrl' => '' ];
+		$data['settings'] = array_merge( $this->getApiCalendar($calendarId),   [ 'navForward' => '30', 'navBackward' => '30', 'navRootUrl' => '' ]);
 
 		$data['workerRecords'] = $this->getApiWorkerRecs( $calendarId );
 
@@ -280,6 +280,18 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 
 		return $fTags;
 
+	}
+
+	
+	/**
+	 *
+	 */
+	public function getApiCalendar($calendarId)
+	{
+		$cal = ApiCalendar::find($calendarId);
+
+		return $cal->calendar_json;
+		
 	}
 
 

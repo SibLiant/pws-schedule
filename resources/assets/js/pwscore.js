@@ -10,7 +10,8 @@ PWSSchedule.core = function(options){
 		"headerDateFormat": 'ddd MMM D',
 		"navBackward": options.settings.navBackward,
 		"navForward": options.settings.navForward,
-		"navRootUrl": options.settings.navRootUrl
+		"navRootUrl": options.settings.navRootUrl,
+		"calendarName": options.settings.name
 	};
 
 	config.calRangeInt = config.momCalEnd.diff( config.momCalStart, "days" );

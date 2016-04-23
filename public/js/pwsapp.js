@@ -38,7 +38,8 @@ PWSSchedule.core = function(options){
 		"headerDateFormat": 'ddd MMM D',
 		"navBackward": options.settings.navBackward,
 		"navForward": options.settings.navForward,
-		"navRootUrl": options.settings.navRootUrl
+		"navRootUrl": options.settings.navRootUrl,
+		"calendarName": options.settings.name
 	};
 
 	config.calRangeInt = config.momCalEnd.diff( config.momCalStart, "days" );
@@ -95,9 +96,18 @@ PWSSchedule.render = function( core ){
 		var i;						
 
 		for(i=0; i < core.config.calRangeInt; i++){
-			hdrdivs.push('<div class="cnt-hdr-date">'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.headerDateFormat)+' </div>');
+			var dy = core.config.momCalStart.clone().add(i, 'days');
+			var cls = ( isWeekend(dy) ) ? 'cnt-hdr-date weekend' :  'cnt-hdr-date';
+			hdrdivs.push('<div class="'+cls+'">'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.headerDateFormat)+' </div>');
 		}
 		hdrTarget.append(hdrdivs);
+		setCalendarName();
+	};
+
+	var isWeekend = function(mom){
+		
+		return (  mom.weekday() === 0 || mom.weekday() === 6 ) ? true : false;
+
 	};
 
 	var initScheduleRecords = function(){
@@ -267,6 +277,13 @@ PWSSchedule.render = function( core ){
 		});
 	};
 
+	var setCalendarName = function(){
+
+		$('#calendar-name').html(core.config.calendarName);
+
+
+	};
+
 	var buildWorkerDiv = function(worker_id, worker_name, targetElement){
 		//var jqObjTarget = ( targetElement instanceof jQuery ) ? targetElement : $( targetElement );
 		targetElement = $( targetElement );
@@ -284,7 +301,10 @@ PWSSchedule.render = function( core ){
 		var daysDivs = [];
 		clearWorkerDayDivs( worker_id );
 		for(var i = 0; i < core.config.calRangeInt; i++){
-			daysDivs.push('<div class="proj-droppable worker-day" id="worker-id_'+worker_id+'_day_'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.pwsDateFormat)+'"> </div>');
+
+			var dy = core.config.momCalStart.clone().add(i, 'days');
+			var cls = ( isWeekend(dy) ) ? 'weekend' :  '';
+			daysDivs.push('<div class="proj-droppable worker-day '+cls+'" id="worker-id_'+worker_id+'_day_'+ core.config.momCalStart.clone().add(i, 'days').format(core.config.pwsDateFormat)+'"> </div>');
 		}
 		$('#worker-row_'+worker_id).append(daysDivs);
 	};

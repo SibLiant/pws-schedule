@@ -4,7 +4,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-html, body {padding: 0px; margin: 0px;}
+html, body {padding: 0px; margin: 0px; overflow:hidden;}
 html,
 button,
 input,
@@ -311,6 +311,7 @@ textarea {
 	background-color: @bs-blue-base;
 }
 
+
 /*#cnt-calendar-header {overflow-x: scroll; height: 100%; white-space: nowrap;}*/
 /*#cnt-calendar-header div { */
 	/*border: 1px solid red; */
@@ -328,22 +329,17 @@ textarea {
 .proj-border-width {border-width: 2px;}
 
 div#cnt-calendar-header {.sch-table; border: 1px solid @bs-grey;}
-div#cnt-calendar-header div.hdr-row {display: table-row; }
+div#cnt-calendar-header div.hdr-row {display: table-row; height: 20px}
 div#cnt-calendar-header div.hdr-row div { .sch-day-cell; text-align: center; }
 div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 
 
 
 #cnt-scroll-header { overflow-x: hidden; }
-#cnt-worker-grids { overflow-x: scroll; height: 1200px; }
+#cnt-worker-grids { overflow-x: scroll; height: 97vh; }
 .accomodate-scrollbar {width: 17px; background-color:@bs-bg;}
 
-
-
-
-#cnt-main-grid {position: relative; top: 100px; border: 1px dotted yellow;}
-
-#calendar-workers-scrollable { padding-top: 120px; .sch-table; border: 1px solid black; }
+#calendar-workers-scrollable { padding-top: 130px; .sch-table; border: 1px solid black; }
 #calendar-workers-scrollable .worker-row { display: table-row; }
 #calendar-workers-scrollable .worker-name { .sch-name-cell; background-color: @bs-blue-base; color: white;}
 #calendar-workers-scrollable .worker-day { .sch-day-cell; }
@@ -352,7 +348,7 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 @proj-border-color: @bs-yellow;
 @proj-border-width: 3px;
 @proj-border-radius: 10px;
-@proj-selected-bgcolor: #00FFFF	 !important;
+@proj-selected-bgcolor: white	 !important;
 
 @pal-bg-color: rgb(19,41,61);
 @pal-blue-green: rgb(36,123,160);
@@ -370,10 +366,15 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 @bs-yellow: #f39c12;
 @bs-red: #e74c3c;
 @bs-grey: #464545;
+@bs-bg-weekend:  lighten(spin(@bs-bg, 5), 2%);
+
+.weekend {
+	background-color: @bs-bg-weekend !important;
+}
 
 
 body { background-color: @bs-bg; }
-.cnt-project {  padding: 5px; margin-bottom: 10px; background-color: @pal-blue-white; overflow:hidden; white-space:nowrap; }
+.cnt-project {  padding: 5px; margin-bottom: 10px; background-color: @pal-blue-white; overflow:hidden; white-space:nowrap; color: black;}
 .cnt-hdr-date { color: white; background-color: @bs-bg;}
 .proj-single {  border: @proj-border-width solid @proj-border-color; border-radius: @proj-border-radius;}
 .proj-begin { 
@@ -407,8 +408,12 @@ span.tag {
 
 #cnt-ctrl {
 	margin-bottom: 10px; 
-	margin-top: 20px;
-	height: 40px; 
+	margin-top: 5px;
+	height: 60px; 
+}
+
+.selected-col-cnt {
+	height: 40px;
 }
 
 
@@ -417,21 +422,23 @@ span.tag {
 	line-height: 30px;
 
 }
+
 ul#selected-project {
-	/*position: relative;*/
-	/*top: -20px;*/
 	border: 1xp solid @pal-blue-dark;
-	font: "Courier";
 	border-radius:@proj-border-radius;
+	margin-left:5px;
+	white-space: nowrap;
+	
 }
 
 ul#selected-project li:first-child {
 	background-color: @proj-selected-bgcolor;
 	border-color: @proj-border-color;
 	border-width: @proj-border-width;
-	width: 400px;
+	width: 200px;
 	position: relative;
 	left: -40px;
+	color: black;
 
 
 }
@@ -513,7 +520,7 @@ ul#selected-project li {
 
 .proj-drop-hover { background-color: yellow; }
 
-.proj-selected { background-color: @proj-selected-bgcolor;}
+.proj-selected { background-color: @bs-blue-light;}
 
 
 /*@pal-bg-color: rgb(19,41,61);*/
@@ -525,7 +532,12 @@ ul#selected-project li {
 /* button style */
 
 
-
-
-
-
+#calendar-name {
+	text-align:center;
+	position:relative;
+	top: -10px;
+}
+#hdr-cal-name-col {
+	overflow:hidden;
+	white-space:nowrap;
+}

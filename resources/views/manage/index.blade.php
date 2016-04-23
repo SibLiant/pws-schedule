@@ -11,18 +11,14 @@
 
 
 					<div class="list-group">
-						<a href="/manage/calendars" class="list-group-item active"> Calendars </a>
+						<a href="/RO/calendar/1" class="list-group-item"> RO Calendar 1 </a>
+						<a href="/manage/calendars" class="list-group-item "> Calendars </a>
 						<a href="/manage/workers" class="list-group-item">Workers</a>
 						<a href="/manage/tags" class="list-group-item">Tags</a>
 					</div>
 
 
                 </div>
-
-
-
-
-
 
             </div>
         </div>

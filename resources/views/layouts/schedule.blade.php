@@ -2,12 +2,9 @@
 <html>
 <head>
 		<title>PWS Schedule</title>
-
-
-
 		<!-- Styles -->
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-		{{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+
+		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/darkly/bootstrap.min.css" rel="stylesheet">
 
 		<style>
 			body {
@@ -21,48 +18,62 @@
 
 
 		<link rel="stylesheet" type="text/css" href="/css/app.css"> 
-<!--
-		<link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
--->
-
 
 		<script src="/js/jquery-2.2.0.min.js"></script>
 		<script src="/js/moment.2.11.1.js"></script>
 		<script src="/js/underscore_1.8.3.js"></script>
 		<script src="/js/pwsapp.js"></script>
 
-
-
-<!--
-		<script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-  		<script src="http://chaijs.com/chai.js"></script>
-
--->
 </head>
 
 <body>
 
-@if (Session::has('flash_notification.message'))
-    <div class="alert alert-{{ Session::get('flash_notification.level') }}">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        {{ Session::get('flash_notification.message') }}
-    </div>
-@endif
 
 <!-- #############   fixed header   ###################### -->	
 <div id="fixed-header">
 	<div id="cnt-ctrl">
 
-	<ul id="selected-project">
-	</ul>
+<div class="col-md-8 selected-col-cnt" id="hdr-proj-col">
+			<ul id="selected-project">
+			</ul>
+			<ul class="project-controls list-inline">
+				<li> <a href="#" class="btn btn-warning btn-xs">test 1</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
+			</ul>
+		</div>
+
+<div class="col-md-3" id="hdr-cal-name-col"> <h3 id="calendar-name">This is my long calendar name.  How do you like it</h3>  </div>
+<div class="col-md-1" id="hdr-manage-menu-col">
+
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/manage') }}"><i class="fa fa-btn fa-asterisk"></i>Manage</a></li>
+                            </ul>
+                        </li>
+                </ul>
+</div>
+
+
+
+
+	
 </div>
 
 <!-- #############   calendar header   ###################### -->	
 	<div id="cnt-scroll-header">
-							<div id="cnt-calendar-header">
-							<div class="hdr-row" id="hdr-row">
-							</div> <!-- cnt-calendar-header -->	
-							</div>
+		<div id="cnt-calendar-header">
+			<div class="hdr-row" id="hdr-row"> </div> <!-- cnt-calendar-header -->	
+		</div>
 	</div>
 </div>
 <!-- #############   end fixed header   ###################### -->	
@@ -97,9 +108,8 @@ project
 
 
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<script>//mocha.setup('bdd')</script>
-<script>//mocha.run();</script>
 </body>
 </html>
 

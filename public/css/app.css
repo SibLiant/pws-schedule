@@ -5,6 +5,7 @@ html,
 body {
   padding: 0px;
   margin: 0px;
+  overflow: hidden;
 }
 html,
 button,
@@ -303,6 +304,7 @@ div#cnt-calendar-header {
 }
 div#cnt-calendar-header div.hdr-row {
   display: table-row;
+  height: 20px;
 }
 div#cnt-calendar-header div.hdr-row div {
   width: 175px;
@@ -326,19 +328,14 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
 }
 #cnt-worker-grids {
   overflow-x: scroll;
-  height: 1200px;
+  height: 97vh;
 }
 .accomodate-scrollbar {
   width: 17px;
   background-color: #222222;
 }
-#cnt-main-grid {
-  position: relative;
-  top: 100px;
-  border: 1px dotted yellow;
-}
 #calendar-workers-scrollable {
-  padding-top: 120px;
+  padding-top: 130px;
   display: table;
   table-layout: fixed;
   width: 100%;
@@ -371,6 +368,9 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
   padding: 5px;
   margin-bottom: 5px;
 }
+.weekend {
+  background-color: #272727 !important;
+}
 body {
   background-color: #222222;
 }
@@ -380,6 +380,7 @@ body {
   background-color: #e8f1f2;
   overflow: hidden;
   white-space: nowrap;
+  color: black;
 }
 .cnt-hdr-date {
   color: white;
@@ -408,12 +409,13 @@ body {
 #proj-ctrl {
   border: 3px solid #f39c12;
   border-radius: 10px;
-  background-color: #00FFFF !important;
+  background-color: #3498db;
   padding: 5px;
   margin-bottom: 10px;
   background-color: #e8f1f2;
   overflow: hidden;
   white-space: nowrap;
+  color: black;
   width: 200px;
 }
 span.tag {
@@ -422,7 +424,10 @@ span.tag {
 }
 #cnt-ctrl {
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
+  height: 60px;
+}
+.selected-col-cnt {
   height: 40px;
 }
 #cnt-proj-ctrl {
@@ -430,19 +435,19 @@ span.tag {
   line-height: 30px;
 }
 ul#selected-project {
-  /*position: relative;*/
-  /*top: -20px;*/
   border: 1xp solid #006494;
-  font: "Courier";
   border-radius: 10px;
+  margin-left: 5px;
+  white-space: nowrap;
 }
 ul#selected-project li:first-child {
-  background-color: #00FFFF !important;
+  background-color: white !important;
   border-color: #f39c12;
   border-width: 3px;
-  width: 400px;
+  width: 200px;
   position: relative;
   left: -40px;
+  color: black;
 }
 ul#selected-project li {
   display: inline-block;
@@ -504,7 +509,7 @@ ul#selected-project li {
   background-color: yellow;
 }
 .proj-selected {
-  background-color: #00FFFF !important;
+  background-color: #3498db;
 }
 /*@pal-bg-color: rgb(19,41,61);*/
 /*@pal-blue-green: rgb(36,123,160);*/
@@ -512,6 +517,15 @@ ul#selected-project li {
 /*@pal-blue-bright: rgb(27,152,224);*/
 /*@pal-blue-white: rgb(232,241,242);*/
 /* button style */
+#calendar-name {
+  text-align: center;
+  position: relative;
+  top: -10px;
+}
+#hdr-cal-name-col {
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 /* manage related css */
 table th:last-child,
