@@ -49,6 +49,7 @@
 	  <td>
 		<a href="/manage/calendars/edit/{{$c['id']}}" class="btn btn-primary btn-xs">Edit</a>		
 		<a href="#myModal"  data-toggle="modal" data-href="/manage/calendars/remove/{{$c['id']}}" data-name="{{$c['calendar_json']['name']}}" class="btn btn-primary btn-xs confirm-remove" >Remove</a>		
+		<a href="/manage/calendar/{{$c['id']}}/workers" class="btn btn-primary btn-xs">Edit Workers</a>		
 	  </td>
 	</tr>
 

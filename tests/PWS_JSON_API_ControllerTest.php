@@ -119,7 +119,7 @@ class PWS_JSON_API_ControllerTest extends TestCase
 
 		$tmp = factory( App\ApiCalendar::class, 1 )->create(['id' => 25,'user_id' => $this->client->id]);
 
-		$tmp = factory( App\ApiCalendarWorkerJoin::class, 1 )->create(['worker_id' => 20, 'calendar_id' => 25]);
+		$tmp = factory( App\ApiCalendarWorkerJoin::class, 1 )->create(['worker_id' => 345, 'calendar_id' => 25]);
 
 		$resp = $this->clientGET('/api/worker/345/remove-from-cal/25', []);
 

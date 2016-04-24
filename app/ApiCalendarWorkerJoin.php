@@ -43,11 +43,15 @@ class ApiCalendarWorkerJoin extends ApiModel
 	 */
 	public static function unJoin($calendarId, $workerId)
 	{
-		$id = self::getJoinId($calendarId, $workerId);
 
-		ApiCalendarWorkerJoin::where('calendar_id', $calendarId)->where('worker_id', $workerId)->delete();
 
-		return true;
+		if ( $id = self::getJoinId($calendarId, $workerId) ) {
+
+			return  ApiCalendarWorkerJoin::findOrFail($id)->delete();
+
+		}
+
+		return false;
 		
 	}
 
@@ -58,11 +62,13 @@ class ApiCalendarWorkerJoin extends ApiModel
 	 */
 	public static function getJoinId($calendarId, $workerId)
 	{
-		$J = ApiCalendarWorkerJoin::select('*')->where('calendar_id', $calendarId)->where("worker_id", $workerId)->get();
+		$j = ApiCalendarWorkerJoin::where('calendar_id', $calendarId)
+			->where('worker_id', $workerId)
+			->value('id');
 
-		if ( $J->isEmpty() ) return false;
+		if ( $j ) return $j;
 
-		return $J->id;;
+		return false;
 
 	}
 

@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Input;
 use App\Exceptions\Handler;
 use App\Calendar;
 use App\Worker;
+use App\ApiCalendarWorkerJoin;
 use App\Tag;
 use Kint;
 use Carbon\Carbon;
 use View;
+use Flash;
 
 /*
  * todo: pagination
@@ -416,5 +418,93 @@ class ManageController extends Controller
 		
 	}
 
+	
+	/**
+	 *
+	 */
+	public function calendarWorkers($calendarId)
+	{
 
+		if ( ! $this->calendar->userOwnsCalendar( $calendarId, Auth::user()->id )  ) {
+			abort(500, "unknown calendar");
+		}
+
+		$recs =  $this->worker->where('user_id', Auth::user()->id)->get()->toArray();
+
+		$workerDrop = [];
+
+		foreach($recs as $r){ 
+
+			$workerDrop[$r['id']] = $r['worker_json']['worker_name'];
+
+		}
+
+		return View::make('manage.calendar_workers', array(
+			'workers' => $this->calendar->find($calendarId)->workers()->get(),
+			'cal' => $this->calendar->findOrFail($calendarId),
+			'workerDrop' => $workerDrop
+		));
+
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function calendarWorkersRemove($calendarId, $workerId)
+	{
+
+
+		$userId = Auth::user()->id;
+
+		$cal = $this->calendar->findOrFail($calendarId);
+
+		$worker = $this->worker->findOrFail($workerId);
+
+		if ( $cal->user_id == $userId && $worker->user_id == $userId ) {
+
+			if  ( ApiCalendarWorkerJoin::unJoin($calendarId, $workerId) ) {
+
+				Flash::success('Worker removed');
+
+				return redirect()->route('manage.calendar-workers', $calendarId);
+			}
+
+			
+		}
+		
+		Flash::error('Worker remove error!');
+
+		return redirect()->back();
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function calendarWorkersAdd($calendarId, $workerId)
+	{
+
+		$userId = Auth::user()->id;
+
+		$cal = $this->calendar->findOrFail($calendarId);
+
+		$worker = $this->worker->findOrFail($workerId);
+
+		if ( $cal->user_id == $userId && $worker->user_id == $userId ) {
+
+			if ( ApiCalendarWorkerJoin::join($calendarId, $workerId) ) {
+
+				Flash::success('Worker added');
+
+				return redirect()->back();
+				
+			}
+		}
+
+		abort(403, "error");
+	}
 }
+
