@@ -24,8 +24,13 @@ class ManageController extends Controller
 {
 
 	private $calendar;
+
 	private $worker;
+
 	private $tag;
+
+	private $calWorkerJoin;
+
 	private $validationRulesCalendar = [
 		'name' => 'required|max:30'
 	];
@@ -56,6 +61,8 @@ class ManageController extends Controller
 		$this->worker = new \App\ApiWorker;
 
 		$this->tag = new \App\ApiTag;
+
+		$this->calWorkerJoin = new \App\ApiCalendarWorkerJoin;;
 
     }
 
@@ -429,7 +436,15 @@ class ManageController extends Controller
 			abort(500, "unknown calendar");
 		}
 
-		$recs =  $this->worker->where('user_id', Auth::user()->id)->get()->toArray();
+		$alreadyAssigned =  $this->calWorkerJoin
+			->where('calendar_id', $calendarId )
+			->pluck('worker_id')
+			->toArray();
+		
+		$recs =  $this->worker
+			->where('user_id', Auth::user()->id)
+			->whereNotIn('id', $alreadyAssigned)
+			->get()->toArray();
 
 		$workerDrop = [];
 

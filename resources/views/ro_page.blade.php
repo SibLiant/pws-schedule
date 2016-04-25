@@ -4,6 +4,4 @@
 
 
 
-my shell app 4
-my test
 @endsection

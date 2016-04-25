@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
 		$genCount = [
 			'customers' => 50,
 			'projects' => 200,
-			'workers' => 5,
+			'workers' => 8,
 			'schedules' => 200,
 			'tags' => 400,
-			'api_schedule_elements' => 50
+			'api_schedule_elements' => 200
 		];
 
 
@@ -62,27 +62,9 @@ class DatabaseSeeder extends Seeder
 			'name' => "Peters"
 		]);
 
-		//workers 
-		for( $i = 1; $i < $genCount['workers']; $i++ ){
-			DB::table('workers')->insert([
-				'name' => str_random(15)
-			]);
-		}
 
 
 
-		//schedules
-		for( $i = 0; $i < $genCount['schedules']; $i++ ){
-			$dateSeed = rand( 0, 30 );
-			$carbonDate = Carbon::now()->addDays($dateSeed)->toDateString();
-			DB::table('schedules')->insert([
-				'job_length_days' => rand(1, 5),
-				'worker_id' => rand( 1, 5 ),
-				'user_id' => 1,
-				'project_id' => rand( 1, 50 ),
-				'scheduled_date' => $carbonDate
-			]);
-		}
 
 
 		DB::table('schedules')->insert([
@@ -99,13 +81,6 @@ class DatabaseSeeder extends Seeder
 			DB::table('tags')->insert([ 'name' => 'piano box', 'abbreviation'=>'XXL', 'background_color' => 'silver', 'border_color'=>'yellow', 'tool_tip' => 'testing tool tip' ]);
 			DB::table('tags')->insert([ 'name' => 'speaker box', 'abbreviation'=>'HVHC', 'background_color' => 'green', 'border_color'=>'red', 'tool_tip' => 'testing tool tip' ]);
 
-		// tags join schedules
-		for( $i = 1; $i < $genCount['schedules'] + 1; $i++ ){
-			DB::table('schedule_tag')->insert([ 'schedule_id' => $i, 'tag_id' => 1 ]);
-			DB::table('schedule_tag')->insert([ 'schedule_id' => $i,  'tag_id' => 2 ]);
-			DB::table('schedule_tag')->insert([ 'schedule_id' => $i,  'tag_id' => 3 ]);
-			DB::table('schedule_tag')->insert([ 'schedule_id' => $i,  'tag_id' => 4 ]);
-		}
 
 
 		//user
@@ -145,7 +120,7 @@ class DatabaseSeeder extends Seeder
 			$schedule_id += 1;
 			$item = [
 				'job_length_days' => rand(1, 5),
-				'worker_id' => rand( 1, 5 ),
+				'worker_id' => rand( 1, 8 ),
 				'schedule_id' => $schedule_id,
 				'user_id' => 1,
 				'customer_name' => $faker->name,
@@ -167,6 +142,10 @@ class DatabaseSeeder extends Seeder
 		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":3,"external_worker_id":3, "worker_name":"Isacc"}']);
 		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":4,"external_worker_id":4, "worker_name":"Wilson"}']);
 		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":5,"external_worker_id":5, "worker_name":"James"}']);
+		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":6,"external_worker_id":5, "worker_name":"Alex"}']);
+		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":7,"external_worker_id":5, "worker_name":"Jordan"}']);
+		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":8,"external_worker_id":5, "worker_name":"Peter"}']);
+		DB::table('api_workers')->insert([  'user_id' => 1, 'worker_json' => '{"worker_id":9,"external_worker_id":5, "worker_name":"Adam"}']);
 
 		//api_calendars
 		DB::table('api_calendars')->insert([  'user_id' => 1, 'calendar_json' => '{"id":1,"external_worker_id":1, "name":"hvhc"}']);
@@ -180,6 +159,10 @@ class DatabaseSeeder extends Seeder
 		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 2]);
 		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 3]);
 		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 4]);
+		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 5]);
+		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 6]);
+		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 7]);
+		DB::table('api_calendar_worker_joins')->insert([  'calendar_id' => 1, 'worker_id' => 8]);
 
 		//api tags
 		DB::table('api_tags')->insert([ 'user_id' => 1,  'tag_json' => '{"schedule_id":1,"tag_id":1,"name":"funkey","background_color":"green","border_color":"blue","abbreviation":"XEDCV","tool_tip":"now is the time for all good men to come to the aid of the country"}']);
