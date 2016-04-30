@@ -61,13 +61,6 @@
 <p>We have not created any calendars yet.</p>
 @endif
 
-
-
-
-
-
-
-
 </div>
 </div>
 </div>
@@ -94,13 +87,5 @@ $(document).ready(function(){
 	});
 
 });
-
-//$('a').click(function(e){
-	//e.preventDefault();
-	//target = e.target;
-	//console.debug(target);
-//});
-
-</script>
 
 @endsection

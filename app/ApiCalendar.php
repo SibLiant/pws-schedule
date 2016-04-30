@@ -31,6 +31,17 @@ class ApiCalendar extends ApiModel
 		return $this->belongsToMany('App\ApiWorker', 'api_calendar_worker_joins', 'calendar_id', 'worker_id');
 					
 	}
+
+	
+	/**
+	 *
+	 */
+	public function invitations()
+	{
+
+		return $this->hasMany('App\CalendarInvitation');
+		
+	}
 	
 	/**
 	 *
@@ -121,6 +132,7 @@ class ApiCalendar extends ApiModel
 		return true;
 
 	}
+
 
 	//public function getCalendarJsonAttribute($value) {
 

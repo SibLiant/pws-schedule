@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -28,7 +29,12 @@
                             <label class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								@if ( ! old('email') && isset($inv->email ))
+                                <input type="email" class="form-control" name="email"  value="{{ $inv->email }}" readonly style="background-color: silver">
+                                <input type="hidden" class="form-control" name="urlKey"  value="{{ $inv->url_key }}">
+								@else
+                                <input type="email" class="form-control" name="email"  value="{{ old('email') }}">
+								@endif
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -79,4 +85,5 @@
         </div>
     </div>
 </div>
+
 @endsection

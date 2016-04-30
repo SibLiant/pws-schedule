@@ -24,8 +24,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        $this->registerPolicies($gate);
 
-        //
+
+		$gate->before(function ($user, $ability) {
+			ddd($user);
+			if ($user->isGlobalAdmin()) {
+				return true;
+			}
+		});
+
+        $this->registerPolicies($gate);
     }
 }

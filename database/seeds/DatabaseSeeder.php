@@ -67,13 +67,14 @@ class DatabaseSeeder extends Seeder
 
 
 
-		DB::table('schedules')->insert([
+		$insertArr = [
 			'job_length_days' => 3,
 			'user_id' => 1,
 			'worker_id' => 1,
 			'project_id' => $genCount['projects'] +1,
 			'scheduled_date' => Carbon::now()->toDateString()
-		]);
+		];
+		DB::table('schedules')->insert($insertArr);
 
 		//tags
 			DB::table('tags')->insert([ 'name' => 'guitar box', 'abbreviation'=>'GB', 'background_color' => 'blue', 'border_color'=>'grey', 'tool_tip' => 'testing tool tip' ]);
@@ -81,14 +82,14 @@ class DatabaseSeeder extends Seeder
 			DB::table('tags')->insert([ 'name' => 'piano box', 'abbreviation'=>'XXL', 'background_color' => 'silver', 'border_color'=>'yellow', 'tool_tip' => 'testing tool tip' ]);
 			DB::table('tags')->insert([ 'name' => 'speaker box', 'abbreviation'=>'HVHC', 'background_color' => 'green', 'border_color'=>'red', 'tool_tip' => 'testing tool tip' ]);
 
-
-
 		//user
 		DB::table('users')->insert([
 			'name' => 'parker',
 			'email' => 'pws@gmail.com',
 			'password' => bcrypt('1234'),
+			'global_admin' => true,
 		]);
+		$tmp = factory( App\User::class, 60 )->create();
 
 		//calendars
 		DB::table('calendars')->insert([
@@ -113,19 +114,28 @@ class DatabaseSeeder extends Seeder
 		for( $i = 0; $i < $genCount['api_schedule_elements']; $i++ ){
 
 			$tgs = [];
+			
 			for( $x = 0; $x < 6; $x++ ){ array_push($tgs, rand(1, 4));  } 
 
+			$jobLength = rand(1, 5);
+
 			$dateSeed = rand( 0, 30 );
-			$carbonDate = Carbon::now()->addDays($dateSeed)->toDateString();
+
+			$cDate = Carbon::now()->addDays($dateSeed);
+
+			$carbonEndDate = $cDate->copy()->addDays($jobLength);
+
 			$schedule_id += 1;
+
 			$item = [
-				'job_length_days' => rand(1, 5),
+				'job_length_days' => $jobLength,
 				'worker_id' => rand( 1, 8 ),
 				'schedule_id' => $schedule_id,
 				'user_id' => 1,
 				'customer_name' => $faker->name,
 				'project_id' => rand( 1, 50 ),
-				'scheduled_date' => $carbonDate,
+				'scheduled_date' => $cDate->toDateString(),
+				'scheduled_end_date' => $carbonEndDate->toDateString(),
 				'tags' => $tgs
 			];
 
@@ -169,6 +179,9 @@ class DatabaseSeeder extends Seeder
 		DB::table('api_tags')->insert([ 'user_id' => 1, 'tag_json' => '{"schedule_id":2,"tag_id":2,"name":"coal","background_color":"red","border_color":"blue","abbreviation":"XEDCV","tool_tip":"never give up"}']);
 		DB::table('api_tags')->insert([  'user_id' => 1,'tag_json' => '{"schedule_id":3,"tag_id":3,"name":"medina","background_color":"orange","border_color":"blue","abbreviation":"XEDCV","tool_tip":"coding is an emotional roller coaster"}']);
 		DB::table('api_tags')->insert([  'user_id' => 1,'tag_json' => '{"schedule_id":4,"tag_id":4,"name":"vanialla","background_color":"blue","border_color":"blue","abbreviation":"XEDCV","tool_tip":"linux is hard but worth it"}']);
+
+		// calendar invitations
+		$tmp = factory( App\CalendarInvitation::class, 5 )->create();
 
     }
 }

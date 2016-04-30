@@ -16,6 +16,8 @@ Route::get('/', function () { //return view('welcome');
 	return view('pws_scheduler_home');
 });
 
+Route::match(['get', 'head'], '/register/{urlKey?}', [ 'middleware' => ['web', 'guest'], 'as' => 'register', 'uses' => '\App\Http\Controllers\Auth\AuthController@showRegistrationForm']);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -37,8 +39,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/RO', 'ReadonlyController@index');
     Route::get('/RO/postedSchedule', 'ReadonlyController@postedSchedule');
     Route::get('/RO/test', 'ReadonlyController@modelTest');
+
     //Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@schedule');
-    Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@calendar');
+    Route::get('/RO/calendar/{calendarId}', ['as' => 'calendar.view', 'uses' =>'ReadonlyController@calendar']);
+    //Route::get('/RO/calendar', ['as' => 'calendar.index', 'uses' => 'ReadonlyController@index']);
+    Route::get('/RO/calendars', ['as' => 'calendar.index', 'uses' => 'ReadonlyController@index']);
+	Route::get('/calendars', function(){
+
+		return redirect()->route('calendar.index');
+	});
 
 
 
@@ -68,6 +77,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('manage/calendar/{calendarId}/remove/worker/{workerId}', ['as' => 'manage.calendar-workers.remove', 'uses' =>'ManageController@calendarWorkersRemove']);
     Route::get('manage/calendar/{calendarId}/add/worker/{workerId}', ['as' => 'manage.calendar-workers.add', 'uses' =>'ManageController@calendarWorkersAdd']);
 
+    Route::get('/manage/global-users', ['as' => 'manage.global-users', 'uses' => 'ManageController@globalUsers']);
+    Route::get('/manage/calendar-invitations', ['as' => 'manage.calendar-invitations', 'uses' => 'ManageController@calendarInvitations']);
+    Route::match(['get', 'post'],'/manage/calendar-invitations/add/{calendarId?}', ['as' => 'manage.calendar-invitation.add', 'uses' => 'ManageController@calendarInvitationsAdd']);
+    Route::get('/manage/calendar-invitations/remove', ['as' => 'manage.calendar-invitations.remove', 'uses' => 'ManageController@calendarInvitationsRemove']);
+    Route::get('/manage/calendar-invitations/remove/{invitationId}', ['as' => 'manage.calendar-invitations.remove', 'uses' => 'ManageController@calendarInvitationsRemove']);
 });
 
 

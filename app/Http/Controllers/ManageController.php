@@ -7,14 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Repos;
 use Illuminate\Support\Facades\Input;
 use App\Exceptions\Handler;
-use App\Calendar;
-use App\Worker;
-use App\ApiCalendarWorkerJoin;
-use App\Tag;
 use Kint;
 use Carbon\Carbon;
 use View;
 use Flash;
+use Mail;
 
 /*
  * todo: pagination
@@ -28,6 +25,8 @@ class ManageController extends Controller
 	private $worker;
 
 	private $tag;
+	
+	private $user;
 
 	private $calWorkerJoin;
 
@@ -43,6 +42,10 @@ class ManageController extends Controller
 		'name' => 'required|max:30',
 		'background_color' => 'required|max:20',
 		'abbreviation' => 'required|max:5'
+	];
+
+	private $validationRulesCalInvitation= [
+		'email' => 'required|email',
 	];
 
 
@@ -61,6 +64,8 @@ class ManageController extends Controller
 		$this->worker = new \App\ApiWorker;
 
 		$this->tag = new \App\ApiTag;
+
+		$this->user = new \App\User;
 
 		$this->calWorkerJoin = new \App\ApiCalendarWorkerJoin;;
 
@@ -521,5 +526,133 @@ class ManageController extends Controller
 
 		abort(403, "error");
 	}
+
+	
+	/**
+	 *
+	 */
+	public function globalUsers()
+	{
+
+		$users = $this->user->paginate(15);
+
+		return view('manage.global_users', ['users'=>$users]);
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function calendarInvitations()
+	{
+
+		$cals = $this->calendar->where('user_id', Auth::user()->id)->get();
+		$calList = $this->calendar->extractListFromJsonFields($cals, 'name');
+
+
+		$invs =  \App\CalendarInvitation::where('invited_by_user_id', Auth::user()->id)
+			->orderBy('calendar_id', 'desc')
+			->get();
+
+		return view('manage.calendar_invitations', compact('cals', 'invs', 'calList'));
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function calendarInvitationsAdd(Request $request, $calendarId = null)
+	{
+
+		if ($request->isMethod('post')) {
+
+			$this->validate($request, $this->validationRulesCalInvitation);
+
+			$inv = new \App\CalendarInvitation;
+
+			$inv->calendar_id = $request->session()->get('invitation_cal_id');	
+			
+			$inv->email = Input::get('email');
+
+			if ( \App\CalendarInvitation::where('calendar_id', $inv->calendar_id)
+				->where('email', $inv->email)
+				->exists()){
+
+				Flash::warning('Invitation already exists');
+
+				return redirect()->route('manage.calendar-invitation.add');
+				
+			}
+
+			$inv->url_key = $this->user->generteGUID();
+			
+			$inv->invited_by_user_id = Auth::user()->id;
+
+			if( $inv->save() ){
+
+				$this->sendInvitationEmail($request, $inv->id);
+
+				Flash::success('Invitation created for '.$inv->email);
+
+				return redirect()->route('manage.calendar-invitation.add');
+
+			}
+
+			else {
+
+				abort(500,'can not create invitation');
+
+			}
+		}
+
+		//gate this calendar id
+		if ( $calendarId ) {
+
+			$request->session()->put('invitation_cal_id', $calendarId);	
+
+		}
+
+		return view('manage.calendar_invitations_add');
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function calendarInvitationsRemove($invitationId)
+	{
+
+		$i = \App\CalendarInvitation::find($invitationId);
+
+		if (  $i->delete() ) {
+
+			Flash::success(' Invitation removed');
+
+			return redirect()->route('manage.calendar-invitations');
+
+		}
+		
+		Flash::error('unable to remove invitation');
+
+		return redirect()->route('manage.calendar-invitations');
+
+	}
+
+
+
+	public function sendInvitationEmail(Request $request, $invitationId) {
+
+        $inv = \App\CalendarInvitation::findOrFail($invitationId);
+		$cal = $this->calendar->find($inv->calendar_id);
+
+        Mail::send('emails.calendar_invitation', ['inv' => $inv, 'cal' => $cal], function ($m) use ($inv) {
+            $m->from('admin@scheduler.com', 'PWS Scheduler');
+
+            $m->to($inv->email, $inv->email)->subject('schedule invitation');
+        });
+    }
 }
 

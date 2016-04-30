@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Flash;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -28,7 +29,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/calendars';
 
     /**
      * Create a new authentication controller instance.
@@ -63,10 +64,51 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
+
+	public function showRegistrationForm($urlKey = null)
+	{
+
+		//user may have clicked a calendar invitation.  we're running all 
+		//invitations through here to catch anyone  not registered yet
+		//if the email is already
+		//registered just redirect to the calendar index
+
+		if ( $urlKey ) {
+
+			$inv = \App\CalendarInvitation::where('url_key', $urlKey)->first();
+
+			if ( ! $inv ) {
+
+				Flash::error('Invalid key.  Please request new from calendar admin');
+
+				return redirect()->back();
+				
+			}
+
+			if ( User::emailRegistered($inv->email) ) {
+
+				Flash::success('The schedule will appear in your index');
+
+				return redirect()->route('calendar.index');
+
+			}
+
+			return view('auth.register')->with('inv', $inv);
+		}
+		
+		if (property_exists($this, 'registerView')) {
+			return view($this->registerView);
+		}
+
+		return view('auth.register');
+
+	}
 }

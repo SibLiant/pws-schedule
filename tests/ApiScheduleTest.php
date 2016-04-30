@@ -159,17 +159,17 @@ class ApiScheduleTest extends TestCase
 	{
 		
 		//create 2 schedule elements on a unique calendar id
-		$tmp = factory( App\ApiSchedule::class, 1 )->create([ 'id' => '200', 'calendar_id'=>5, 'json_data' => '{"worker_id":999, "scheduled_date":"2016-01-01", "job_length_days":1}', 'user_id' => $this->client->id]);
-		$tmp = factory( App\ApiSchedule::class, 1 )->create([ 'id' => '201', 'calendar_id'=>5, 'json_data' => '{"worker_id":999, "scheduled_date":"2016-01-01", "job_length_days":1}', 'user_id' => $this->client->id]);
+		$tmp = factory( App\ApiSchedule::class, 1 )->create([ 'id' => '5999', 'calendar_id'=>5, 'json_data' => '{"worker_id":999, "scheduled_date":"2016-01-01", "job_length_days":1}', 'user_id' => $this->client->id]);
+		$tmp = factory( App\ApiSchedule::class, 1 )->create([ 'id' => '6000', 'calendar_id'=>5, 'json_data' => '{"worker_id":999, "scheduled_date":"2016-01-01", "job_length_days":1}', 'user_id' => $this->client->id]);
 
 		$recs = $this->_object->getDistinctScheduleIds( 5 );
 
 		//assert that we have the exact id's and only them
 		$this->assertCount(2, $recs);
 
-		$this->assertEquals(200, $recs[0]->id);
+		$this->assertEquals(5999, $recs[0]->id);
 
-		$this->assertEquals(201, $recs[1]->id);
+		$this->assertEquals(6000, $recs[1]->id);
 	}
 
 }

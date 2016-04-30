@@ -12,9 +12,12 @@ use App\Lib\PWS_JSON_Generator;
 use Illuminate\Support\Facades\Input;
 use App\Exceptions\Handler;
 use App\Calendar;
+use App\ApiCalendar;
+use App\ApiSchedule;
 use App\ApiScheduleElement;
 use Kint;
 use Carbon\Carbon;
+use Auth;
 
 class ReadonlyController extends Controller
 {
@@ -43,15 +46,33 @@ class ReadonlyController extends Controller
 	*/
     public function index(Request $request)
     {
-		$json = $this->repo->getJSON();
 
-		if (  JsonValidator::isValid($json)){
+		//get all the calendars this user is invited too
+		$inv = \App\CalendarInvitation::where('email', Auth::user()->email)->pluck('calendar_id')->toArray();
 
-        	return view('ro_page')->with('json_data', $json);
+		//get all the calendar ids the user actually owns
+		$userCalIds = ApiCalendar::where('user_id', Auth::user()->id)->pluck('id')->toArray();
 
-		}
+		//combine all cal ids
+		$cals = array_merge($inv,$userCalIds);
 
-		abort(500, 'invalid json');
+		$cals = ApiCalendar::whereIn('id', $cals)->get();
+
+		//d($inv);
+		//ddd($cals);
+
+		$schRecCounts[] = [];
+		foreach($cals as $c){ 
+			$schRecCounts[$c->id] = ApiSchedule::where('calendar_id', $c->id)->count();
+	   	}
+
+
+
+		return view('calendars.index', [
+				'cals' => $cals ,
+				'schRecCounts' => $schRecCounts 
+			]
+		);
 
     }
 
@@ -174,12 +195,6 @@ class ReadonlyController extends Controller
 		}
 
 		abort(500, 'invalid json');
-
-
-
-
-
-		
 	}
 
 }

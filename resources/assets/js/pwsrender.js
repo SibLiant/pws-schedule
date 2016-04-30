@@ -62,14 +62,6 @@ PWSSchedule.render = function( core ){
 		if ( scrollWorkers ) { scrollWorkers.scrollLeft = 0; }
 		if ( scrollWkGrids ) { scrollWkGrids.scrollLeft = 0; }
 
-
-
-		//$('#cnt-worker-grids').scroll(function(e) {
-				//var pos = $('#cnt-worker-grids').scrollLeft();
-				//$(".worker-name, #name-placeholder").css({
-						//left: pos
-				//});
-		//});
 	};
 
 	var navCal = function(direction, days){
@@ -78,10 +70,12 @@ PWSSchedule.render = function( core ){
 		}
 		if ( direction === 'forward' ) {
 			core.config.momCalStart.add( days, 'days' );
+			core.config.momCalEnd.add( days, 'days' );
 		}
 
 		if ( direction === 'backward' ) {
 			core.config.momCalStart.subtract( days, 'days' );
+			core.config.momCalEnd.subtract( days, 'days' );
 		}
 		reRender();
 	};
@@ -135,7 +129,14 @@ PWSSchedule.render = function( core ){
 			momPrevProj = moment( wRow[i].scheduled_date ).add( wRow[i].job_length_days, 'days' );
 		}
 		dDiff = core.config.momCalEnd.diff( momPrevProj, 'days' );
-		if (  dDiff > 0   )  { renderPlaceHolder(worker_id, momPrevProj, dDiff);}
+		if (  dDiff > 0   )  { 
+			
+			console.debug('---------');
+			console.debug('end row place holders');
+			console.debug( core.config.momCalEnd );
+			console.debug('---------');
+			renderPlaceHolder(worker_id, momPrevProj, dDiff);
+		}
 	};
 
 	var renderPlaceHolder = function(worker_id, start, days){

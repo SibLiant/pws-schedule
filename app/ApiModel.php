@@ -23,5 +23,21 @@ class ApiModel extends Model
 	}
 
 
+
+	/**
+	 *
+	 */
+	public function extractListFromJsonFields($collection, $jsonFieldName)
+	{
+		$n = [];
+
+		foreach($collection as $c){
+
+			$n[$c->id] = $c->calendar_json[$jsonFieldName];
+	  	}
+
+		return $n;
+		
+	}
 }
 

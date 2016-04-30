@@ -290,7 +290,9 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 	{
 		$cal = ApiCalendar::find($calendarId);
 
-		return $cal->calendar_json;
+		if ( isset( $cal->calendar_json ) ) return $cal->calendar_json;
+		
+		return [];
 		
 	}
 

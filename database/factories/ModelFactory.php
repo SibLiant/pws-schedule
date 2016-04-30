@@ -116,5 +116,17 @@ $factory->define(App\ApiTag::class, function (Faker\Generator $faker) {
 	
 });
 
+$factory->define(App\CalendarInvitation::class, function (Faker\Generator $faker) {
+
+    return [
+		'invited_by_user_id' => 1,
+		'calendar_id' => 1,
+		'calendar_admin' => false,
+		'url_key' => \App\User::generteGUID(),
+		'email' => $faker->email,
+    ];
+	
+});
+
 
 
