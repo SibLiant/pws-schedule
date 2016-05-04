@@ -4,9 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
+	
 
+<a href="/calendars" >back to schedule index</a>
 
-	<h1>User Calendar View</h1>
+	<h1>Manage</h1>
 
 
 	@if ( Auth::user()->isGlobalAdmin() )
@@ -15,16 +17,10 @@
 
 	@endif
 
-
-
 	@if ( Auth::user()->isAccountAdmin() )
-
-	<h3>Account Admin</h3>
-
 
 					<div class="list-group">
 						<a href="/manage/calendar-invitations" class="list-group-item">Invitations</a>
-						<a href="/RO/calendar/1" class="list-group-item"> RO Calendar 1 </a>
 						<a href="/manage/calendars" class="list-group-item "> Calendars </a>
 						<a href="/manage/workers" class="list-group-item">Workers</a>
 						<a href="/manage/tags" class="list-group-item">Tags</a>

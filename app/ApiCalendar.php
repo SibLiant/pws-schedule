@@ -39,7 +39,7 @@ class ApiCalendar extends ApiModel
 	public function invitations()
 	{
 
-		return $this->hasMany('App\CalendarInvitation');
+		return $this->hasMany('App\CalendarInvitation', 'calendar_id');
 		
 	}
 	

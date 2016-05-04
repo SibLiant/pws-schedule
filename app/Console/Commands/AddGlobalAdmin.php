@@ -55,6 +55,8 @@ class AddGlobalAdmin extends Command
 
 		$user->global_admin = true;
 
+		$user->account_admin = true;
+
 		$user->save();
     }
 }

@@ -51,11 +51,6 @@
 
 
 
-
-
-
-
-
 <div class="form-group">
 	<a href="/manage/calendar-invitations" class="btn btn-default">Cancel</a>		
 	{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}

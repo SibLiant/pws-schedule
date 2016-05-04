@@ -18,6 +18,7 @@ use App\ApiScheduleElement;
 use Kint;
 use Carbon\Carbon;
 use Auth;
+use Gate;
 
 class ReadonlyController extends Controller
 {
@@ -185,6 +186,10 @@ class ReadonlyController extends Controller
 	 */
 	public function calendar($calendarId)
 	{
+
+		$cal = \App\ApiCalendar::find($calendarId);
+
+		if ( Gate::denies('calendar-view', $cal) ) abort(403);
 
 		$json = $this->repo->build($calendarId);
 

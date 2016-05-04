@@ -26,13 +26,38 @@ class AuthServiceProvider extends ServiceProvider
     {
 
 
+        $this->registerPolicies($gate);
+
 		$gate->before(function ($user, $ability) {
-			ddd($user);
-			if ($user->isGlobalAdmin()) {
-				return true;
-			}
+			//if ($user->isGlobalAdmin()) {
+				//return true;
+			//}
 		});
 
-        $this->registerPolicies($gate);
+		$gate->define('calendar-view', function ($user, $cal) {
+
+			$invs = $cal->invitations;
+
+			//if user is invited to it
+			foreach($invs as $i) {
+				if ( $i->email == $user->email ) return true;
+			}
+
+			//if user owns it
+			if (  $user->id == $cal->user_id) return true;
+
+			return false;
+						        
+		});
+
+
+		$gate->define('manage-account', function ($user, $cal) {
+
+			
+			
+		});
+
+
+
     }
 }

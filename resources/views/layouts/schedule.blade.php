@@ -44,7 +44,7 @@
 			</ul>
 		</div>
 
-<div class="col-md-3" id="hdr-cal-name-col"> <h3 id="calendar-name">This is my long calendar name.  How do you like it</h3>  </div>
+<div class="col-md-3" id="hdr-cal-name-col"> <h3 id="calendar-name"></h3>  </div>
 <div class="col-md-1" id="hdr-manage-menu-col">
 
 

@@ -19,7 +19,6 @@ class CreateCalendarInvitationsTable extends Migration
             $table->boolean('calendar_admin')->default(false);
             $table->string('url_key', 60)->nullable();
             $table->string('email', 60);
-            $table->integer('user_id')->nullable();
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();
 			$table->softDeletes();

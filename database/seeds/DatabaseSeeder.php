@@ -83,13 +83,11 @@ class DatabaseSeeder extends Seeder
 			DB::table('tags')->insert([ 'name' => 'speaker box', 'abbreviation'=>'HVHC', 'background_color' => 'green', 'border_color'=>'red', 'tool_tip' => 'testing tool tip' ]);
 
 		//user
-		DB::table('users')->insert([
-			'name' => 'parker',
-			'email' => 'pws@gmail.com',
-			'password' => bcrypt('1234'),
-			'global_admin' => true,
-		]);
-		$tmp = factory( App\User::class, 60 )->create();
+		DB::table('users')->insert([ 'name' => 'parker', 'email' => 'pws@gmail.com', 'password' => bcrypt('1234'), 'global_admin' => true, ]);
+		DB::table('users')->insert([ 'name' => 'parker_two', 'email' => 'pwbradtmiller@gmail.com', 'password' => bcrypt('1234'), 'global_admin' => false, ]);
+		DB::table('users')->insert([ 'name' => 'parker_three', 'email' => 'pwbradtmiller@yahoo.com', 'password' => bcrypt('1234'), 'global_admin' => false, ]);
+
+		$tmp = factory( App\User::class, 10 )->create();
 
 		//calendars
 		DB::table('calendars')->insert([

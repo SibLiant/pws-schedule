@@ -33,7 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 	Route::get('/', function () {
-		    return redirect()->route('manage.index');
+		    return redirect()->route('calendar.index');
 
 	});
     Route::get('/RO', 'ReadonlyController@index');
@@ -48,9 +48,6 @@ Route::group(['middleware' => ['web']], function () {
 
 		return redirect()->route('calendar.index');
 	});
-
-
-
 
     Route::get('/manage', ['as' => 'manage.index', 'uses' => 'ManageController@index']);
 
