@@ -71,7 +71,7 @@ PWSSchedule.core = function(options){
  
 };
 
-/*global PWSSchedule, moment */
+/*global PWSSchedule, moment, crfs */
 /*exported  getCalStart, getCalRange, setCalStart */
 /* jshint unused:false */
 PWSSchedule.render = function( core ){
@@ -115,9 +115,7 @@ PWSSchedule.render = function( core ){
 		$.each(core.workers, function( workerIndex, worker ) {
 			buildWorkerDays( worker.id );
 			rws = worker.buildRows(core.config.momCalStart, core.config.calRangeInt);
-			//console.debug(rws);
 			$.each(rws, function( rowIndex, row ) {
-				//console.debug(row);
 				renderWorkerRow( worker.id, row  );
 			});
 		});
@@ -203,11 +201,6 @@ PWSSchedule.render = function( core ){
 		}
 		dDiff = core.config.momCalEnd.diff( momPrevProj, 'days' );
 		if (  dDiff > 0   )  { 
-			
-			console.debug('---------');
-			console.debug('end row place holders');
-			console.debug( core.config.momCalEnd );
-			console.debug('---------');
 			renderPlaceHolder(worker_id, momPrevProj, dDiff);
 		}
 	};
@@ -291,7 +284,7 @@ PWSSchedule.render = function( core ){
 		var workerDivs = [];
 
 		var workerCntId = 'worker-row_'+ worker_id;
-		var divString = '<div class="proj-droppable worker-row" id="'+workerCntId+'"> <div class="worker-name">'+worker_name+'</div> </div> <!-- worker-row -->	';
+		var divString = '<div class="worker-row" id="'+workerCntId+'"> <div class="worker-name">'+worker_name+'</div> </div> <!-- worker-row -->	';
 		targetElement.append(divString);
 		
 		//build day containers
@@ -347,6 +340,34 @@ PWSSchedule.render = function( core ){
 		var tag = core.options.tags[tagId];
 		var styles = 'border-color: '+tag.border_color+'; background-color: '+tag.background_color+'; ';
 		$('#selected-project').append('<li class="tag tag-tooltip" id="tag-id_"'+tagId+' style="'+styles+'" tooltip="'+tag.tool_tip+'">'+tag.abbreviation+'</li>');
+	};
+
+	var parseWorkerDayId = function(id){
+
+		var stripped = id.substring(10, id.length +1);
+		var wkId = stripped.match(/^\d*/g);
+		wkId = wkId[0];
+
+		var dt = id.substring(id.length - 10, id.length);
+
+		return { workerId:wkId, day: moment(dt) };
+
+
+	};
+
+	var moveScheduleRec = function(scheduleRecord, fieldsObj){
+
+				$.ajax({
+					type: "POST",
+					url: '/RO/schedule/update',
+					data: {"_token":crfs,"targetRecord":scheduleRecord, "updateFields": fieldsObj},
+					success: function(){
+						alert('success');
+
+					},
+					dataType: "json"
+				});
+
 	};
 
 	// build all the controls that were dynamically built
@@ -408,11 +429,44 @@ PWSSchedule.render = function( core ){
 				});
 		});
 
+
+		// if a scroll bar is on the scrollable div adjus with width so the calendar days line up nicely
 		var div= document.getElementById('cnt-worker-grids'); // need real DOM Node, not jQuery wrapper
 		var hasVerticalScrollbar= div.scrollHeight>div.clientHeight;
 		if ( hasVerticalScrollbar ){
 			$('#hdr-row').append('<div class="accomodate-scrollbar">&nbsp</div>');
 		}
+
+		//enable drag and drop
+		$( ".proj-draggable"  ).draggable( {
+			//revert : function(event, ui){
+				//$(this).data("uiDraggable").originalPosition = {top:0,left:0};
+				//return !event;
+			//},
+			scroll: true,
+			snap: ".proj-droppable",
+			snapMode: "inner"
+		});
+
+
+		$(".proj-droppable").droppable({
+			drop: function(event,ui){
+				var parsedTargetId = parseWorkerDayId( $(this).attr("id") );
+				var rec =  $(ui.draggable).data("scheduleRecord");
+
+				var updateFields = {	
+						"scheduled_date":parsedTargetId.day.format(core.config.pwsDateFormat),
+						"worker_id":parsedTargetId.workerId
+				};
+
+				moveScheduleRec( rec, updateFields );
+			},
+			accept: ".proj-draggable",
+			hoverClass: "drop-hover",
+			activeClass: "drop-active"
+		});
+
+
 	};
 
 	return {

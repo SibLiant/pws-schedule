@@ -19,10 +19,6 @@
 
 		<link rel="stylesheet" type="text/css" href="/css/app.css"> 
 
-		<script src="/js/jquery-2.2.0.min.js"></script>
-		<script src="/js/moment.2.11.1.js"></script>
-		<script src="/js/underscore_1.8.3.js"></script>
-		<script src="/js/pwsapp.js"></script>
 
 </head>
 
@@ -37,10 +33,10 @@
 			<ul id="selected-project">
 			</ul>
 			<ul class="project-controls list-inline">
-				<li> <a href="#" class="btn btn-warning btn-xs">test 1</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">test 1</a></li>
+				<li> <a href="#" class="btn btn-warning btn-xs">update</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">related</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">notes</a></li>
+				<li> <a href="#" class="btn btn-info btn-xs">log</a></li>
 			</ul>
 		</div>
 
@@ -95,9 +91,17 @@ project
 <div id="fixtures"></div>
 
 
+<script src="/js/jquery-2.2.0.min.js"></script>
+<script src="/js/moment.2.11.1.js"></script>
+<script src="/js/underscore_1.8.3.js"></script>
+<script src="/js/pwsapp.js"></script>
+<script src="/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" charset="utf-8">
 	var scheduleJson = <?php echo $json_data;  ?>;
+	var crfs = '{{ csrf_token()  }}';
 	PWSCore =  new PWSSchedule.core(scheduleJson);
 	PWSCore.render =  new PWSSchedule.render( PWSCore );
 	PWSCore.render.bldGridHeader('.hdr-row');
@@ -105,10 +109,6 @@ project
 	PWSCore.render.initScheduleRecords();
 	PWSCore.render.ctrlBind();
 </script>
-
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </body>
 </html>

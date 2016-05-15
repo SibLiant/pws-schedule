@@ -146,6 +146,7 @@ class ApiSchedule extends ApiModel
 
 		return DB::table('api_schedules')
 			->whereRaw("calendar_id = {$calendarId} and  to_date( json_data->>'scheduled_date', 'YYYY-MM-DD' ) BETWEEN '{$start->toDateString()}' AND '{$end->toDateString()}'")
+			->where("active", true)
 			->get();
 
 		//return \DB::select( $sql );
@@ -229,6 +230,30 @@ class ApiSchedule extends ApiModel
 		
 		return $newId;
 		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function updateRec($target, $fields, $userId)
+	{
+
+		$schId = ( is_int($target) ) ? $target : (int)$target['schedule_id'];
+		//d($schId);
+
+		$Schedule = ApiSchedule::find( $schId);
+
+		$data = json_decode($Schedule->json_data);
+
+		foreach($fields as $k => $v){
+			$data->$k = $v;
+	  	}
+
+		$data = json_encode($data);
+
+		$this->apiUpdate($Schedule->calendar_id, $schId, $userId, $data);
+
 	}
 	
 }

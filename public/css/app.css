@@ -306,6 +306,7 @@ div#cnt-calendar-header {
 div#cnt-calendar-header div.hdr-row {
   display: table-row;
   height: 20px;
+  background-color: #222222;
 }
 div#cnt-calendar-header div.hdr-row div {
   width: 175px;
@@ -372,7 +373,7 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder {
   margin-bottom: 5px;
 }
 .weekend {
-  background-color: #272727 !important;
+  background-color: #272727;
 }
 body {
   background-color: #222222;
@@ -387,7 +388,6 @@ body {
 }
 .cnt-hdr-date {
   color: white;
-  background-color: #222222;
 }
 .proj-single {
   border: 3px solid #f39c12;
@@ -505,8 +505,12 @@ ul#selected-project li {
 /*****************/
 /*drag and drop*/
 /*****************/
-.drop-active-class {
-  background-color: lightgreen;
+.drop-active {
+  /*background-color: lighten(spin(grey, 5), 30%);*/
+  background-color: black;
+}
+.drop-hover {
+  background-color: lightblue !important;
 }
 .proj-drop-hover {
   background-color: yellow;

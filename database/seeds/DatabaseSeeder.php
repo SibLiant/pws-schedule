@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
 
 		//schedule elements
 		$faker = Faker::create();
-		$schedule_id = 500;
+		$schedule_id = 0;
 			
 			
 		for( $i = 0; $i < $genCount['api_schedule_elements']; $i++ ){

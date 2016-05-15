@@ -19,6 +19,7 @@ use Kint;
 use Carbon\Carbon;
 use Auth;
 use Gate;
+use Illuminate\Http\JsonResponse;
 
 class ReadonlyController extends Controller
 {
@@ -200,6 +201,34 @@ class ReadonlyController extends Controller
 		}
 
 		abort(500, 'invalid json');
+	}
+
+	
+	/**
+	 *
+	 */
+	public function ajaxScheduleUpdate(Request $request)
+	{
+		//!Kint::dump(Input::all()); die();
+
+		$targetRec = Input::get('targetRecord');
+
+		$fieldsToUpdate = Input::get('updateFields');
+
+		$Schedule = new ApiSchedule();
+
+		$newRec = $Schedule->updateRec($targetRec, $fieldsToUpdate, Auth::user()->id );
+		
+		$respData = ['record' => $newRec];
+
+		return new JsonResponse($respData, 200);
+	
+		//!Kint::dump($targetRec); die();
+
+
+
+
+		
 	}
 
 }

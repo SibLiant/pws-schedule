@@ -22,6 +22,7 @@ elixir(function(mix) {
 				'pwsrender.js',
 				'pwsworker.js',
 				'pwsworkercollection.js'
+				//'jquery-ui-1.11.4.customi/jquery-ui.min.js'
 		], 'public/js/pwsapp.js');
 		mix.livereload();
 

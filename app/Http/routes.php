@@ -39,6 +39,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/RO', 'ReadonlyController@index');
     Route::get('/RO/postedSchedule', 'ReadonlyController@postedSchedule');
     Route::get('/RO/test', 'ReadonlyController@modelTest');
+    Route::post('/RO/schedule/update', 'ReadonlyController@ajaxScheduleUpdate');
+
+
+
 
     //Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@schedule');
     Route::get('/RO/calendar/{calendarId}', ['as' => 'calendar.view', 'uses' =>'ReadonlyController@calendar']);

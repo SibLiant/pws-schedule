@@ -329,7 +329,7 @@ textarea {
 .proj-border-width {border-width: 2px;}
 
 div#cnt-calendar-header {.sch-table; border: 1px solid @bs-grey;}
-div#cnt-calendar-header div.hdr-row {display: table-row; height: 20px}
+div#cnt-calendar-header div.hdr-row {display: table-row; height: 20px; background-color: @bs-bg}
 div#cnt-calendar-header div.hdr-row div { .sch-day-cell; text-align: center; }
 div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 
@@ -369,13 +369,13 @@ div#cnt-calendar-header div.hdr-row div#name-placeholder { .sch-name-cell; }
 @bs-bg-weekend:  lighten(spin(@bs-bg, 5), 2%);
 
 .weekend {
-	background-color: @bs-bg-weekend !important;
+	background-color: @bs-bg-weekend;
 }
 
 
 body { background-color: @bs-bg; }
 .cnt-project {  padding: 5px; margin-bottom: 10px; background-color: @pal-blue-white; overflow:hidden; white-space:nowrap; color: black;}
-.cnt-hdr-date { color: white; background-color: @bs-bg;}
+.cnt-hdr-date { color: white;}
 .proj-single {  border: @proj-border-width solid @proj-border-color; border-radius: @proj-border-radius;}
 .proj-begin { 
 	border-style: solid;	
@@ -514,8 +514,13 @@ ul#selected-project li {
 
 }
 
-.drop-active-class {
- background-color: lightgreen;
+.drop-active {
+ /*background-color: lighten(spin(grey, 5), 30%);*/
+ background-color: black;
+}
+
+.drop-hover {
+ background-color: lightblue !important;
 }
 
 .proj-drop-hover { background-color: yellow; }
