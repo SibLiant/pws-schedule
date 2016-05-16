@@ -132,9 +132,24 @@ PWSSchedule.worker =  function(id, name, projectPool) {
 		return name;
 	};
 
+	var removeProjectFromPool = function(scheduleId){
+		$.each(projectPool, function( index, value ) {
+			if ( scheduleId === value.schedule_id ) {
+				projectPool.splice(index,1);
+				return false;
+			}
+		});
+	};
+
+	var addProjectToPool = function(rec){
+		projectPool.push(rec);
+	};
+
 
 	return {
 		id:id,
+		removeProjectFromPool:removeProjectFromPool,
+		addProjectToPool:addProjectToPool,
 		isDateInCalendarRange:isDateInCalendarRange,
 		isRecInCalendarRange:isRecInCalendarRange,
 		sortScheduleRecordsAZ:sortScheduleRecordsAZ,

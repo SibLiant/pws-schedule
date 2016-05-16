@@ -118,7 +118,24 @@ PWSSchedule.render = function( core ){
 			$.each(rws, function( rowIndex, row ) {
 				renderWorkerRow( worker.id, row  );
 			});
+			bindDragDrop(worker.id);
 		});
+	};
+
+	var renderWorkerScheduleElements = function(workerId, clearExisting){
+
+		if ( clearExisting ) {
+			clearWorkerScheduleElements(workerId);
+		}
+
+		var worker = core.workers[workerId];
+		var rws = worker.buildRows(core.config.momCalStart, core.config.calRangeInt);
+		$.each(rws, function( rowIndex, row ) {
+			renderWorkerRow( worker.id, row  );
+		});
+
+		bindDragDrop(workerId);
+
 	};
 
 	var reRender = function(){
@@ -324,10 +341,13 @@ PWSSchedule.render = function( core ){
 	};
 
 	var updateSelectedProjectDisplay = function (){
+
 		$('#selected-project').html('');
-		var proj = '<li>'+projectSelected.customer_name+'</li>';
+		var proj = '<li id="selected-proj-li" class="proj-draggable">'+projectSelected.customer_name+'</li>';
 		$('#selected-project').append(proj);
+		$('#selected-proj-li').data("scheduleRecord", projectSelected );
 		setTagStyles();
+		//ctrlBind();
 	};
 
 	var setTagStyles = function(){
@@ -351,22 +371,109 @@ PWSSchedule.render = function( core ){
 		var dt = id.substring(id.length - 10, id.length);
 
 		return { workerId:wkId, day: moment(dt) };
-
-
 	};
 
 	var moveScheduleRec = function(scheduleRecord, fieldsObj){
+		var jqxhr = $.ajax({
+			url: "/RO/schedule/update",
+			async: true,
+			dataType: "json",
+			data: {"_token":crfs,"targetRecord":scheduleRecord, "updateFields": fieldsObj},
+			method: "POST"
+		} )
+		.done(function(newRec) {
 
-				$.ajax({
-					type: "POST",
-					url: '/RO/schedule/update',
-					data: {"_token":crfs,"targetRecord":scheduleRecord, "updateFields": fieldsObj},
-					success: function(){
-						alert('success');
+			var wkr;
+			if ( parseInt( scheduleRecord.worker_id ) === parseInt( newRec.worker_id )  ) {
+				wkr = core.workers[newRec.worker_id];
+				wkr.removeProjectFromPool(scheduleRecord.schedule_id);
+				wkr.addProjectToPool(newRec);
+				renderWorkerScheduleElements(newRec.worker_id, true);
 
-					},
-					dataType: "json"
-				});
+			}
+			else {
+				wkr = core.workers[newRec.worker_id];
+
+				//worker old pool
+				var wkrOld = core.workers[scheduleRecord.worker_id];
+				wkrOld.removeProjectFromPool(scheduleRecord.schedule_id);
+
+				wkr.removeProjectFromPool(scheduleRecord.schedule_id);
+				wkr.addProjectToPool(newRec);
+				renderWorkerScheduleElements(newRec.worker_id, true);
+				renderWorkerScheduleElements(scheduleRecord.worker_id, true);
+			}
+
+			setProjSelected(newRec);
+			updateSelectedProjectDisplay(projectSelected);
+			//ctrlBind();
+		})
+		.fail(function() {
+			alert( "error" );
+		})
+		.always(function() {
+			//alert( "complete" );
+		});
+	};
+
+	var bindDragDrop = function(workerId){
+
+		var projElements = $('#worker-row_'+workerId+' .proj-draggable');
+		var dayElements = $('#worker-row_'+workerId+' .proj-droppable');
+
+		projElements.draggable( {
+			revert : "invalid",
+			scroll: true,
+			snap: ".proj-droppable",
+			snapMode: "inner"
+		});
+
+		dayElements.droppable({
+			drop: function(event,ui){
+				var parsedTargetId = parseWorkerDayId( $(this).attr("id") );
+				var rec =  $(ui.draggable).data("scheduleRecord");
+				if ( $(ui.draggable).attr("id") === "selected-proj-li"  ) {
+					ui.draggable.draggable('option', 'revert', true);
+				}
+
+				var targetDay = parsedTargetId.day.format(core.config.pwsDateFormat);
+			
+				// if target is not goign to change dont hit the database
+				if ( targetDay === rec.scheduled_date && parsedTargetId.workerId === rec.worker_id  ) {
+					ui.draggable.draggable('option', 'revert', true);
+					return true;
+				}
+
+				var updateFields = {	
+						"scheduled_date":parsedTargetId.day.format(core.config.pwsDateFormat),
+						"worker_id":parsedTargetId.workerId
+				};
+
+				moveScheduleRec( rec, updateFields );
+			},
+			accept: ".proj-draggable",
+			hoverClass: "drop-hover",
+			activeClass: "drop-active"
+
+
+		});
+
+		projElements.click(function(e){
+			// user can click on other elements in the project div
+			// make sure we catch it and get the appropriate id
+
+			var projEl;
+
+			if ( e.target.nodeName === "SPAN" ) { projEl = $(e.target).parent(); }
+			if ( e.target.nodeName === "DIV" ) { projEl = $(e.target); }
+
+			var projData = projEl.data("scheduleRecord");
+
+			setProjUnselected( projData );
+			setProjSelected( projData );
+			updateSelectedProjectDisplay();
+			
+		});
 
 	};
 
@@ -399,23 +506,6 @@ PWSSchedule.render = function( core ){
 
 
 
-		$('.cnt-project').click(function(e){
-			// user can click on other elements in the project div
-			// make sure we catch it and get the appropriate id
-
-			var projEl;
-
-			if ( e.target.nodeName === "SPAN" ) { projEl = $(e.target).parent(); }
-			if ( e.target.nodeName === "DIV" ) { projEl = $(e.target); }
-
-			var projData = projEl.data("scheduleRecord");
-
-
-			setProjUnselected( projData );
-			setProjSelected( projData );
-			updateSelectedProjectDisplay();
-			
-		});
 
 		$("#cnt-worker-grids").scroll(function () { 
 			$("#cnt-scroll-header").scrollLeft($("#cnt-worker-grids").scrollLeft());
@@ -438,33 +528,6 @@ PWSSchedule.render = function( core ){
 		}
 
 		//enable drag and drop
-		$( ".proj-draggable"  ).draggable( {
-			//revert : function(event, ui){
-				//$(this).data("uiDraggable").originalPosition = {top:0,left:0};
-				//return !event;
-			//},
-			scroll: true,
-			snap: ".proj-droppable",
-			snapMode: "inner"
-		});
-
-
-		$(".proj-droppable").droppable({
-			drop: function(event,ui){
-				var parsedTargetId = parseWorkerDayId( $(this).attr("id") );
-				var rec =  $(ui.draggable).data("scheduleRecord");
-
-				var updateFields = {	
-						"scheduled_date":parsedTargetId.day.format(core.config.pwsDateFormat),
-						"worker_id":parsedTargetId.workerId
-				};
-
-				moveScheduleRec( rec, updateFields );
-			},
-			accept: ".proj-draggable",
-			hoverClass: "drop-hover",
-			activeClass: "drop-active"
-		});
 
 
 	};
@@ -626,9 +689,24 @@ PWSSchedule.worker =  function(id, name, projectPool) {
 		return name;
 	};
 
+	var removeProjectFromPool = function(scheduleId){
+		$.each(projectPool, function( index, value ) {
+			if ( scheduleId === value.schedule_id ) {
+				projectPool.splice(index,1);
+				return false;
+			}
+		});
+	};
+
+	var addProjectToPool = function(rec){
+		projectPool.push(rec);
+	};
+
 
 	return {
 		id:id,
+		removeProjectFromPool:removeProjectFromPool,
+		addProjectToPool:addProjectToPool,
 		isDateInCalendarRange:isDateInCalendarRange,
 		isRecInCalendarRange:isRecInCalendarRange,
 		sortScheduleRecordsAZ:sortScheduleRecordsAZ,

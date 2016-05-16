@@ -219,7 +219,7 @@ class ReadonlyController extends Controller
 
 		$newRec = $Schedule->updateRec($targetRec, $fieldsToUpdate, Auth::user()->id );
 		
-		$respData = ['record' => $newRec];
+		$respData = json_decode( $newRec->json_data );
 
 		return new JsonResponse($respData, 200);
 	

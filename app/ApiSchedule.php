@@ -252,7 +252,9 @@ class ApiSchedule extends ApiModel
 
 		$data = json_encode($data);
 
-		$this->apiUpdate($Schedule->calendar_id, $schId, $userId, $data);
+		$recId = $this->apiUpdate($Schedule->calendar_id, $schId, $userId, $data);
+
+		return ApiSchedule::find($recId);
 
 	}
 	
