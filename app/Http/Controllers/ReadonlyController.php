@@ -19,6 +19,7 @@ use Kint;
 use Carbon\Carbon;
 use Auth;
 use Gate;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 
 class ReadonlyController extends Controller
@@ -164,8 +165,6 @@ class ReadonlyController extends Controller
 		$data['workerRecords'][] = ['worker_id'=>3, 'worker_name'=>'williams' ];
 
 
-		//!Kint::dump($data); die();
-		//$data['tags'] = $this->getTags();
 		$data['tags'] = [];
 
 
@@ -207,9 +206,148 @@ class ReadonlyController extends Controller
 	/**
 	 *
 	 */
-	public function ajaxScheduleUpdate(Request $request)
+	public function ajaxScheduleUserUpdate(Request $request, $calendarId, $scheduleId)
 	{
-		//!Kint::dump(Input::all()); die();
+
+		if ($request->ajax() && $request->isMethod("post"))
+		{
+			$validation= [
+				'scheduled_date' => 'required|date_format:"Y-m-d"',
+				'customer_name' => 'required'
+			];
+
+			$this->validate($request, $validation);
+
+			
+			if ( ! $newRec = $this->repo->saveUserScheduleUpdate(Input::all()) ){
+
+				abort(422);
+
+			}
+
+			$respData = json_decode( $newRec->json_data );
+
+			return new JsonResponse($respData, 200);
+
+
+		}
+		
+		return view('user_update')->with('scheduleData', $this->repo->getUserScheduleUpdateData($scheduleId));
+		
+	}
+
+	/**
+	 *
+	 */
+	public function ajaxScheduleTagRemove($scheduleId, $tagId)
+	{
+		
+		if ( $newRec = $this->repo->removeTagFromScheduelElement($scheduleId, $tagId)  ){
+
+			$respData = json_decode( $newRec->json_data );
+
+			return new JsonResponse($respData, 200);
+
+		}
+
+		return abort(422);
+		
+	}
+
+	/**
+	 *
+	 */
+	public function ajaxScheduleTagAdd($scheduleId, $tagId)
+	{
+
+		if ( $newRec = $this->repo->addTagToScheduelElement($scheduleId, $tagId)  ){
+
+			$respData = json_decode( $newRec->json_data );
+
+			return new JsonResponse($respData, 200);
+
+		}
+
+		return abort(422);
+		
+	}
+
+	/**
+	 *
+	 */
+	public function ajaxScheduleTagEdit($calendarId, $scheduleId)
+	{
+
+		$tagData = $this->repo->getEditTagsData($calendarId, $scheduleId);
+
+		return view('user_tag_edit')->with('tagData', $tagData );
+		
+	}
+
+
+	/**
+	 *
+	 */
+	public function ajaxScheduleUserRemove($scheduleId)
+	{
+
+		//gate
+		
+		if ( ApiSchedule::setInactive($scheduleId, Auth::user()->id) ){
+
+			return new JsonResponse(["response"=>"success"], 200);
+
+		}
+
+		return new JsonResponse(["response"=>"error: unable to update record"], 422);
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function ajaxScheduleUserAdd(Request $request, $calendarId)
+	{
+
+		if ($request->ajax() && $request->isMethod("post"))
+		{
+			$validation= [
+				'scheduled_date' => 'required|date_format:"Y-m-d"',
+				'customer_name' => 'required',
+				'project_id' => 'required',
+				'worker_id' => 'required'
+			];
+
+			$this->validate($request, $validation);
+
+			
+			if ( ! $newRec = $this->repo->saveUserScheduleAdd(Input::all(), $calendarId) ){
+
+				abort(422);
+
+			}
+
+			$respData = json_decode( $newRec->json_data );
+
+			return new JsonResponse($respData, 200);
+		}
+
+		$data = $this->repo->getUserScheduleAddData($calendarId);
+
+		$data['calendar_id'] = $calendarId;
+
+		return view('user_add')->with('scheduleData', $data );
+
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function ajaxScheduleDragUpdate(Request $request)
+	{
 
 		$targetRec = Input::get('targetRecord');
 
@@ -222,12 +360,6 @@ class ReadonlyController extends Controller
 		$respData = json_decode( $newRec->json_data );
 
 		return new JsonResponse($respData, 200);
-	
-		//!Kint::dump($targetRec); die();
-
-
-
-
 		
 	}
 

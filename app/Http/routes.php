@@ -39,10 +39,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/RO', 'ReadonlyController@index');
     Route::get('/RO/postedSchedule', 'ReadonlyController@postedSchedule');
     Route::get('/RO/test', 'ReadonlyController@modelTest');
-    Route::post('/RO/schedule/update', 'ReadonlyController@ajaxScheduleUpdate');
-
-
-
+    Route::post('/RO/schedule/drag-update', 'ReadonlyController@ajaxScheduleDragUpdate');
+	Route::match(['get', 'post'], '/calendar/{calendarId}/schedule-element/{scheduleId}/user-update', ['as' => 'calendar.user-edit-schedule-element', 'uses' => 'ReadonlyController@ajaxScheduleUserUpdate']);
+	Route::match(['get', 'post'], '/calendar/{calendarId}/schedule-element/user-add', ['as' => 'calendar.user-add-schedule-element', 'uses' => 'ReadonlyController@ajaxScheduleUserAdd']);
+    Route::get('/calendar/schedule-element/{scheduleId}/tag/{tagId}/add', ['as' => 'calendar.user-tag-add', 'uses' => 'ReadonlyController@ajaxScheduleTagAdd']);
+    Route::get('/calendar/schedule-element/{scheduleId}/tag/{tagId}/remove', ['as' => 'calendar.user-tag-remove', 'uses' => 'ReadonlyController@ajaxScheduleTagRemove']);
+    Route::get('/calendar/{calendarId}/schedule-element/{scheduleId}/tag/edit', ['as' => 'calendar.user-tag-edit', 'uses' => 'ReadonlyController@ajaxScheduleTagEdit']);
 
     //Route::get('/RO/calendar/{calendarId}', 'ReadonlyController@schedule');
     Route::get('/RO/calendar/{calendarId}', ['as' => 'calendar.view', 'uses' =>'ReadonlyController@calendar']);

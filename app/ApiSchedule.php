@@ -14,11 +14,20 @@ class ApiSchedule extends ApiModel
 	public $timestamps = true;
 
 	protected $guarded = ['id', 'created_at', 'updated_at'];
+
+	public static $userUpdateFields = [
+		'job_length_days',
+		'scheduled_date',
+		'worker_id',
+		'customer_name',
+		'schedule_id',
+		'project_id',
+	];
 	
 	//protected $casts = [ 'json_data' => 'array' ];
 
-	public $jsonDefaults = [
-		'job_length_days' => '',
+	public static $jsonDefaults = [
+		'job_length_days' => '1',
 		'scheduled_date' => ''
 	];
 
@@ -112,7 +121,7 @@ class ApiSchedule extends ApiModel
 	public static function setInactive($id, $userId)
 	{
 		
-		$S = ApiSchedule::find($id)->where('user_id', $userId)->first();
+		$S = ApiSchedule::find($id);
 
 		if ( ! $S ) return false;
 
@@ -256,6 +265,73 @@ class ApiSchedule extends ApiModel
 
 		return ApiSchedule::find($recId);
 
+	}
+
+	
+	/**
+	 *
+	 */
+	public function userAdd($data, $calendarId, $userId)
+	{
+
+		$newId = self::add($calendarId, $userId, json_encode($data));
+		
+		return  ApiSchedule::find($newId);
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public static function removeTag($scheduleId, $tagId, $userId)
+	{
+
+		$S = ApiSchedule::find($scheduleId);
+
+		$dataAr  = json_decode($S->json_data);
+		
+
+		if( ($key = array_search($tagId, (array) $dataAr->tags)) !== false) {
+			
+			unset( $dataAr->tags[$key] );
+
+			$dataAr->tags = array_values( $dataAr->tags );
+
+			$newId = ApiSchedule::apiUpdate ( $S->calendar_id, $S->id, $userId,  json_encode( $dataAr) );
+
+			return	$S->find($newId);
+
+		}
+
+		return false;
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public static function addTag($scheduleId, $tagId, $userId)
+	{
+
+		$S = ApiSchedule::find($scheduleId);
+
+		$dataAr  = json_decode($S->json_data);
+		
+
+		if( ($key = array_search($tagId, (array) $dataAr->tags)) === false) {
+			
+			$dataAr->tags[] = $tagId;
+
+			$newId = ApiSchedule::apiUpdate ( $S->calendar_id, $S->id, $userId,  json_encode( $dataAr) );
+
+			return	$S->find($newId);
+
+		}
+
+		return false;
+		
 	}
 	
 }

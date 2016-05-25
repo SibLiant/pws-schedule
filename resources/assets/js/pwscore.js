@@ -1,7 +1,7 @@
 /*global PWSSchedule, moment */
 PWSSchedule.core = function(options){
 	"use strict";
-	
+//todo: on cal nav project is not highlighted when cal redraws	
 	var scheduleWorkers = options.workerRecords;
 	var config = {
 		"momCalStart": moment( options.calendarRange.start ),
@@ -11,7 +11,8 @@ PWSSchedule.core = function(options){
 		"navBackward": options.settings.navBackward,
 		"navForward": options.settings.navForward,
 		"navRootUrl": options.settings.navRootUrl,
-		"calendarName": options.settings.name
+		"calendarName": options.settings.name,
+		"calendarId": options.settings.id
 	};
 
 	config.calRangeInt = config.momCalEnd.diff( config.momCalStart, "days" );

@@ -140,7 +140,7 @@ class ApiWorker extends ApiModel
 	 *
 	 * @return date string
 	 */
-	public function getWorkersByCalendarId($calendarId, $userId)
+	public static function getWorkersByCalendarId($calendarId, $userId = null)
 	{
 
 		$res = ApiCalendar::find($calendarId);
@@ -153,9 +153,38 @@ class ApiWorker extends ApiModel
 
 		foreach( $res as $w ){ $workerArr[] = $w[ 'worker_id' ]; }
 
-		return ApiWorker::whereIn('id', $workerArr)->where('user_id', $userId)->get()->toArray();
+		if ( $userId ) {
 
+			return ApiWorker::whereIn('id', $workerArr)->where('user_id', $userId)->get()->toArray();
+
+		}
+		
+		return ApiWorker::whereIn('id', $workerArr)->get()->toArray();
 		
 	}
+
+	
+	/**
+	 *
+	 */
+	public static function wList($calendarId)
+	{
+		
+		$list = self::getWorkersByCalendarId($calendarId);
+
+		foreach ( $list as $k => $v ) {
+
+			$workerList[$v['worker_json']['worker_id']] = $v['worker_json']['worker_name'];
+
+		}
+
+		return $workerList;
+
+	}
+
+
+
+
+
 
 }

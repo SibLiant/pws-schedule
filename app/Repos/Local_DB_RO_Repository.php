@@ -11,6 +11,7 @@ use App\ApiTag;
 use App\ApiSchedule;
 use App\ApiCalendarWorkerJoin;
 use App\User;
+use Auth;
 
 class Local_DB_RO_Repository  extends PWS_DB_RO_Repository { 
 	
@@ -288,6 +289,7 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 	 */
 	public function getApiCalendar($calendarId)
 	{
+
 		$cal = ApiCalendar::find($calendarId);
 
 		if ( isset( $cal->calendar_json ) ) return $cal->calendar_json;
@@ -297,5 +299,151 @@ class Local_DB_RO_Repository  extends PWS_DB_RO_Repository {
 	}
 
 
+	/**
+	 *
+	 */
+	public function getUserScheduleUpdateData($scheduleId)
+	{
+
+		$data = ApiSchedule::findOrFail($scheduleId);
+
+		$json_data = json_decode($data->json_data, true);
+		
+		unset($json_data['tags']);
+
+		$displayFields = ApiSchedule::$userUpdateFields;
+
+		$calendar_id = $data->calendar_id;
+
+		$Worker = new ApiWorker;
+
+		$list = $Worker->getWorkersByCalendarId($data->calendar_id, Auth::user()->id);
+
+		foreach ( $list as $k => $v ) {
+			$workerList[$v['worker_json']['worker_id']] = $v['worker_json']['worker_name'];
+		}
+
+		$workerList = $workerList;
+
+		$data = compact( 'json_data', 'calendar_id', 'displayFields', 'workerList' );
+
+		return $data;
+
+	}
+
+	
+	/**
+	 *
+	 */
+	public function saveUserScheduleUpdate($scheduleData)
+	{
+		
+		$S = new ApiSchedule;
+
+		$scheduleId = $scheduleData['schedule_id'];
+
+		unset($scheduleData['schedule_id']);
+
+		unset($scheduleData['_token']);
+
+		if ( $newRec = $S->updateRec( (int) $scheduleId, $scheduleData, Auth::user()->id)) {
+
+			return $newRec;
+
+		}
+
+		return false;
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function getUserScheduleAddData($calendarId)
+	{
+
+		$workerList = ApiWorker::wList($calendarId);
+
+		$displayFields = ApiSchedule::$userUpdateFields;
+
+		return compact('displayFields', 'workerList');
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function saveUserScheduleAdd($scheduleData, $calendarId)
+	{
+
+		$S = new ApiSchedule;
+
+		unset($scheduleData['schedule_id']);
+
+		unset($scheduleData['_token']);
+
+		if ( $newRec = $S->userAdd( $scheduleData, $calendarId, Auth::user()->id ) ) {
+
+			return $newRec;
+
+		}
+
+		return false;
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function getEditTagsData($calendarId, $scheduleId)
+	{
+
+		$availableTags = ApiTag::tList(Auth::user()->id);
+
+		$schedule = ApiSchedule::find($scheduleId);
+
+		$data = json_decode($schedule->json_data);
+
+		$assignedTags = $data->tags;
+
+		return compact('availableTags', 'assignedTags'); 
+		
+	}
+
+	
+	/**
+	 *
+	 */
+	public function removeTagFromScheduelElement($scheduleId, $tagId)
+	{
+
+		if ( $newRec = ApiSchedule::removeTag($scheduleId, $tagId, Auth::user()->id) ) {
+
+			return $newRec;
+
+		}
+
+		return false;
+		
+	}
+
+	/**
+	 *
+	 */
+	public function addTagToScheduelElement($scheduleId, $tagId)
+	{
+
+		if ( $newRec = ApiSchedule::addTag($scheduleId, $tagId, Auth::user()->id) ) {
+
+			return $newRec;
+
+		}
+
+		return false;
+		
+	}
 
 }

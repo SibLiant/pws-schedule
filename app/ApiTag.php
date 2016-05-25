@@ -130,4 +130,29 @@ class ApiTag extends ApiModel
 		
 	}
 
+	
+	/**
+	 *
+	 */
+	public static function tList($userId)
+	{
+
+		$tags = ApiTag::where('user_id', $userId)->get();
+
+
+		if ( ! $tags ) return [];
+
+		$list = [];
+
+
+		foreach($tags as $k => $v ) {
+
+			$list[$v['id']] = $v['tag_json']['name'];
+			
+		}
+
+		return $list;
+		
+	}
+
 }

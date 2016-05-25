@@ -32,11 +32,8 @@
 <div class="col-md-8 selected-col-cnt" id="hdr-proj-col">
 			<ul id="selected-project">
 			</ul>
-			<ul class="project-controls list-inline">
-				<li> <a href="#" class="btn btn-warning btn-xs">update</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">related</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">notes</a></li>
-				<li> <a href="#" class="btn btn-info btn-xs">log</a></li>
+			<ul class="project-controls list-inline" id="project-controls">
+
 			</ul>
 		</div>
 
@@ -81,14 +78,76 @@
 </div>
 <div id="cnt-footer"> 
 <div id="selected-project"> 
-project
 
-</div> container footer </div>	
+</div> 
+<ul class="list-inline" id="schedule-ctrl">
+<li> <a href="#cal-ctrl"  data-toggle="modal" data-href="" data-name="add" class="btn btn-success btn" >Add</a></li>
+<li> <a href="#cal-ctrl"  id="btn-filter-workers" data-toggle="modal" data-href="" data-name="filter-workers" class="btn btn-success btn" >Filter Workers</a></li>
+<li> <a href="#cal-ctrl"  data-toggle="modal" data-href="" data-name="Update" class="btn btn-success btn" >Filter Tags</a></li>
+</ul>
+</div>	
 
 
-<div id="mocha"></div>
-<div id="messages"></div>
-<div id="fixtures"></div>
+
+
+  <!-- Modal project controls -->
+  <div class="modal fade modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+			<p> empty </p>
+        </div>
+        <div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <a href="#" class="btn btn-primary" id="btn-modal-submit" >Submit</a>		
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+
+  <!-- Modal calendar controls -->
+  <div class="modal fade modal-lg" id="cal-ctrl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+			<p> calendar control </p>
+        </div>
+        <div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <a href="#" class="btn btn-primary" id="btn-modal-cal-ctrl-submit" >Submit</a>		
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <!-- Modal calendar controls -->
+  <div class="modal fade modal-lg" id="tags" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title"> Edit Tags</h4>
+        </div>
+        <div class="modal-body">
+			<p> tags control </p>
+        </div>
+        <div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
 
 <script src="/js/jquery-2.2.0.min.js"></script>
@@ -96,6 +155,7 @@ project
 <script src="/js/underscore_1.8.3.js"></script>
 <script src="/js/pwsapp.js"></script>
 <script src="/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script src="/js/js-cookie-2.1.1.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -108,6 +168,7 @@ project
 	PWSCore.render.initWorkerDivs('#calendar-workers-scrollable');
 	PWSCore.render.initScheduleRecords();
 	PWSCore.render.ctrlBind();
+	PWSCore.render.applyFilters();
 </script>
 
 </body>

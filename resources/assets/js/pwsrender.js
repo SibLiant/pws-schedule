@@ -1,4 +1,4 @@
-/*global PWSSchedule, moment, crfs */
+/*global PWSSchedule, moment, crfs,_,Cookies */
 /*exported  getCalStart, getCalRange, setCalStart */
 /* jshint unused:false */
 PWSSchedule.render = function( core ){
@@ -247,15 +247,24 @@ PWSSchedule.render = function( core ){
 		$('#worker-row_'+worker_id).append(daysDivs);
 	};
 
+	var updateSelectedProject = function(newRec) {
+
+		if ( ! newRec ) {
+			setProjUnselected();	
+			return;
+		}
+
+		setProjUnselected();
+		setProjSelected( newRec );
+		updateSelectedProjectDisplay();
+		renderButtons();
+	};
 
 	var setProjUnselected = function(){
-		if ( $.isEmptyObject( projectSelected ) ) { return; }
-		for (var i = 0; i < projectSelected.job_length_days; i ++) {
-			var select =  '#schedule-id_'+projectSelected.schedule_id+'_dy_'+ Math.abs(i+1);
-			$( select ).removeClass('proj-selected');
-		}
 		projectSelected = {};
 		$('#selected-project').html('');
+		$('#project-controls').html('');
+		$('#calendar-workers-scrollable').find('.proj-selected').removeClass('proj-selected');
 	};
 
 	var setProjSelected = function(p){
@@ -274,13 +283,99 @@ PWSSchedule.render = function( core ){
 		$('#selected-project').append(proj);
 		$('#selected-proj-li').data("scheduleRecord", projectSelected );
 		setTagStyles();
+		bindSelectedProjectDraggable();
 		//ctrlBind();
 	};
 
 	var setTagStyles = function(){
+		
+		if ( _.isEmpty( projectSelected.tags)  ) {
+			return;
+		}
+
 		$.each(projectSelected.tags, function( index, value ) {
 			renderTag( value );
 		});
+	};
+
+
+	var renderExistingTagsForEdit = function(){
+		$('#existing-tags').html('');
+		if ( _.isEmpty( projectSelected.tags)  ) {
+			return;
+		}
+
+		$.each(projectSelected.tags, function( index, value ) {
+			renderEditTagListElement( value );
+		});
+
+		$('.remove-tag').on(' click ', function(e){
+			removeTag( $(e.target) );
+		});	
+
+	};
+
+	var bindTagCtrls = function(){
+		$('#btn-add-tag').on(' click ', function(){
+			var tagId = $('#tag-select').val();
+			addTag(tagId);
+		});
+	};
+
+	var removeTag = function(btnTarget){
+		var tagId =  btnTarget.attr("id").match(/\d+$/);
+		tagId = tagId[0];
+
+		//console.debug('schedule id to remove tag: '+projectSelected.schedule_id);
+		//console.debug('tags id '+tagId);
+		var jqxhr = $.ajax({
+			url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/tag/"+tagId+"/remove",
+			async: true,
+			method: "GET"
+		} )
+		.done(function(newRec) {
+			if ( _.isObject( newRec )) {
+				liveUpdateWorkerRows(projectSelected, newRec);
+				renderExistingTagsForEdit();
+
+			}
+
+		})
+		.fail(function() {
+			alert( "error removing tag!" );
+		});
+	};
+
+	var addTag = function(tagId){
+
+		if ( $('#tag-select').val() === '' ) {
+			alert('select a tag before trying to add');
+			return;
+		}
+
+		var jqxhr = $.ajax({
+			url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/tag/"+tagId+"/add",
+			async: true,
+			method: "GET"
+		} )
+		.done(function(newRec) {
+			if ( _.isObject( newRec )) {
+				liveUpdateWorkerRows(projectSelected, newRec);
+				renderExistingTagsForEdit();
+			}
+
+		})
+		.fail(function() {
+			alert( "error adding tag! does it already exist?" );
+		});
+	};
+
+
+
+	var renderEditTagListElement = function(tagId){
+		var tag = core.options.tags[tagId];
+		var styles = 'border-color: '+tag.border_color+'; background-color: '+tag.background_color+'; ';
+		$('#existing-tags').append('<li><span class="tag tag-tooltip" id="tag-id_"'+tagId+' style="'+styles+'" tooltip="'+tag.tool_tip+'">'+tag.name+'</span>&nbsp;<a href="#" class="btn btn-primary btn-xs remove-tag" id="remove-tag_'+tagId+'">remove</a></li>');
 	};
 
 	var renderTag = function(tagId){
@@ -300,47 +395,259 @@ PWSSchedule.render = function( core ){
 		return { workerId:wkId, day: moment(dt) };
 	};
 
+	var liveUpdateWorkerRow = function(newRec) {
+		var wkr = core.workers[newRec.worker_id];
+		wkr.addProjectToPool(newRec);
+		renderWorkerScheduleElements(newRec.worker_id, true);
+		updateSelectedProject(newRec);
+	};
+
+	var liveUpdateWorkerRows = function(origRec, newRec){
+
+		if( _.isEmpty( origRec ) ) {
+			liveUpdateWorkerRow(newRec);
+			return;
+		}
+
+		var wkr;
+		if ( parseInt( origRec.worker_id ) === parseInt( newRec.worker_id )  ) {
+			wkr = core.workers[newRec.worker_id];
+			wkr.removeProjectFromPool(origRec.schedule_id);
+			wkr.addProjectToPool(newRec);
+			renderWorkerScheduleElements(newRec.worker_id, true);
+
+		}
+		else {
+			wkr = core.workers[newRec.worker_id];
+			var wkrOld = core.workers[origRec.worker_id];
+			wkrOld.removeProjectFromPool(origRec.schedule_id);
+			wkr.removeProjectFromPool(origRec.schedule_id);
+			wkr.addProjectToPool(newRec);
+			renderWorkerScheduleElements(newRec.worker_id, true);
+			renderWorkerScheduleElements(origRec.worker_id, true);
+		}
+		
+		updateSelectedProject(newRec);
+
+	};
+
 	var moveScheduleRec = function(scheduleRecord, fieldsObj){
 		var jqxhr = $.ajax({
-			url: "/RO/schedule/update",
+			url: "/RO/schedule/drag-update",
 			async: true,
 			dataType: "json",
 			data: {"_token":crfs,"targetRecord":scheduleRecord, "updateFields": fieldsObj},
 			method: "POST"
 		} )
 		.done(function(newRec) {
-
-			var wkr;
-			if ( parseInt( scheduleRecord.worker_id ) === parseInt( newRec.worker_id )  ) {
-				wkr = core.workers[newRec.worker_id];
-				wkr.removeProjectFromPool(scheduleRecord.schedule_id);
-				wkr.addProjectToPool(newRec);
-				renderWorkerScheduleElements(newRec.worker_id, true);
-
-			}
-			else {
-				wkr = core.workers[newRec.worker_id];
-
-				//worker old pool
-				var wkrOld = core.workers[scheduleRecord.worker_id];
-				wkrOld.removeProjectFromPool(scheduleRecord.schedule_id);
-
-				wkr.removeProjectFromPool(scheduleRecord.schedule_id);
-				wkr.addProjectToPool(newRec);
-				renderWorkerScheduleElements(newRec.worker_id, true);
-				renderWorkerScheduleElements(scheduleRecord.worker_id, true);
-			}
-
-			setProjSelected(newRec);
-			updateSelectedProjectDisplay(projectSelected);
-			//ctrlBind();
+			liveUpdateWorkerRows(scheduleRecord, newRec);
 		})
 		.fail(function() {
 			alert( "error" );
-		})
-		.always(function() {
-			//alert( "complete" );
 		});
+	};
+
+	var renderButtons = function(){
+
+		rbUpdate(projectSelected);
+		rbRemove(projectSelected);
+		rbTags(projectSelected);
+
+		
+	};
+
+	var fetchModalAddContent = function(){
+		var jqxhr = $.ajax({
+			url: '/calendar/'+core.config.calendarId+'/schedule-element/user-add',
+			async: true,
+			method: "GET"
+		} )
+		.done(function(response) {
+			$('#cal-ctrl').find('.modal-body').html(response)
+				.find( "#scheduled-date-field"  )
+				.datepicker({dateFormat: "yy-mm-dd"});
+			$('#cal-ctrl').find(".modal-title").html("Add Schedule Record");
+			$('#btn-modal-cal-ctrl-submit').show();
+		})
+		.fail(function() {
+			alert( "error fetching url data" );
+		});
+
+	};
+
+	var buildModalContentFilterWorkers = function(){
+
+		var bdy = $('#cal-ctrl').find('.modal-body');
+		$('#cal-ctrl').find('.modal-title').html('Show Workers -- uncheck workers to hide');
+		$('#btn-modal-cal-ctrl-submit').hide();
+		bdy.html('');
+		var filteredWorkers = Cookies.getJSON('pws_filtered_workers');	
+
+		bdy.append('<ul id = "filtered-workers-list"></ul>');
+		var list = $('#filtered-workers-list');
+		$.each(core.workers, function( index, wkr ) {
+			var cid = 'wkr-cb_'+wkr.id;
+			list.append('<li class="checkbox" > <input class="fw-checkbox" id="'+cid+'" type="checkbox" name="vehicle" value="'+wkr.id+'" checked="checked">'+wkr.name+' </li>');
+			if ( $.inArray(wkr.id, filteredWorkers) >= 0 ) {
+				//console.debug(cid);
+				$('#'+cid).prop('checked', false);
+			}
+
+		});
+
+		$('#filtered-workers-list li .fw-checkbox').on(' click ', function(e){
+			var nonCheckedId;
+			var clickedId = $(e.target).attr("id").match(/\d+$/);
+			var filteredList = [];
+			$.each($('.fw-checkbox'), function( index, value ) {
+				if ( ! $(value).is(':checked')  ){
+					nonCheckedId = $(value).attr("id").match(/\d+$/);
+					filteredList.push( parseInt(nonCheckedId[0]));
+				}
+			});
+
+			Cookies.set('pws_filtered_workers', filteredList, {path:''});
+			applyWorkerFilter();
+
+		});
+	};
+
+	var applyWorkerFilter = function(){
+		var wFilter= Cookies.getJSON('pws_filtered_workers');
+
+		if ( _.isEmpty(wFilter) ) {
+			$('#btn-filter-workers').removeClass('btn-warning').addClass('btn-success');
+			return;
+		}
+
+		$.each( core.workers, function( index, wkr ) {
+			if( $.inArray(wkr.id, wFilter) >= 0 ){
+				$('#worker-row_'+wkr.id).hide();
+			}else{
+				$('#worker-row_'+wkr.id).show();
+			}
+		});
+
+		$('#btn-filter-workers').removeClass('btn-success').addClass('btn-warning');
+
+	};
+
+
+	var rbTags = function(){
+
+
+		var html = '<li> <a href="#tags"  id="btn-tags" data-toggle="modal" data-href="" data-name="tags" class="btn btn-info btn-xs" >Tags</a></li>';
+		$('#project-controls').append(html);
+
+
+		$("#tags").on("show.bs.modal", function(e){
+			var jqxhr = $.ajax({
+				url: "/calendar/"+core.config.calendarId+"/schedule-element/"+projectSelected.schedule_id+"/tag/edit",
+				async: true,
+				method: "GET"
+			} )
+			.done(function(response) {
+
+				$('#tags .modal-body').html('');
+				$('#tags .modal-body').html(response);
+				renderExistingTagsForEdit();
+				$('#btn-add-tag').on(' click ', function(){
+					var tagId = $('#tag-select').val();
+					addTag(tagId);
+				});
+			
+			})
+			.fail(function() {
+				alert( "error fetching  edit tag data" );
+			});
+		});
+	};
+
+	var rbUpdate = function(rec){
+				// Fill modal with content from link href
+		$("#myModal").on("show.bs.modal", function(e) {
+
+			//determin what to fetch
+
+			var target = $(e.target);
+			var link = $(e.relatedTarget);
+			var url = '/calendar/'+core.config.calendarId+'/schedule-element/'+rec.schedule_id+'/user-update';
+			var modalBody = $(this).find(".modal-body");
+
+			var jqxhr = $.ajax({
+				url: url,
+				async: true,
+				//dataType: "json",
+				//data: {"_token":crfs,"targetRecord":scheduleRecord, "updateFields": fieldsObj},
+				method: "GET"
+			} )
+			.done(function(response) {
+				modalBody.html(response).find( "#scheduled-date-field"  ).datepicker({dateFormat: "yy-mm-dd"});
+
+			})
+			.fail(function() {
+				alert( "error" );
+			})
+			.always(function() {
+				//alert( "complete" );
+			});
+
+			$(this).find(".modal-title").html("Update Schedule Element");
+		});
+		var html = '<li> <a href="#myModal"  data-toggle="modal" data-href="" data-name="Update" class="btn btn-info btn-xs" >Update</a></li>';
+		$('#project-controls').append(html);
+
+	};
+
+	var rbRemove = function(){
+
+		var html = '<li> <a href="#" data-name="remove" class="btn btn-info btn-xs btn-remove" >Remove</a></li>';
+		$('#project-controls').append(html);
+
+		$(".btn-remove").on("click", function(e) {
+
+		confirm('You are about to remove schedule element for ' + projectSelected.customer_name + '.  Continue?');
+
+		if ( confirm ) {
+
+			var jqxhr = $.ajax({
+				url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/remove",
+				async: true,
+				method: "GET"
+			} )
+			.done(function(response) {
+				
+				var wkr = core.workers[projectSelected.worker_id];
+				wkr.removeProjectFromPool(projectSelected.schedule_id);
+				renderWorkerScheduleElements(projectSelected.worker_id, true);
+				setProjUnselected();
+				
+			
+			})
+			.fail(function() {
+				alert( "error: unable to remove record!" );
+			})
+			.always(function() {
+				//alert( "complete" );
+			});
+
+		}
+
+		});
+
+
+
+	};
+
+	var bindSelectedProjectDraggable = function(){
+
+		$('#selected-proj-li').draggable( {
+			revert : "invalid",
+			scroll: true,
+			snap: ".proj-droppable",
+			snapMode: "inner"
+		});
+
 	};
 
 	var bindDragDrop = function(workerId){
@@ -381,8 +688,6 @@ PWSSchedule.render = function( core ){
 			accept: ".proj-draggable",
 			hoverClass: "drop-hover",
 			activeClass: "drop-active"
-
-
 		});
 
 		projElements.click(function(e){
@@ -396,16 +701,80 @@ PWSSchedule.render = function( core ){
 
 			var projData = projEl.data("scheduleRecord");
 
-			setProjUnselected( projData );
-			setProjSelected( projData );
-			updateSelectedProjectDisplay();
+			updateSelectedProject( projEl.data("scheduleRecord") );
 			
 		});
 
 	};
 
+
 	// build all the controls that were dynamically built
 	var ctrlBind = function(){
+
+		$("#cal-ctrl").on("show.bs.modal", function(e) {
+
+			var calCtrl = $('#cal-ctrl');
+			
+			var dataName = $(e.relatedTarget).attr("data-name");
+			
+			if ( dataName === "add" ) {
+				fetchModalAddContent();
+			}
+
+			if ( dataName === "filter-workers" ) {
+				buildModalContentFilterWorkers();
+			}
+
+		});
+
+		var modal = $('#myModal,#cal-ctrl, #tags');
+
+		modal.css('margin-left', ($(window).width() - modal.width()) / 2 );
+
+		modal.on('submit', function(e){
+
+			e.preventDefault();
+
+			var jqxhr = $.ajax({
+				url: $(e.target).attr("action"),
+				async: true,
+				data: $(e.target).serialize(),
+				method: "POST"
+			} )
+			.done(function(response) {
+				if ( _.isObject(response) ) {
+					liveUpdateWorkerRows(projectSelected, response);
+					$('.modal').modal('hide');
+					$('#myModal, #cal-ctrl').find('.modal-body').html('');
+				}
+				else {
+					alert( 'error - repsonse not object' );
+				}
+
+			})
+			.fail(function(response) {
+				if ( _.has(response, 'responseJSON') ){
+					$.each(response.responseJSON, function( index, value ) {
+						$('.modal-body').append('<h4 class="error">error: '+index+'</h4');
+							$.each(value, function( errindex, error ) {
+								$('.modal-body').append('<p class="error" >'+error+'</p>');
+							});
+					});
+				}
+				else {
+					alert('error saving data!');
+
+				}
+			});
+		});
+
+		$('#btn-modal-submit').on('click', function(){
+			$('#schedule-data-form').submit();
+		});
+
+		$('#btn-modal-cal-ctrl-submit').on('click', function(){
+			$('#schedule-cal-ctrl-form').submit();
+		});
 
 		$('#cal-ctrl-back').click(function(e){
 			e.preventDefault();
@@ -459,7 +828,12 @@ PWSSchedule.render = function( core ){
 
 	};
 
+	var applyFilters = function(){
+		applyWorkerFilter();
+	};
+
 	return {
+		applyFilters:applyFilters,
 		navCal:navCal,
 		clearWorkerDayDivs:clearWorkerDayDivs,
 		clearWorkerScheduleElements:clearWorkerScheduleElements,
