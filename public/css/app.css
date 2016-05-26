@@ -543,6 +543,14 @@ ul#selected-project li {
   #cal-ctrl .modal-dialog {
     width: 900px;
   }
+  .modal-dialog {
+    overflow-y: initial !important;
+  }
+  .modal-body {
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 .error {
   color: red;

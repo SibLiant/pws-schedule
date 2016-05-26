@@ -83,12 +83,9 @@
 <ul class="list-inline" id="schedule-ctrl">
 <li> <a href="#cal-ctrl"  data-toggle="modal" data-href="" data-name="add" class="btn btn-success btn" >Add</a></li>
 <li> <a href="#cal-ctrl"  id="btn-filter-workers" data-toggle="modal" data-href="" data-name="filter-workers" class="btn btn-success btn" >Filter Workers</a></li>
-<li> <a href="#cal-ctrl"  data-toggle="modal" data-href="" data-name="Update" class="btn btn-success btn" >Filter Tags</a></li>
+<li> <a href="#cal-ctrl"  id="btn-filter-tags" data-toggle="modal" data-href="" data-name="filter-tags" class="btn btn-success btn" >Filter Tags</a></li>
 </ul>
 </div>	
-
-
-
 
   <!-- Modal project controls -->
   <div class="modal fade modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

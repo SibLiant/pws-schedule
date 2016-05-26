@@ -526,8 +526,21 @@ PWSSchedule.render = function( core ){
 		rbUpdate(projectSelected);
 		rbRemove(projectSelected);
 		rbTags(projectSelected);
+		rbExternalLinks(projectSelected);
 
 		
+	};
+
+	var rbExternalLinks = function(proj){
+
+
+		$.each(proj, function( fName, fValue ) {
+			if ( fName.substring(0, 14 ) ==="external_link_" ) {
+				var	linkName = fName.substring(14).replace('_', ' ');
+				var html = '<li> <a href="'+fValue+'"  class="btn btn-info btn-xs" >'+linkName+'</a></li>';
+				$('#project-controls').append(html);
+			}
+		});
 	};
 
 	var fetchModalAddContent = function(){
@@ -584,6 +597,69 @@ PWSSchedule.render = function( core ){
 			applyWorkerFilter();
 
 		});
+	};
+
+
+	var buildModalContentFilterTags = function(){
+
+		var bdy = $('#cal-ctrl').find('.modal-body');
+		$('#cal-ctrl').find('.modal-title').html('Show only projects with these tags');
+		$('#btn-modal-cal-ctrl-submit').hide();
+		bdy.html('');
+		var filteredTags = Cookies.getJSON('pws_filtered_tags');	
+
+		bdy.append('<ul id = "filtered-tags-list"></ul>');
+		var list = $('#filtered-tags-list');
+		$.each(core.options.tags, function( index, tg ) {
+			var cid = 'tag-cb_'+tg.tag_id;
+			list.append('<li class="checkbox" > <input class="tag-checkbox" id="'+cid+'" type="checkbox" name="tag" value="'+tg.id+'" checked="checked">'+tg.name+' </li>');
+			if ( $.inArray(tg.tag_id, filteredTags) >= 0 ) {
+				$('#'+cid).prop('checked', false);
+			}
+		});
+
+		$('#filtered-tags-list li .tag-checkbox').on(' click ', function(e){
+			var nonCheckedId;
+			var clickedId = $(e.target).attr("id").match(/\d+$/);
+			var filteredList = [];
+			$.each($('.tag-checkbox'), function( index, value ) {
+				if ( ! $(value).is(':checked')  ){
+					nonCheckedId = $(value).attr("id").match(/\d+$/);
+					filteredList.push( parseInt(nonCheckedId[0]));
+				}
+			});
+
+			Cookies.set('pws_filtered_tags', filteredList, {path:''});
+			applyTagFilter();
+
+		});
+
+	};
+
+	var applyTagFilter = function(){
+
+		var tFilter= Cookies.getJSON('pws_filtered_tags');
+
+		if ( _.isEmpty(tFilter) ) {
+			$('#btn-filter-tags').removeClass('btn-warning').addClass('btn-success');
+			return;
+		}
+
+		var projs = $('.cnt-project').not('.place-holder');
+
+		$.each( projs, function( index, proj ) {
+			var pData = $(proj).data("scheduleRecord");
+
+			var tagsToShow = _.difference(pData.tags, tFilter);
+			//console.debug(tagsToShow);
+
+			if(  _.isEmpty(tagsToShow) ){
+				$(proj).css('visibility', 'hidden');
+			}else{
+				$(proj).css('visibility', 'visible');
+			}
+		});
+
 	};
 
 	var applyWorkerFilter = function(){
@@ -679,38 +755,27 @@ PWSSchedule.render = function( core ){
 		$('#project-controls').append(html);
 
 		$(".btn-remove").on("click", function(e) {
-
-		confirm('You are about to remove schedule element for ' + projectSelected.customer_name + '.  Continue?');
-
-		if ( confirm ) {
-
-			var jqxhr = $.ajax({
-				url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/remove",
-				async: true,
-				method: "GET"
-			} )
-			.done(function(response) {
-				
-				var wkr = core.workers[projectSelected.worker_id];
-				wkr.removeProjectFromPool(projectSelected.schedule_id);
-				renderWorkerScheduleElements(projectSelected.worker_id, true);
-				setProjUnselected();
-				
-			
-			})
-			.fail(function() {
-				alert( "error: unable to remove record!" );
-			})
-			.always(function() {
-				//alert( "complete" );
-			});
-
-		}
-
+			confirm('You are about to remove schedule element for ' + projectSelected.customer_name + '.  Continue?');
+			if ( confirm ) {
+				var jqxhr = $.ajax({
+					url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/remove",
+					async: true,
+					method: "GET"
+				} )
+				.done(function(response) {
+					var wkr = core.workers[projectSelected.worker_id];
+					wkr.removeProjectFromPool(projectSelected.schedule_id);
+					renderWorkerScheduleElements(projectSelected.worker_id, true);
+					setProjUnselected();
+				})
+				.fail(function() {
+					alert( "error: unable to remove record!" );
+				})
+				.always(function() {
+					//alert( "complete" );
+				});
+			}
 		});
-
-
-
 	};
 
 	var bindSelectedProjectDraggable = function(){
@@ -740,13 +805,28 @@ PWSSchedule.render = function( core ){
 			drop: function(event,ui){
 				var parsedTargetId = parseWorkerDayId( $(this).attr("id") );
 				var rec =  $(ui.draggable).data("scheduleRecord");
+				var grabbedDraggableDay =  $(ui.draggable).attr("id").match(/\d+$/);
+				var targetDay;
+
+
+
+				//when user dragges selected project from the top onto the schedule
+				//this makes sure we done leave an element hanging in an odd space
 				if ( $(ui.draggable).attr("id") === "selected-proj-li"  ) {
 					ui.draggable.draggable('option', 'revert', true);
 				}
 
-				var targetDay = parsedTargetId.day.format(core.config.pwsDateFormat);
+				//if use grabs non-first day of schedule rec adjust the drop 
+				//start day accordingly
+				if ( grabbedDraggableDay > 1 ) {
+					targetDay = parsedTargetId.day.subtract( parseInt(grabbedDraggableDay) - 1 , "days" );
+				}else{
+					targetDay = parsedTargetId.day;
+				}
+
+				targetDay.format(core.config.pwsDateFormat);
 			
-				// if target is not goign to change dont hit the database
+				// if target is not going to change dont hit the database
 				if ( targetDay === rec.scheduled_date && parsedTargetId.workerId === rec.worker_id  ) {
 					ui.draggable.draggable('option', 'revert', true);
 					return true;
@@ -782,6 +862,7 @@ PWSSchedule.render = function( core ){
 	};
 
 
+
 	// build all the controls that were dynamically built
 	var ctrlBind = function(){
 
@@ -797,6 +878,10 @@ PWSSchedule.render = function( core ){
 
 			if ( dataName === "filter-workers" ) {
 				buildModalContentFilterWorkers();
+			}
+
+			if ( dataName === "filter-tags" ) {
+				buildModalContentFilterTags();
 			}
 
 		});

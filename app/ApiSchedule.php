@@ -22,13 +22,15 @@ class ApiSchedule extends ApiModel
 		'customer_name',
 		'schedule_id',
 		'project_id',
+		'external_link_testing_link',
 	];
 	
 	//protected $casts = [ 'json_data' => 'array' ];
 
 	public static $jsonDefaults = [
 		'job_length_days' => '1',
-		'scheduled_date' => ''
+		'scheduled_date' => '',
+		'external_link_testing_link' => ''
 	];
 
 	
