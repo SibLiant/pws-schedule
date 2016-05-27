@@ -93,7 +93,8 @@ PWSSchedule.render = function( core ){
 		$('div.hdr-row').html('');
 
 		//build the controls first
-		hdrdivs.push('<div id="name-placeholder"> <a href="#" id="cal-ctrl-back" class="btn"><</a> &nbsp; &nbsp; <a href="#" id="cal-ctrl-forward" class="btn">></a> </div>');
+		//hdrdivs.push('<div id="name-placeholder"> <a href="#" id="cal-ctrl-back" class="btn"><</a> &nbsp; &nbsp; <a href="#" id="cal-ctrl-forward" class="btn">></a> </div>');
+		hdrdivs.push('<div id="name-placeholder"> <button id="cal-ctrl-back" type="button" class="btn btn-default btn-sm"> <span  class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<button type="button" id="cal-ctrl-forward" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button></div>');
 		var i;						
 
 		for(i=0; i < core.config.calRangeInt; i++){
@@ -537,7 +538,7 @@ PWSSchedule.render = function( core ){
 		$.each(proj, function( fName, fValue ) {
 			if ( fName.substring(0, 14 ) ==="external_link_" ) {
 				var	linkName = fName.substring(14).replace('_', ' ');
-				var html = '<li> <a href="'+fValue+'"  class="btn btn-info btn-xs" >'+linkName+'</a></li>';
+				var html = '<li> <a href="'+fValue+'"  target="_blank" class="btn btn-info btn-xs" >'+linkName+'</a></li>';
 				$('#project-controls').append(html);
 			}
 		});
@@ -640,10 +641,6 @@ PWSSchedule.render = function( core ){
 
 		var tFilter= Cookies.getJSON('pws_filtered_tags');
 
-		if ( _.isEmpty(tFilter) ) {
-			$('#btn-filter-tags').removeClass('btn-warning').addClass('btn-success');
-			return;
-		}
 
 		var projs = $('.cnt-project').not('.place-holder');
 
@@ -660,15 +657,18 @@ PWSSchedule.render = function( core ){
 			}
 		});
 
+		if ( _.isEmpty(tFilter) ) {
+			$('#btn-filter-tags').removeClass('btn-warning').addClass('btn-success');
+			return;
+		}
+
+		$('#btn-filter-tags').removeClass('btn-success').addClass('btn-warning');
+
 	};
 
 	var applyWorkerFilter = function(){
 		var wFilter= Cookies.getJSON('pws_filtered_workers');
 
-		if ( _.isEmpty(wFilter) ) {
-			$('#btn-filter-workers').removeClass('btn-warning').addClass('btn-success');
-			return;
-		}
 
 		$.each( core.workers, function( index, wkr ) {
 			if( $.inArray(wkr.id, wFilter) >= 0 ){
@@ -677,6 +677,11 @@ PWSSchedule.render = function( core ){
 				$('#worker-row_'+wkr.id).show();
 			}
 		});
+
+		if ( _.isEmpty(wFilter) ) {
+			$('#btn-filter-workers').removeClass('btn-warning').addClass('btn-success');
+			return;
+		}
 
 		$('#btn-filter-workers').removeClass('btn-success').addClass('btn-warning');
 
@@ -755,8 +760,8 @@ PWSSchedule.render = function( core ){
 		$('#project-controls').append(html);
 
 		$(".btn-remove").on("click", function(e) {
-			confirm('You are about to remove schedule element for ' + projectSelected.customer_name + '.  Continue?');
-			if ( confirm ) {
+			var cres = confirm('You are about to remove schedule element for ' + projectSelected.customer_name + '.  Continue?');
+			if ( cres ) {
 				var jqxhr = $.ajax({
 					url: "/calendar/schedule-element/"+projectSelected.schedule_id+"/remove",
 					async: true,
@@ -936,6 +941,7 @@ PWSSchedule.render = function( core ){
 		});
 
 		$('#cal-ctrl-back').click(function(e){
+			console.debug('nav back');
 			e.preventDefault();
 			var nBackward = core.config.navBackward;
 
@@ -949,6 +955,7 @@ PWSSchedule.render = function( core ){
 		});
 
 		$('#cal-ctrl-forward').click(function(e){
+			console.debug('nav forward');
 			e.preventDefault();
 			var nForward = core.config.navForward;
 			if ( core.config.calNavRootUrl  ) {
@@ -989,6 +996,7 @@ PWSSchedule.render = function( core ){
 
 	var applyFilters = function(){
 		applyWorkerFilter();
+		applyTagFilter();
 	};
 
 	return {

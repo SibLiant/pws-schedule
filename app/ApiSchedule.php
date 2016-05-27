@@ -22,7 +22,7 @@ class ApiSchedule extends ApiModel
 		'customer_name',
 		'schedule_id',
 		'project_id',
-		'external_link_testing_link',
+		'external_link_External',
 	];
 	
 	//protected $casts = [ 'json_data' => 'array' ];
