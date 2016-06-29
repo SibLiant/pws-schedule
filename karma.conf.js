@@ -19,6 +19,7 @@ module.exports = function(config) {
 		'public/js/jquery-2.2.0.min.js',
 		'public/js/moment.2.11.1.js',
 		'public/js/underscore_1.8.3.js',
+		'public/js/jquery-ui-1.11.4.custom/jquery-ui.js',
 
 		//'public/js/pwsapp.js',
 
@@ -44,10 +45,10 @@ module.exports = function(config) {
     preprocessors: {
 		//'public/js/pwsapp.js': 'coverage'
 
-		//'resources/assets/js/pwsnamespace.js': 'coverage',
-		//'resources/assets/js/pwscore.js': 'coverage',
-		//'resources/assets/js/pwsworker.js': 'coverage',
-		//'resources/assets/js/pwsrender.js': 'coverage'
+		'resources/assets/js/pwsnamespace.js': 'coverage',
+		'resources/assets/js/pwscore.js': 'coverage',
+		'resources/assets/js/pwsworker.js': 'coverage',
+		'resources/assets/js/pwsrender.js': 'coverage'
     },
 
 

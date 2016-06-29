@@ -56,7 +56,8 @@ describe('PWSCore - ', function() {
 							"scheduled_date": "2016-03-14",
 							"job_length_days": 1,
 							"schedule_note": null,
-							"external_link": null
+							"external_link": null,
+							"tags": [4, 3, 2, 1]
 						},
 
 						"202": {
@@ -396,8 +397,6 @@ describe('PWSCore - ', function() {
 
 		//test header
 		it('test render header elements', function() {
-
-
 			$('body').append('<div class="hdr-row" style="border: 1px solid black;"></div>');
 			core.render.bldGridHeader('.hdr-row');
 			expect( $('#cal-ctrl-back') ).toBeInDOM();
@@ -524,11 +523,10 @@ describe('PWSCore - ', function() {
 				$('body').append('<ul id="selected-project" style="border: 1px solid black;"></ul>');
 
 				var target = $('#schedule-id_199_dy_1');
-				var data = core.render.setProjSelected( target );
-				core.render.updateSelectedProjectDisplay();
-				expect( $( '#selected-project'  ) ).toContainHtml('<li>'+data.customer_name+'</li>');
+ 				var data = target.data("scheduleRecord");
+				core.render.updateSelectedProject(data);
+				expect( $( '#selected-project'  ) ).toContainHtml(data.customer_name);
 
-				
 			});
 
 
@@ -574,10 +572,35 @@ describe('PWSCore - ', function() {
 				expect(spyEventF).toHaveBeenTriggered();
 				
 			});
+
+
+			it('tell a worker to clear its current elments are render its elements', function() {
+				core.render.renderWorkerScheduleElements(1, true);
+				expect($('#worker-id_2_day_2016-03-14')).toBeInDOM();
+			});
+
+			it('proj controls -- update selected project', function() {
+				var wkr = new PWSSchedule.worker( 1, 'parker', core.scheduleRecordsByWorkerId[1] );
+				var recs = wkr.buildRows(core.config.momCalStart, core.config.calRangeInt);
+
+				core.render.updateSelectedProject( core.scheduleRecordsByWorkerId[1][2] );
+                var txt = $('#selected-project').html();
+				expect(txt).toContain('Parker Bradtmiller');
+				
+			});
+
+			it('renders buttons for selected project', function() {
+				$('#selected-project').append('<div id="project-controls"></div>');
+				core.render.renderButtons();
+                var txt = $('#project-controls').html();
+				expect(txt).toContain('Update');
+				expect(txt).toContain('Remove');
+				expect(txt).toContain('Tags');
+			});
+
+
 			
 		});
-
-
   });
 
 });

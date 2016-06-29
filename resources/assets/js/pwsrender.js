@@ -867,7 +867,7 @@ PWSSchedule.render = function( core ){
 		});
 
 		$('#cal-ctrl-back').click(function(e){
-			console.debug('nav back');
+			//console.debug('nav back');
 			e.preventDefault();
 			var nBackward = core.config.navBackward;
 
@@ -881,7 +881,7 @@ PWSSchedule.render = function( core ){
 		});
 
 		$('#cal-ctrl-forward').click(function(e){
-			console.debug('nav forward');
+			//console.debug('nav forward');
 			e.preventDefault();
 			var nForward = core.config.navForward;
 			if ( core.config.calNavRootUrl  ) {
@@ -943,7 +943,10 @@ PWSSchedule.render = function( core ){
 		setProjUnselected:setProjUnselected,
 		projectSelected:projectSelected,
 		updateSelectedProjectDisplay:updateSelectedProjectDisplay,
-		ctrlBind:ctrlBind
+		updateSelectedProject:updateSelectedProject,
+		ctrlBind:ctrlBind,
+		renderWorkerScheduleElements:renderWorkerScheduleElements,
+		renderButtons:renderButtons
   	};
 
 };
