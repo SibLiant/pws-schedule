@@ -25,13 +25,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
 
-
         $this->registerPolicies($gate);
 
 		$gate->before(function ($user, $ability) {
 			//if ($user->isGlobalAdmin()) {
 				//return true;
 			//}
+
+
+			//if user owns it
+			//if (  $user->id == $cal->user_id) return true;
 		});
 
 		$gate->define('calendar-view', function ($user, $cal) {
@@ -47,17 +50,25 @@ class AuthServiceProvider extends ServiceProvider
 			if (  $user->id == $cal->user_id) return true;
 
 			return false;
-						        
+								
 		});
 
+		$gate->define('calendar-edit', function ($user, $cal) {
 
-		$gate->define('manage-account', function ($user, $cal) {
+			$invs = $cal->invitations;
 
-			
-			
+			//if user is invited to it
+			foreach($invs as $i) {
+				ddd($i);
+				if ( $i->email == $user->email ) return true;
+			}
+
+			//if user owns it
+			if (  $user->id == $cal->user_id) return true;
+
+			return false;
+								
 		});
-
-
 
     }
 }
